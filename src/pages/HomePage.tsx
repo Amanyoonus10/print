@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollVideo } from '../components/home/ScrollVideo';
 import { Hero } from '../components/home/Hero';
 import { Introduction } from '../components/home/Introduction';
 import { InteractiveServices } from '../components/home/InteractiveServices';
@@ -16,6 +17,9 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
   return (
     <div className="w-full flex flex-col bg-[#FFFFFF]">
+      {/* 00 MINIMALIST CINEMATIC SCROLL FILM */}
+      <ScrollVideo />
+
       {/* 01 HERO */}
       <Hero onOpenQuoteModal={onOpenQuoteModal} />
 

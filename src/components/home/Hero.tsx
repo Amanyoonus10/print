@@ -25,7 +25,7 @@ export const Hero: React.FC<HeroProps> = () => {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-between pt-20 sm:pt-22 pb-4 bg-[#FFFFFF] overflow-hidden">
+    <section id="hero-section" className="relative w-full min-h-screen flex flex-col justify-between pt-20 sm:pt-22 pb-4 bg-[#FFFFFF] overflow-hidden">
       {/* Full-Width Edge-to-Edge Video Container (Strictly Zero Black Bars on Any Screen) */}
       <div className="flex-1 w-full flex items-center justify-center my-auto px-0 overflow-hidden">
         <div className="relative w-full h-[65vh] sm:h-[72vh] md:h-[76vh] max-h-[calc(100vh-150px)] overflow-hidden bg-transparent">
