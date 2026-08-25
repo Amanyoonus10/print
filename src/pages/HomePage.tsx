@@ -31,6 +31,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
       {/* 05 - 12 DEDICATED VISUAL SHOWCASES FOR ALL 8 SERVICES */}
       <ServiceShowcases />
 
+
       {/* 13 OUR CLIENTS */}
       <section className="py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
