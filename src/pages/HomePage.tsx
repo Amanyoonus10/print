@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollVideo } from '../components/home/ScrollVideo';
 import { Hero } from '../components/home/Hero';
 import { Introduction } from '../components/home/Introduction';
@@ -15,13 +15,27 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    // Show intro on initial arrival
+    return !sessionStorage.getItem('seen_film_intro');
+  });
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem('seen_film_intro', 'true');
+    setShowIntro(false);
+  };
+
+  const handleReplayIntro = () => {
+    setShowIntro(true);
+  };
+
   return (
     <div className="w-full flex flex-col bg-[#FFFFFF]">
-      {/* 00 MINIMALIST CINEMATIC SCROLL FILM */}
-      <ScrollVideo />
+      {/* 00 ENTRY CINEMATIC INTRO: Plays once before site begins, then unmounts completely */}
+      {showIntro && <ScrollVideo onComplete={handleIntroComplete} />}
 
       {/* 01 HERO */}
-      <Hero onOpenQuoteModal={onOpenQuoteModal} />
+      <Hero onOpenQuoteModal={onOpenQuoteModal} onReplayIntro={handleReplayIntro} />
 
       {/* 02 COMPANY STORY / INTRODUCTION */}
       <Introduction />

@@ -4,9 +4,10 @@ import { companyData } from '../../data/company';
 
 interface HeroProps {
   onOpenQuoteModal?: () => void;
+  onReplayIntro?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = () => {
+export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -44,15 +45,26 @@ export const Hero: React.FC<HeroProps> = () => {
 
       {/* Bottom Bar: Scroll Indicator & Core Credentials Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-3 pb-1 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-200 mt-2">
-        <button
-          onClick={scrollToExplore}
-          className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-gray-700 hover:text-[#00BCD4] transition-colors cursor-pointer group uppercase font-bold"
-        >
-          <div className="w-6 h-6 rounded-full border border-gray-300 bg-white flex items-center justify-center group-hover:border-[#00BCD4] transition-colors shadow-xs">
-            <ArrowDown className="w-3 h-3 text-[#00BCD4] animate-bounce" />
-          </div>
-          <span>SCROLL TO EXPLORE</span>
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={scrollToExplore}
+            className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-gray-700 hover:text-[#00BCD4] transition-colors cursor-pointer group uppercase font-bold"
+          >
+            <div className="w-6 h-6 rounded-full border border-gray-300 bg-white flex items-center justify-center group-hover:border-[#00BCD4] transition-colors shadow-xs">
+              <ArrowDown className="w-3 h-3 text-[#00BCD4] animate-bounce" />
+            </div>
+            <span>SCROLL TO EXPLORE</span>
+          </button>
+
+          {onReplayIntro && (
+            <button
+              onClick={onReplayIntro}
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-[#008BA3] font-mono text-[10px] uppercase font-bold tracking-wider transition-colors cursor-pointer"
+            >
+              <span>🎬 Watch Commercial Film</span>
+            </button>
+          )}
+        </div>
 
         {/* 3 Core Strengths Badges */}
         <div className="flex items-center gap-4 sm:gap-6 text-xs font-mono text-gray-700 font-semibold">
@@ -73,3 +85,4 @@ export const Hero: React.FC<HeroProps> = () => {
     </section>
   );
 };
+
