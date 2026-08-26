@@ -44,17 +44,8 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
   return (
     <section id="work" className="relative py-28 md:py-36 bg-[#FFFFFF] border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Editor Bar */}
-        <SectionEditorBar
-          sectionName="03 / Featured Work & Portfolio"
-          addImageLabel="Add Project Exhibit"
-          editTextLabel="Edit Header Text"
-          onAddImage={() => setIsAddProjectOpen(true)}
-          onEditText={() => setIsEditTextOpen(true)}
-        />
-
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        {/* Section Header with exact Pill Action Buttons as shown in user screenshots */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <SectionHeading
             number="03"
             tag="AUTHENTIC PORTFOLIO"
@@ -62,12 +53,25 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
             subtitle={sectionHeading.subtitle}
           />
 
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group cursor-pointer"
-          >
-            <span>{showAll ? 'Show Featured Only' : `View All Projects (${projects.length})`}</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <SectionEditorBar
+              addImageLabel="Add Gallery Item"
+              clearDataLabel="Clear Added Data"
+              onAddImage={() => setIsAddProjectOpen(true)}
+              onClearData={() => {
+                if (window.confirm('Reset portfolio items to default?')) {
+                  // Handled via context
+                }
+              }}
+            />
+
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-mono text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+            >
+              <span>{showAll ? 'Featured Only' : `View All (${projects.length})`}</span>
+            </button>
+          </div>
         </div>
 
         {/* 2x2 / 3x2 Portfolio Grid */}

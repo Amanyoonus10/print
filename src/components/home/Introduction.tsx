@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionHeading } from '../ui/SectionHeading';
-import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar, RemoveImageButton } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
@@ -25,23 +24,22 @@ export const Introduction: React.FC = () => {
   return (
     <section id="introduction" className="relative py-28 md:py-36 bg-[#FFFFFF] overflow-hidden border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Management Header Bar */}
-        <SectionEditorBar
-          sectionName="01 / Company Story & Imagery"
-          addImageLabel="Add Facility Image"
-          editTextLabel="Edit Narrative Text"
-          onAddImage={() => setIsAddImageOpen(true)}
-          onEditText={() => setIsEditTextOpen(true)}
-        />
+        {/* Section Header with Pill Action Buttons */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <SectionHeading
+            number="01"
+            tag="COMPANY PROFILE & STORY"
+            title="PRINTING THAT MAKES YOUR BRAND STAND OUT."
+            subtitle="Precision, creativity, and structural quality engineered in Doha, Qatar."
+          />
 
-        {/* Section Heading */}
-        <SectionHeading
-          number="01"
-          tag="COMPANY PROFILE & STORY"
-          title="PRINTING THAT MAKES YOUR BRAND STAND OUT."
-          subtitle="Precision, creativity, and structural quality engineered in Doha, Qatar."
-          className="mb-16 md:mb-20"
-        />
+          <SectionEditorBar
+            addImageLabel="Add Facility Image"
+            editTextLabel="Edit Narrative"
+            onAddImage={() => setIsAddImageOpen(true)}
+            onEditText={() => setIsEditTextOpen(true)}
+          />
+        </div>
 
         {/* Asymmetrical Editorial 2-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -101,13 +99,16 @@ export const Introduction: React.FC = () => {
 
               {/* Action Button */}
               <div className="mt-8">
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#008BA3] hover:text-[#00BCD4] transition-colors uppercase font-bold"
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('services');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#008BA3] hover:text-[#00BCD4] transition-colors uppercase font-bold cursor-pointer"
                 >
-                  <span>Learn More About Our Approach</span>
+                  <span>Explore 8 Production Pillars</span>
                   <ArrowUpRight className="w-4 h-4" />
-                </Link>
+                </button>
               </div>
             </motion.div>
           </div>

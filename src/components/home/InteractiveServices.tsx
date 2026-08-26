@@ -42,15 +42,6 @@ export const InteractiveServices: React.FC = () => {
   return (
     <section id="services" className="relative py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Editor Bar */}
-        <SectionEditorBar
-          sectionName={`02 / Services (${activeService.title})`}
-          addImageLabel="Change Preview Image"
-          editTextLabel="Edit Active Service"
-          onAddImage={() => setIsAddImageOpen(true)}
-          onEditText={() => setIsEditTextOpen(true)}
-        />
-
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <SectionHeading
@@ -60,16 +51,25 @@ export const InteractiveServices: React.FC = () => {
             subtitle="Interactive capabilities directory engineered for modern brands in Qatar."
           />
 
-          <button
-            onClick={() => {
-              const el = document.getElementById('services-showcases');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group cursor-pointer"
-          >
-            <span>View All {services.length} Service Exhibits</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <SectionEditorBar
+              addImageLabel="Add Service Item"
+              editTextLabel="Edit Active Service"
+              onAddImage={() => setIsAddImageOpen(true)}
+              onEditText={() => setIsEditTextOpen(true)}
+            />
+
+            <button
+              onClick={() => {
+                const el = document.getElementById('services-showcases');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-gray-200/80 hover:bg-gray-300 text-gray-800 font-mono text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+            >
+              <span>Exhibits Directory ({services.length})</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
         {/* 2-Column Desktop Grid: Left List + Right Floating Live Preview Viewport */}

@@ -177,19 +177,19 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
 
       {/* Case Study Gallery Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Section Management Header Bar for Gallery */}
-        <SectionEditorBar
-          sectionName={`${project.title} Gallery (${project.gallery.length} Photos)`}
-          addImageLabel="Add Photo Exhibit & Description"
-          onAddImage={() => setIsAddGalleryImageOpen(true)}
-        />
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <SectionHeading
+            tag="PHOTO EXHIBITS"
+            title="PROJECT GALLERIES."
+            subtitle="Authentic visual captures of delivered solutions in Qatar."
+          />
 
-        <SectionHeading
-          tag="PHOTO EXHIBITS"
-          title="PROJECT GALLERIES."
-          subtitle="Authentic visual captures of delivered solutions in Qatar."
-          className="mb-10"
-        />
+          <SectionEditorBar
+            addImageLabel="Add Gallery Item"
+            clearDataLabel="Clear Added Data"
+            onAddImage={() => setIsAddGalleryImageOpen(true)}
+          />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {project.gallery.map((item, idx) => (

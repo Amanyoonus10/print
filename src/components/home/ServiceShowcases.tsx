@@ -48,14 +48,24 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
             <div className={`absolute top-1/2 ${isEven ? 'left-0' : 'right-0'} -translate-y-1/2 w-96 h-96 bg-[#00BCD4]/5 rounded-full blur-3xl pointer-events-none`} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              {/* Per-Section Editor Bar */}
-              <SectionEditorBar
-                sectionName={`${service.number} / ${service.title}`}
-                addImageLabel="Add Exhibit Image"
-                editTextLabel="Edit Description"
-                onAddImage={() => setActiveAddService(service)}
-                onEditText={() => setActiveEditService(service)}
-              />
+              {/* Section Header Controls */}
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs font-bold text-[#008BA3] px-3 py-1 rounded-full bg-[#00BCD4]/10 border border-[#00BCD4]/25">
+                    {service.number}
+                  </span>
+                  <span className="font-mono text-xs text-gray-500 uppercase tracking-[0.2em] font-semibold">
+                    Specialized Production
+                  </span>
+                </div>
+
+                <SectionEditorBar
+                  addImageLabel={`Add ${service.title} Item`}
+                  editTextLabel="Edit Description"
+                  onAddImage={() => setActiveAddService(service)}
+                  onEditText={() => setActiveEditService(service)}
+                />
+              </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 {/* Content Side */}
@@ -66,15 +76,6 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className={`lg:col-span-6 flex flex-col gap-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
                 >
-                  {/* Number & Category Pill */}
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold text-[#008BA3] px-3 py-1 rounded-full bg-[#00BCD4]/10 border border-[#00BCD4]/25">
-                      {service.number}
-                    </span>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-[0.2em] font-semibold">
-                      Specialized Production
-                    </span>
-                  </div>
 
                   {/* Oversized Title */}
                   <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-[#0A0B0D] tracking-tight uppercase leading-[1.05]">

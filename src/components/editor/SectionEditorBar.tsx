@@ -1,66 +1,72 @@
 import React from 'react';
-import { Plus, Edit3, Trash2 } from 'lucide-react';
+import { PlusCircle, Trash2, Edit3 } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
 
 interface SectionEditorBarProps {
-  sectionName: string;
+  sectionName?: string;
   onAddImage?: () => void;
   onEditText?: () => void;
+  onClearData?: () => void;
   addImageLabel?: string;
   editTextLabel?: string;
+  clearDataLabel?: string;
   customActions?: React.ReactNode;
+  className?: string;
 }
 
 export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
-  sectionName,
   onAddImage,
   onEditText,
-  addImageLabel = 'Add Image',
-  editTextLabel = 'Edit Description',
+  onClearData,
+  addImageLabel = 'Add Gallery Item',
+  editTextLabel = 'Edit Text',
+  clearDataLabel = 'Clear Added Data',
   customActions,
+  className = '',
 }) => {
-  const { isEditMode } = useContent();
+  const { resetToDefaults } = useContent();
 
-  if (!isEditMode) return null;
+  const handleClear = () => {
+    if (onClearData) {
+      onClearData();
+    } else {
+      resetToDefaults();
+    }
+  };
 
   return (
-    <div className="mb-6 flex flex-wrap items-center justify-between gap-3 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-xl border border-white/15 text-white shadow-xl">
-      <div className="flex items-center gap-2.5">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00BCD4] opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00BCD4]" />
-        </span>
-        <span className="font-mono text-xs text-white uppercase tracking-wider font-bold">
-          {sectionName}
-        </span>
-        <span className="hidden sm:inline-block font-mono text-[10px] text-[#38E1FF] bg-[#00BCD4]/15 px-2 py-0.5 rounded-full border border-[#00BCD4]/30">
-          Section Controls
-        </span>
-      </div>
+    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
+      {onAddImage && (
+        <button
+          onClick={onAddImage}
+          className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-sans text-xs sm:text-sm font-semibold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer group active:scale-98"
+        >
+          <PlusCircle className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
+          <span>{addImageLabel}</span>
+        </button>
+      )}
 
-      <div className="flex items-center gap-2">
-        {onAddImage && (
-          <button
-            onClick={onAddImage}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-mono text-xs uppercase font-bold tracking-wider transition-all shadow-[0_2px_10px_rgba(0,188,212,0.4)] cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>{addImageLabel}</span>
-          </button>
-        )}
+      {onClearData && (
+        <button
+          onClick={handleClear}
+          className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 font-sans text-xs sm:text-sm font-semibold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer active:scale-98"
+        >
+          <Trash2 className="w-4 sm:w-5 h-4 sm:h-5 stroke-[2]" />
+          <span>{clearDataLabel}</span>
+        </button>
+      )}
 
-        {onEditText && (
-          <button
-            onClick={onEditText}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase font-bold tracking-wider transition-all border border-white/15 cursor-pointer"
-          >
-            <Edit3 className="w-3.5 h-3.5 text-[#38E1FF]" />
-            <span>{editTextLabel}</span>
-          </button>
-        )}
+      {onEditText && (
+        <button
+          onClick={onEditText}
+          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-sans text-xs sm:text-sm font-medium shadow-xs transition-all duration-200 cursor-pointer"
+        >
+          <Edit3 className="w-4 h-4 text-gray-500" />
+          <span>{editTextLabel}</span>
+        </button>
+      )}
 
-        {customActions}
-      </div>
+      {customActions}
     </div>
   );
 };
@@ -69,11 +75,7 @@ export const RemoveImageButton: React.FC<{
   onClick: (e: React.MouseEvent) => void;
   label?: string;
   className?: string;
-}> = ({ onClick, label = 'Remove', className = '' }) => {
-  const { isEditMode } = useContent();
-
-  if (!isEditMode) return null;
-
+}> = ({ onClick, className = '' }) => {
   return (
     <button
       onClick={(e) => {
@@ -81,11 +83,11 @@ export const RemoveImageButton: React.FC<{
         e.preventDefault();
         onClick(e);
       }}
-      title="Remove item"
-      className={`z-30 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-600/90 hover:bg-red-600 text-white font-mono text-[10px] uppercase font-bold tracking-wider shadow-lg backdrop-blur-md transition-all cursor-pointer border border-white/20 ${className}`}
+      title="Delete item"
+      className={`z-30 inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/90 hover:bg-red-600 text-gray-700 hover:text-white border border-gray-200 shadow-md backdrop-blur-md transition-all duration-200 cursor-pointer active:scale-95 ${className}`}
     >
-      <Trash2 className="w-3 h-3" />
-      <span>{label}</span>
+      <Trash2 className="w-4 h-4 stroke-[2]" />
     </button>
   );
 };
+

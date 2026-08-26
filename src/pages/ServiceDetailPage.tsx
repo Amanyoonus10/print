@@ -181,20 +181,20 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
 
       {/* Gallery Showcase Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Section Management Header Bar for Gallery */}
-        <SectionEditorBar
-          sectionName={`${service.title} Gallery (${service.gallery.length} Images)`}
-          addImageLabel="Add Exhibit Image & Description"
-          onAddImage={() => setIsAddGalleryImageOpen(true)}
-        />
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <SectionHeading
+            number={service.number}
+            tag="AUTHENTIC GALLERY"
+            title={`${service.title} EXHIBITS.`}
+            subtitle="Genuine project deliverables executed for organizations across Qatar."
+          />
 
-        <SectionHeading
-          number={service.number}
-          tag="AUTHENTIC GALLERY"
-          title={`${service.title} EXHIBITS.`}
-          subtitle="Genuine project deliverables executed for organizations across Qatar."
-          className="mb-12"
-        />
+          <SectionEditorBar
+            addImageLabel="Add Gallery Item"
+            clearDataLabel="Clear Added Data"
+            onAddImage={() => setIsAddGalleryImageOpen(true)}
+          />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {service.gallery.map((item, idx) => (
