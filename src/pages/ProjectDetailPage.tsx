@@ -6,6 +6,7 @@ import { useContent } from '../context/ContentContext';
 import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
+import { RemoveItemModal } from '../components/editor/RemoveItemModal';
 
 interface ProjectDetailPageProps {
   onOpenQuoteModal: () => void;
@@ -13,11 +14,12 @@ interface ProjectDetailPageProps {
 
 export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuoteModal }) => {
   const { slug } = useParams<{ slug: string }>();
-  const { projects, updateProject, addProjectGalleryImage } = useContent();
+  const { projects, updateProject, addProjectGalleryImage, removeProjectGalleryImage, resetToDefaults } = useContent();
 
   const [isAddCoverImageOpen, setIsAddCoverImageOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
   const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
+  const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
 
   const project = projects.find(p => p.slug === slug);
 
@@ -188,6 +190,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
             addImageLabel="Add Gallery Item"
             clearDataLabel="Clear Added Data"
             onAddImage={() => setIsAddGalleryImageOpen(true)}
+            onClearData={() => setIsRemoveGalleryOpen(true)}
           />
         </div>
 
@@ -250,7 +253,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         isOpen={isEditTextOpen}
         onClose={() => setIsEditTextOpen(false)}
         title={`Edit ${project.title}`}
-        subtitle="Project Narrative & Specs"
+        subtitle="Case Study Details"
         fields={[
           {
             key: 'title',
@@ -301,7 +304,24 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         requireDescription={true}
         onAdd={handleAddGalleryImage}
       />
+
+      {/* Remove Gallery Images Modal */}
+      <RemoveItemModal
+        isOpen={isRemoveGalleryOpen}
+        onClose={() => setIsRemoveGalleryOpen(false)}
+        title={`Remove Photos from ${project.title}`}
+        subtitle="Manage Project Gallery"
+        items={project.gallery.map((g, idx) => ({
+          index: idx,
+          title: g.title,
+          subtitle: g.caption,
+          url: g.url,
+        }))}
+        onRemoveItem={(_, idx) => {
+          removeProjectGalleryImage(project.id, idx);
+        }}
+        onClearAll={resetToDefaults}
+      />
     </div>
   );
 };
-

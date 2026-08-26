@@ -5,12 +5,14 @@ import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
+import { RemoveItemModal } from '../editor/RemoveItemModal';
 import type { ServiceItem } from '../../types';
 
 export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ onOpenQuoteModal }) => {
-  const { services, updateService, addServiceGalleryImage } = useContent();
+  const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage, resetToDefaults } = useContent();
 
   const [activeAddService, setActiveAddService] = useState<ServiceItem | null>(null);
+  const [activeRemoveService, setActiveRemoveService] = useState<ServiceItem | null>(null);
   const [activeEditService, setActiveEditService] = useState<ServiceItem | null>(null);
 
   const handleSaveText = (values: Record<string, string>) => {
@@ -61,8 +63,10 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
 
                 <SectionEditorBar
                   addImageLabel={`Add ${service.title} Item`}
+                  clearDataLabel="Clear Added Data"
                   editTextLabel="Edit Description"
                   onAddImage={() => setActiveAddService(service)}
+                  onClearData={() => setActiveRemoveService(service)}
                   onEditText={() => setActiveEditService(service)}
                 />
               </div>
@@ -76,7 +80,6 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className={`lg:col-span-6 flex flex-col gap-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
                 >
-
                   {/* Oversized Title */}
                   <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-[#0A0B0D] tracking-tight uppercase leading-[1.05]">
                     {service.title}
@@ -210,6 +213,26 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
           title={`Add Exhibit to ${activeAddService.title}`}
           subtitle="Service Gallery"
           onAdd={handleAddImage}
+        />
+      )}
+
+      {/* Remove Gallery Items Modal */}
+      {activeRemoveService && (
+        <RemoveItemModal
+          isOpen={!!activeRemoveService}
+          onClose={() => setActiveRemoveService(null)}
+          title={`Remove Exhibits from ${activeRemoveService.title}`}
+          subtitle="Manage Gallery Exhibits"
+          items={activeRemoveService.gallery.map((g, idx) => ({
+            index: idx,
+            title: g.title,
+            subtitle: g.caption,
+            url: g.url,
+          }))}
+          onRemoveItem={(_, idx) => {
+            removeServiceGalleryImage(activeRemoveService.slug, idx);
+          }}
+          onClearAll={resetToDefaults}
         />
       )}
 

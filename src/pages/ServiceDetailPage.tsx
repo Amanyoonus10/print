@@ -6,6 +6,7 @@ import { useContent } from '../context/ContentContext';
 import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
+import { RemoveItemModal } from '../components/editor/RemoveItemModal';
 
 interface ServiceDetailPageProps {
   onOpenQuoteModal: () => void;
@@ -13,11 +14,12 @@ interface ServiceDetailPageProps {
 
 export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuoteModal }) => {
   const { slug } = useParams<{ slug: string }>();
-  const { services, updateService, addServiceGalleryImage } = useContent();
+  const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage, resetToDefaults } = useContent();
   
   const [isAddHeroImageOpen, setIsAddHeroImageOpen] = useState<boolean>(false);
   const [isEditHeroTextOpen, setIsEditHeroTextOpen] = useState<boolean>(false);
   const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
+  const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
 
   const service = services.find(s => s.slug === slug);
 
@@ -193,6 +195,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
             addImageLabel="Add Gallery Item"
             clearDataLabel="Clear Added Data"
             onAddImage={() => setIsAddGalleryImageOpen(true)}
+            onClearData={() => setIsRemoveGalleryOpen(true)}
           />
         </div>
 
@@ -280,6 +283,24 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         subtitle="Authentic Gallery"
         requireDescription={true}
         onAdd={handleAddGalleryImage}
+      />
+
+      {/* Remove Gallery Items Modal */}
+      <RemoveItemModal
+        isOpen={isRemoveGalleryOpen}
+        onClose={() => setIsRemoveGalleryOpen(false)}
+        title={`Remove Exhibits from ${service.title}`}
+        subtitle="Manage Gallery Exhibits"
+        items={service.gallery.map((g, idx) => ({
+          index: idx,
+          title: g.title,
+          subtitle: g.caption,
+          url: g.url,
+        }))}
+        onRemoveItem={(_, idx) => {
+          removeServiceGalleryImage(service.slug, idx);
+        }}
+        onClearAll={resetToDefaults}
       />
     </div>
   );

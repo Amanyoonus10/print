@@ -6,11 +6,13 @@ import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
+import { RemoveItemModal } from '../editor/RemoveItemModal';
 
 export const Introduction: React.FC = () => {
-  const { company, introImages, updateCompanyDescription, addIntroImage } = useContent();
+  const { company, introImages, updateCompanyDescription, addIntroImage, removeIntroImage, resetToDefaults } = useContent();
 
   const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
 
   const handleSaveText = (values: Record<string, string>) => {
@@ -35,8 +37,10 @@ export const Introduction: React.FC = () => {
 
           <SectionEditorBar
             addImageLabel="Add Facility Image"
+            clearDataLabel="Clear Added Data"
             editTextLabel="Edit Narrative"
             onAddImage={() => setIsAddImageOpen(true)}
+            onClearData={() => setIsRemoveModalOpen(true)}
             onEditText={() => setIsEditTextOpen(true)}
           />
         </div>
@@ -166,6 +170,24 @@ export const Introduction: React.FC = () => {
         title="Add Image to Company Story"
         subtitle="Introduction Gallery"
         onAdd={data => addIntroImage({ url: data.url, title: data.title, subtitle: data.subtitle })}
+      />
+
+      {/* Remove Intro Images Modal */}
+      <RemoveItemModal
+        isOpen={isRemoveModalOpen}
+        onClose={() => setIsRemoveModalOpen(false)}
+        title="Remove Facility & Story Images"
+        subtitle="Manage Company Story Media"
+        items={introImages.map(img => ({
+          id: img.id,
+          title: img.title,
+          subtitle: img.subtitle,
+          url: img.url,
+        }))}
+        onRemoveItem={(item) => {
+          if (item.id) removeIntroImage(item.id);
+        }}
+        onClearAll={resetToDefaults}
       />
 
       {/* Edit Text Modal */}

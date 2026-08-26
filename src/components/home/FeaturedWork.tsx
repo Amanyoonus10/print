@@ -6,6 +6,7 @@ import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
+import { RemoveItemModal } from '../editor/RemoveItemModal';
 import type { ProjectItem } from '../../types';
 
 interface FeaturedWorkProps {
@@ -13,9 +14,10 @@ interface FeaturedWorkProps {
 }
 
 export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) => {
-  const { projects, addProject } = useContent();
+  const { projects, addProject, removeProject, resetToDefaults } = useContent();
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
   const [showAll, setShowAll] = useState<boolean>(false);
   const [sectionHeading, setSectionHeading] = useState({
@@ -58,11 +60,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
               addImageLabel="Add Gallery Item"
               clearDataLabel="Clear Added Data"
               onAddImage={() => setIsAddProjectOpen(true)}
-              onClearData={() => {
-                if (window.confirm('Reset portfolio items to default?')) {
-                  // Handled via context
-                }
-              }}
+              onClearData={() => setIsRemoveModalOpen(true)}
             />
 
             <button
@@ -116,6 +114,24 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
         subtitle="Portfolio Item"
         requireDescription={true}
         onAdd={handleAddProject}
+      />
+
+      {/* Remove Items Modal */}
+      <RemoveItemModal
+        isOpen={isRemoveModalOpen}
+        onClose={() => setIsRemoveModalOpen(false)}
+        title="Remove Portfolio Case Studies"
+        subtitle="Manage Portfolio Exhibits"
+        items={projects.map(p => ({
+          id: p.id,
+          title: p.title,
+          subtitle: `${p.category} (${p.year})`,
+          url: p.coverImage,
+        }))}
+        onRemoveItem={(item) => {
+          if (item.id) removeProject(item.id);
+        }}
+        onClearAll={resetToDefaults}
       />
 
       {/* Edit Header Text Modal */}
