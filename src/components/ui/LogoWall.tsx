@@ -27,23 +27,23 @@ export const LogoWall: React.FC<LogoWallProps> = () => {
         {row1Marquee.map((client, idx) => (
           <div
             key={`r1-${client.id}-${idx}`}
-            className="flex items-center gap-3.5 px-5 py-3 rounded-2xl bg-white border border-gray-200/90 shrink-0 shadow-xs hover:border-[#00BCD4]/50 hover:shadow-md transition-all duration-300 group cursor-default"
+            className="flex items-center gap-4 px-6 py-3.5 rounded-2xl bg-white border border-gray-200/90 shrink-0 shadow-xs hover:border-[#00BCD4]/50 hover:shadow-md transition-all duration-300 group cursor-default"
           >
-            <div className="w-12 h-8 rounded-lg bg-gray-50/80 p-1 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100">
+            <div className="w-16 h-10 rounded-xl bg-gray-50 p-1.5 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100/80">
               <img
                 src={`/images/clients/${client.id}.png`}
                 alt={client.name}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-full object-contain filter contrast-[1.05]"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-xs tracking-wide text-gray-900 group-hover:text-[#008BA3] transition-colors whitespace-nowrap">
+              <span className="font-display font-bold text-sm tracking-wide text-gray-900 group-hover:text-[#008BA3] transition-colors whitespace-nowrap">
                 {client.name}
               </span>
-              <span className="font-mono text-[9px] text-gray-500 uppercase tracking-wider">
+              <span className="font-mono text-[10px] text-gray-500 uppercase tracking-wider">
                 {client.sector}
               </span>
             </div>
@@ -56,23 +56,23 @@ export const LogoWall: React.FC<LogoWallProps> = () => {
         {row2Marquee.map((client, idx) => (
           <div
             key={`r2-${client.id}-${idx}`}
-            className="flex items-center gap-3.5 px-5 py-3 rounded-2xl bg-white border border-gray-200/90 shrink-0 shadow-xs hover:border-[#00BCD4]/50 hover:shadow-md transition-all duration-300 group cursor-default"
+            className="flex items-center gap-4 px-6 py-3.5 rounded-2xl bg-white border border-gray-200/90 shrink-0 shadow-xs hover:border-[#00BCD4]/50 hover:shadow-md transition-all duration-300 group cursor-default"
           >
-            <div className="w-12 h-8 rounded-lg bg-gray-50/80 p-1 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100">
+            <div className="w-16 h-10 rounded-xl bg-gray-50 p-1.5 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100/80">
               <img
                 src={`/images/clients/${client.id}.png`}
                 alt={client.name}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-full object-contain filter contrast-[1.05]"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-xs tracking-wide text-gray-900 group-hover:text-[#008BA3] transition-colors whitespace-nowrap">
+              <span className="font-display font-bold text-sm tracking-wide text-gray-900 group-hover:text-[#008BA3] transition-colors whitespace-nowrap">
                 {client.name}
               </span>
-              <span className="font-mono text-[9px] text-gray-500 uppercase tracking-wider">
+              <span className="font-mono text-[10px] text-gray-500 uppercase tracking-wider">
                 {client.sector}
               </span>
             </div>

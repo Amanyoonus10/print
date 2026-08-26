@@ -14,28 +14,28 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   showSubtitle = true
 }) => {
   const iconSizes = {
-    sm: 'w-7 h-7',
-    md: 'w-9 h-9',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16'
+    sm: 'w-9 h-9',
+    md: 'w-13 h-13',
+    lg: 'w-16 h-16',
+    xl: 'w-22 h-22'
   };
 
   const textSizes = {
     sm: 'text-base tracking-[0.25em]',
-    md: 'text-xl tracking-[0.28em]',
-    lg: 'text-2xl tracking-[0.32em]',
-    xl: 'text-4xl tracking-[0.35em]'
+    md: 'text-2xl tracking-[0.28em]',
+    lg: 'text-3xl tracking-[0.32em]',
+    xl: 'text-5xl tracking-[0.35em]'
   };
 
   const subtitleSizes = {
-    sm: 'text-[7px] tracking-[0.28em]',
-    md: 'text-[9px] tracking-[0.32em]',
-    lg: 'text-[11px] tracking-[0.35em]',
-    xl: 'text-[14px] tracking-[0.4em]'
+    sm: 'text-[8px] tracking-[0.28em]',
+    md: 'text-[10px] tracking-[0.32em]',
+    lg: 'text-[12px] tracking-[0.35em]',
+    xl: 'text-[16px] tracking-[0.4em]'
   };
 
   return (
-    <Link to="/" className={`group inline-flex items-center gap-3 select-none ${className}`}>
+    <Link to="/" className={`group inline-flex items-center gap-3.5 select-none ${className}`}>
       {/* Official Brand Monogram Icon from PDF */}
       <div className={`relative ${iconSizes[size]} shrink-0 transition-transform duration-500 group-hover:scale-105`}>
         <img
