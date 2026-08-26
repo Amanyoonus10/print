@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { SectionHeading } from '../ui/SectionHeading';
 import { CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
-import { SectionEditorBar, RemoveImageButton } from '../editor/SectionEditorBar';
+import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
 
 export const Introduction: React.FC = () => {
-  const { company, introImages, updateCompanyDescription, addIntroImage, removeIntroImage } = useContent();
+  const { company, introImages, updateCompanyDescription, addIntroImage } = useContent();
 
   const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
@@ -130,14 +130,6 @@ export const Introduction: React.FC = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                
-                {/* Remove Image Button */}
-                <div className="absolute top-4 right-4">
-                  <RemoveImageButton
-                    onClick={() => removeIntroImage(img.id)}
-                    label="Remove"
-                  />
-                </div>
 
                 <div className="absolute bottom-6 left-6 right-6">
                   {img.subtitle && (

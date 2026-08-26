@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Layers, Cpu, Compass } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { SectionEditorBar, RemoveImageButton } from '../components/editor/SectionEditorBar';
+import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
 
@@ -13,7 +13,7 @@ interface ServiceDetailPageProps {
 
 export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuoteModal }) => {
   const { slug } = useParams<{ slug: string }>();
-  const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage } = useContent();
+  const { services, updateService, addServiceGalleryImage } = useContent();
   
   const [isAddHeroImageOpen, setIsAddHeroImageOpen] = useState<boolean>(false);
   const [isEditHeroTextOpen, setIsEditHeroTextOpen] = useState<boolean>(false);
@@ -202,14 +202,6 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
               key={idx}
               className="group relative rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-xs hover:border-[#00BCD4]/40 hover:shadow-lg transition-all"
             >
-              {/* Remove Button on each individual card */}
-              <div className="absolute top-3 right-3 z-30">
-                <RemoveImageButton
-                  onClick={() => removeServiceGalleryImage(service.slug, idx)}
-                  label="Remove"
-                />
-              </div>
-
               <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
                 <img
                   src={item.url}

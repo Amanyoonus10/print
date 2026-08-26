@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
-import { SectionEditorBar, RemoveImageButton } from '../editor/SectionEditorBar';
+import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
 import type { ServiceItem } from '../../types';
 
 export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ onOpenQuoteModal }) => {
-  const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage } = useContent();
+  const { services, updateService, addServiceGalleryImage } = useContent();
 
   const [activeAddService, setActiveAddService] = useState<ServiceItem | null>(null);
   const [activeEditService, setActiveEditService] = useState<ServiceItem | null>(null);
@@ -183,14 +183,6 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                           loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-
-                        {/* Remove Image Button */}
-                        <div className="absolute top-2 right-2">
-                          <RemoveImageButton
-                            onClick={() => removeServiceGalleryImage(service.slug, gIdx)}
-                            label="Remove"
-                          />
-                        </div>
 
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-3 flex flex-col justify-end">
                           <p className="text-[11px] font-display font-semibold text-white truncate">

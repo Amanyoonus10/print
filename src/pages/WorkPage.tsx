@@ -10,7 +10,7 @@ interface WorkPageProps {
 }
 
 export const WorkPage: React.FC<WorkPageProps> = () => {
-  const { projects, addProject, removeProject } = useContent();
+  const { projects, addProject } = useContent();
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
 
@@ -89,7 +89,6 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
               project={project}
               aspectRatio="wide"
               priority={idx < 2}
-              onRemove={() => removeProject(project.id)}
             />
           ))}
         </div>

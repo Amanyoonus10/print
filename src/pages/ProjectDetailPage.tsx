@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Calendar, Building2, Tag } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { SectionEditorBar, RemoveImageButton } from '../components/editor/SectionEditorBar';
+import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
 
@@ -13,7 +13,7 @@ interface ProjectDetailPageProps {
 
 export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuoteModal }) => {
   const { slug } = useParams<{ slug: string }>();
-  const { projects, updateProject, addProjectGalleryImage, removeProjectGalleryImage } = useContent();
+  const { projects, updateProject, addProjectGalleryImage } = useContent();
 
   const [isAddCoverImageOpen, setIsAddCoverImageOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
@@ -197,14 +197,6 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
               key={idx}
               className="group relative rounded-3xl bg-white border border-gray-200 overflow-hidden shadow-xs hover:border-[#00BCD4]/50 hover:shadow-lg transition-all"
             >
-              {/* Remove button on each photo card */}
-              <div className="absolute top-4 right-4 z-30">
-                <RemoveImageButton
-                  onClick={() => removeProjectGalleryImage(project.id, idx)}
-                  label="Remove Photo"
-                />
-              </div>
-
               <div className="relative aspect-[16/10] bg-gray-100 overflow-hidden">
                 <img
                   src={item.url}

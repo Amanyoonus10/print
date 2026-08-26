@@ -13,7 +13,7 @@ interface FeaturedWorkProps {
 }
 
 export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) => {
-  const { projects, addProject, removeProject } = useContent();
+  const { projects, addProject } = useContent();
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
@@ -83,7 +83,6 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
               aspectRatio="wide"
               priority={idx < 2}
               onClick={() => setSelectedProject(project)}
-              onRemove={() => removeProject(project.id)}
             />
           ))}
         </div>
