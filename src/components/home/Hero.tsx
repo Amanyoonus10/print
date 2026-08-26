@@ -33,10 +33,12 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
           <video
             ref={videoRef}
             src="/videos/hero_combined_loop.mp4"
+            poster="/videos/hero_combined_poster.jpg"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             style={{ width: '100%', height: '100%', objectFit: 'cover', minWidth: '100%', minHeight: '100%' }}
             className="w-full h-full object-cover"
           />
