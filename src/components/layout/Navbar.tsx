@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           isScrolled
-            ? 'bg-white/90 backdrop-blur-xl border-b border-gray-200/80 py-3.5 shadow-[0_4px_25px_rgba(0,0,0,0.06)]'
+            ? 'bg-[#F7F4EE]/90 backdrop-blur-xl border-b border-[#EDE8DE] py-3.5 shadow-[0_4px_25px_rgba(122,31,43,0.04)]'
             : 'bg-transparent py-6 md:py-8'
         }`}
       >
@@ -75,12 +75,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             </div>
 
             {/* Center: Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full bg-gray-100/90 border border-gray-200/80 backdrop-blur-md shadow-xs">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full bg-[#EDE8DE]/90 border border-[#EDE8DE] backdrop-blur-md shadow-xs">
               {navLinks.map((link) => (
                 <button
                   key={link.targetId}
                   onClick={() => scrollToSection(link.targetId)}
-                  className="px-4 py-2 rounded-full font-mono text-xs tracking-[0.18em] transition-all duration-300 text-gray-600 hover:text-black hover:bg-white cursor-pointer"
+                  className="px-4 py-2 rounded-full font-mono text-xs tracking-[0.18em] transition-all duration-300 text-[#171717]/80 hover:text-[#7A1F2B] hover:bg-white cursor-pointer font-medium"
                 >
                   {link.name}
                 </button>
@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             <div className="flex items-center gap-3">
               <button
                 onClick={onOpenQuoteModal}
-                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.35)] cursor-pointer group"
+                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)] cursor-pointer group"
               >
                 <span>ESTIMATE PROJECT</span>
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -101,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 aria-label="Open Mobile Menu"
-                className="lg:hidden w-11 h-11 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-800 hover:bg-gray-200 transition-colors cursor-pointer"
+                className="lg:hidden w-11 h-11 rounded-full bg-[#EDE8DE] border border-[#EDE8DE] flex items-center justify-center text-[#171717] hover:bg-white transition-colors cursor-pointer"
               >
                 <Menu className="w-5 h-5" />
               </button>
@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 bg-white text-gray-900 flex flex-col justify-between p-6 sm:p-10 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-[#F7F4EE] text-[#171717] flex flex-col justify-between p-6 sm:p-10 overflow-y-auto"
           >
             {/* Top Bar inside Overlay */}
             <div className="flex items-center justify-between">
@@ -128,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 aria-label="Close Mobile Menu"
-                className="w-12 h-12 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-800 hover:bg-gray-200 transition-colors cursor-pointer"
+                className="w-12 h-12 rounded-full bg-[#EDE8DE] border border-[#EDE8DE] flex items-center justify-center text-[#171717] hover:bg-white transition-colors cursor-pointer"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -136,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
             {/* Menu Links with Staggered Visual Reveal */}
             <div className="my-auto py-10 flex flex-col gap-4">
-              <span className="font-mono text-xs text-[#00BCD4] uppercase tracking-widest font-semibold mb-2">
+              <span className="font-mono text-xs text-[#B8955A] uppercase tracking-widest font-bold mb-2">
                 Navigation
               </span>
               {navLinks.map((link, idx) => (
@@ -146,23 +146,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                     setMobileMenuOpen(false);
                     scrollToSection(link.targetId);
                   }}
-                  className="font-display text-3xl sm:text-4xl font-extrabold uppercase tracking-tight flex items-center justify-between py-2 border-b border-gray-100 transition-colors text-gray-800 hover:text-[#00BCD4] text-left cursor-pointer"
+                  className="font-display text-3xl sm:text-4xl font-extrabold uppercase tracking-tight flex items-center justify-between py-2 border-b border-[#EDE8DE] transition-colors text-[#171717] hover:text-[#7A1F2B] text-left cursor-pointer"
                 >
                   <div className="flex items-center gap-4">
-                    <span className="font-mono text-xs text-gray-400">0{idx + 1}</span>
+                    <span className="font-mono text-xs text-[#B8955A]">0{idx + 1}</span>
                     <span>{link.name}</span>
                   </div>
-                  <ArrowUpRight className="w-6 h-6 text-[#00BCD4]" />
+                  <ArrowUpRight className="w-6 h-6 text-[#7A1F2B]" />
                 </button>
               ))}
             </div>
 
             {/* Footer inside Mobile Drawer */}
-            <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="pt-6 border-t border-[#EDE8DE] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-mono text-gray-500">Doha, State of Qatar</span>
-                <span className="text-sm font-semibold text-gray-900">{companyData.contact.phone}</span>
-                <span className="text-xs font-mono text-[#00BCD4]">{companyData.contact.email}</span>
+                <span className="text-xs font-mono text-[#555555]">Doha, State of Qatar</span>
+                <span className="text-sm font-semibold text-[#171717]">{companyData.contact.phone}</span>
+                <span className="text-xs font-mono text-[#7A1F2B] font-medium">{companyData.contact.email}</span>
               </div>
 
               <div className="flex items-center gap-3">
@@ -171,7 +171,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                     setMobileMenuOpen(false);
                     onOpenQuoteModal();
                   }}
-                  className="flex-1 sm:flex-initial px-6 py-3.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider text-center"
+                  className="flex-1 sm:flex-initial px-6 py-3.5 rounded-full bg-[#7A1F2B] text-white font-display font-bold text-xs uppercase tracking-wider text-center cursor-pointer shadow-md"
                 >
                   Request Quote
                 </button>

@@ -47,16 +47,15 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
   };
 
   return (
-    <div className="w-full pt-32 pb-24 bg-[#FFFFFF] overflow-hidden">
-      {/* Page Header */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 border-b border-gray-200">
-        {/* Section Management Header Bar */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+    <div className="w-full pt-32 pb-24 bg-[#F7F4EE] overflow-hidden">
+      {/* Header */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 border-b border-[#EDE8DE]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
-            number="03"
-            tag="CASE STUDIES & EXHIBITS"
-            title="SELECTED PORTFOLIO."
-            subtitle="Explore authentic visual productions, sports arena hoardings, illuminated systems, and corporate deliverables in Qatar."
+            number="14"
+            tag="PORTFOLIO"
+            title="AUTHENTIC WORK."
+            subtitle="Explore our verified case studies produced for prominent organizations in Qatar."
           />
 
           <SectionEditorBar
@@ -75,8 +74,8 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
               onClick={() => setActiveCategory(cat)}
               className={`font-mono text-xs px-4 py-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-[#00BCD4] text-[#0A0B0D] font-bold shadow-[0_2px_15px_rgba(0,188,212,0.35)]'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-black border border-gray-200'
+                  ? 'bg-[#7A1F2B] text-white font-bold shadow-[0_2px_15px_rgba(122,31,43,0.35)]'
+                  : 'bg-white text-[#171717] hover:bg-[#EDE8DE] border border-[#EDE8DE]'
               }`}
             >
               {cat}
@@ -99,11 +98,11 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
         </div>
 
         {filteredProjects.length === 0 && (
-          <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
-            <p className="font-mono text-sm text-gray-500">No projects found in category "{activeCategory}".</p>
+          <div className="p-12 text-center border-2 border-dashed border-[#EDE8DE] rounded-3xl bg-white flex flex-col items-center justify-center gap-3">
+            <p className="font-mono text-sm text-[#555555]">No projects found in category "{activeCategory}".</p>
             <button
               onClick={() => setIsAddProjectOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+              className="px-5 py-2.5 rounded-full bg-[#7A1F2B] text-white font-mono text-xs uppercase font-bold cursor-pointer"
             >
               + Add Project to {activeCategory}
             </button>

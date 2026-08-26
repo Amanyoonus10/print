@@ -34,7 +34,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     >
       {/* Image Container with Hover Scale */}
       <div
-        className={`relative w-full ${aspectClasses[aspectRatio]} rounded-3xl overflow-hidden bg-gray-100 border border-gray-200 shadow-sm transition-all duration-500 group-hover:border-[#00BCD4]/50 group-hover:shadow-xl`}
+        className={`relative w-full ${aspectClasses[aspectRatio]} rounded-3xl overflow-hidden bg-white border border-[#EDE8DE] shadow-sm transition-all duration-500 group-hover:border-[#B8955A] group-hover:shadow-xl`}
       >
         <img
           src={project.coverImage}
@@ -60,7 +60,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         {/* Bottom Card Preview on Hover */}
         <div className="absolute bottom-5 left-5 right-5 z-10 flex items-end justify-between">
           <div className="flex flex-col">
-            <span className="text-[11px] font-mono text-[#38E1FF] uppercase tracking-wider font-semibold">
+            <span className="text-[11px] font-mono text-[#B8955A] uppercase tracking-wider font-bold">
               Client: {project.client}
             </span>
             <h3 className="text-lg sm:text-xl font-display font-bold text-white leading-snug mt-0.5 drop-shadow-sm">
@@ -68,7 +68,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </h3>
           </div>
 
-          <div className="w-10 h-10 rounded-full bg-[#00BCD4] text-[#0A0B0D] flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md shrink-0 ml-3">
+          <div className="w-10 h-10 rounded-full bg-[#7A1F2B] text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md shrink-0 ml-3">
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
@@ -76,7 +76,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
       {/* Narrative summary below card */}
       <div className="px-2">
-        <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#555555] line-clamp-2 leading-relaxed">
           {project.summary}
         </p>
       </div>

@@ -31,9 +31,9 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full pt-32 pb-24 bg-[#FFFFFF] overflow-hidden">
+    <div className="w-full pt-32 pb-24 bg-[#F7F4EE] overflow-hidden">
       {/* Header */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 border-b border-gray-200">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 border-b border-[#EDE8DE]">
         <SectionHeading
           number="15"
           tag="GET IN TOUCH"
@@ -47,31 +47,31 @@ export const ContactPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Official Verified Credentials */}
           <div className="lg:col-span-5 flex flex-col gap-8">
-            <div className="p-8 rounded-3xl bg-[#F8FAFC] border border-gray-200 flex flex-col gap-6 shadow-xs">
-              <h3 className="font-display font-extrabold text-2xl text-gray-900 uppercase">
+            <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-6 shadow-xs">
+              <h3 className="font-display font-extrabold text-2xl text-[#171717] uppercase">
                 FACE PRINTING SERVICES
               </h3>
 
-              <div className="flex flex-col gap-5 text-sm text-gray-700">
+              <div className="flex flex-col gap-5 text-sm text-[#555555]">
                 {/* Location */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#00BCD4]/10 border border-[#00BCD4]/25 flex items-center justify-center text-[#008BA3] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">Location</span>
-                    <span className="font-medium text-gray-900">{companyData.contact.location}</span>
+                    <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">Location</span>
+                    <span className="font-medium text-[#171717]">{companyData.contact.location}</span>
                   </div>
                 </div>
 
                 {/* Office Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#00BCD4]/10 border border-[#00BCD4]/25 flex items-center justify-center text-[#008BA3] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">Office Telephone</span>
-                    <a href="tel:+97441423938" className="font-mono font-bold text-gray-900 hover:text-[#008BA3] transition-colors">
+                    <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">Office Telephone</span>
+                    <a href="tel:+97441423938" className="font-mono font-bold text-[#171717] hover:text-[#7A1F2B] transition-colors">
                       {companyData.contact.officePhone}
                     </a>
                   </div>
@@ -79,12 +79,12 @@ export const ContactPage: React.FC = () => {
 
                 {/* WhatsApp Support */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#25D366]/15 border border-[#25D366]/30 flex items-center justify-center text-[#128C7E] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 flex items-center justify-center text-[#128C7E] shrink-0">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">WhatsApp Direct</span>
-                    <a href={companyData.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="font-mono font-bold text-gray-900 hover:text-[#128C7E] transition-colors">
+                    <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">WhatsApp Direct</span>
+                    <a href={companyData.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="font-mono font-bold text-[#171717] hover:text-[#128C7E] transition-colors">
                       {companyData.contact.whatsapp}
                     </a>
                   </div>
@@ -92,12 +92,12 @@ export const ContactPage: React.FC = () => {
 
                 {/* Email */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#00BCD4]/10 border border-[#00BCD4]/25 flex items-center justify-center text-[#008BA3] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">Official Email</span>
-                    <a href={`mailto:${companyData.contact.email}`} className="font-mono text-gray-900 hover:text-[#008BA3] transition-colors">
+                    <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">Official Email</span>
+                    <a href={`mailto:${companyData.contact.email}`} className="font-mono text-[#171717] hover:text-[#7A1F2B] transition-colors font-medium">
                       {companyData.contact.email}
                     </a>
                   </div>
@@ -105,24 +105,24 @@ export const ContactPage: React.FC = () => {
 
                 {/* Web */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#00BCD4]/10 border border-[#00BCD4]/25 flex items-center justify-center text-[#008BA3] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
                     <Globe className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">Website</span>
-                    <span className="font-mono text-gray-900">{companyData.contact.website}</span>
+                    <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">Website</span>
+                    <span className="font-mono text-[#171717] font-medium">{companyData.contact.website}</span>
                   </div>
                 </div>
               </div>
 
               {/* CR Badge */}
-              <div className="p-4 rounded-2xl bg-white border border-gray-200 flex items-center gap-3 mt-2">
-                <ShieldCheck className="w-5 h-5 text-[#00BCD4] shrink-0" />
+              <div className="p-4 rounded-2xl bg-[#F7F4EE] border border-[#EDE8DE] flex items-center gap-3 mt-2">
+                <ShieldCheck className="w-5 h-5 text-[#B8955A] shrink-0" />
                 <div>
-                  <p className="font-mono text-xs text-gray-900 font-bold">
+                  <p className="font-mono text-xs text-[#171717] font-bold">
                     CR: {companyData.contact.cr}
                   </p>
-                  <p className="text-[11px] text-gray-500">
+                  <p className="text-[11px] text-[#555555]">
                     State of Qatar Certified Corporate Printer
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export const ContactPage: React.FC = () => {
               {/* Direct WhatsApp Quick Chat */}
               <button
                 onClick={handleWhatsApp}
-                className="w-full py-3.5 rounded-2xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#128C7E] font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="w-full py-3.5 rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#128C7E] font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Chat Directly on WhatsApp</span>
@@ -141,11 +141,11 @@ export const ContactPage: React.FC = () => {
 
           {/* Right Column: Interactive Contact Form */}
           <div className="lg:col-span-7">
-            <div className="p-8 sm:p-10 rounded-3xl bg-white border border-gray-200 shadow-lg">
-              <h3 className="font-display font-extrabold text-2xl text-gray-900 uppercase mb-2">
+            <div className="p-8 sm:p-10 rounded-3xl bg-white border border-[#EDE8DE] shadow-xl">
+              <h3 className="font-display font-extrabold text-2xl text-[#171717] uppercase mb-2">
                 SEND A MESSAGE OR REQUEST SPECS
               </h3>
-              <p className="text-xs sm:text-sm text-gray-600 mb-8">
+              <p className="text-xs sm:text-sm text-[#555555] mb-8">
                 Our pre-press and estimation team will review your specs and respond promptly.
               </p>
 
@@ -153,7 +153,7 @@ export const ContactPage: React.FC = () => {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-mono text-xs text-gray-700 uppercase tracking-wider mb-1.5 font-semibold">
+                      <label className="block font-mono text-xs text-[#171717] uppercase tracking-wider mb-1.5 font-semibold">
                         Full Name *
                       </label>
                       <input
@@ -162,12 +162,12 @@ export const ContactPage: React.FC = () => {
                         value={formData.name}
                         onChange={e => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Your full name"
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#00BCD4] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block font-mono text-xs text-gray-700 uppercase tracking-wider mb-1.5 font-semibold">
+                      <label className="block font-mono text-xs text-[#171717] uppercase tracking-wider mb-1.5 font-semibold">
                         Company / Organization
                       </label>
                       <input
@@ -175,14 +175,14 @@ export const ContactPage: React.FC = () => {
                         value={formData.company}
                         onChange={e => setFormData({ ...formData, company: e.target.value })}
                         placeholder="Company name"
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#00BCD4] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-mono text-xs text-gray-700 uppercase tracking-wider mb-1.5 font-semibold">
+                      <label className="block font-mono text-xs text-[#171717] uppercase tracking-wider mb-1.5 font-semibold">
                         Phone / WhatsApp *
                       </label>
                       <input
@@ -191,12 +191,12 @@ export const ContactPage: React.FC = () => {
                         value={formData.phone}
                         onChange={e => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+974 7788 9257"
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#00BCD4] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block font-mono text-xs text-gray-700 uppercase tracking-wider mb-1.5 font-semibold">
+                      <label className="block font-mono text-xs text-[#171717] uppercase tracking-wider mb-1.5 font-semibold">
                         Email Address *
                       </label>
                       <input
@@ -205,19 +205,19 @@ export const ContactPage: React.FC = () => {
                         value={formData.email}
                         onChange={e => setFormData({ ...formData, email: e.target.value })}
                         placeholder="email@domain.qa"
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#00BCD4] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs text-gray-700 uppercase tracking-wider mb-1.5 font-semibold">
+                    <label className="block font-mono text-xs text-[#171717] uppercase tracking-wider mb-1.5 font-semibold">
                       Primary Service Discipline
                     </label>
                     <select
                       value={formData.service}
                       onChange={e => setFormData({ ...formData, service: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#00BCD4] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
                     >
                       <option value="01 — BRANDING">01 — BRANDING (Roll-ups, Walls, Canopies)</option>
                       <option value="02 — LIGHT BOX">02 — LIGHT BOX (Fabric SEG, Backlit Displays)</option>
@@ -231,7 +231,7 @@ export const ContactPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs text-gray-700 uppercase tracking-wider mb-1.5 font-semibold">
+                    <label className="block font-mono text-xs text-[#171717] uppercase tracking-wider mb-1.5 font-semibold">
                       Message & Specifications *
                     </label>
                     <textarea
@@ -240,13 +240,13 @@ export const ContactPage: React.FC = () => {
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Please describe your requirements, timelines, quantities..."
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#00BCD4] transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,188,212,0.35)] transition-all cursor-pointer"
+                    className="w-full py-4 rounded-xl bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_4px_25px_rgba(122,31,43,0.35)] transition-all cursor-pointer hover:scale-102"
                   >
                     <Send className="w-4 h-4" />
                     <span>Send Message to FACE Team</span>
@@ -254,18 +254,18 @@ export const ContactPage: React.FC = () => {
                 </form>
               ) : (
                 <div className="py-12 flex flex-col items-center text-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-[#00BCD4]/15 border border-[#00BCD4] flex items-center justify-center text-[#008BA3] shadow-md">
+                  <div className="w-16 h-16 rounded-full bg-[#7A1F2B]/10 border border-[#7A1F2B] flex items-center justify-center text-[#7A1F2B] shadow-md">
                     <Sparkles className="w-8 h-8" />
                   </div>
-                  <h4 className="font-display font-extrabold text-2xl text-gray-900">
+                  <h4 className="font-display font-extrabold text-2xl text-[#171717]">
                     MESSAGE DELIVERED!
                   </h4>
-                  <p className="text-sm text-gray-600 max-w-md">
-                    Thank you, <span className="text-gray-900 font-bold">{formData.name}</span>. We have logged your request and our team will get back to you shortly.
+                  <p className="text-sm text-[#555555] max-w-md">
+                    Thank you, <span className="text-[#171717] font-bold">{formData.name}</span>. We have logged your request and our team will get back to you shortly.
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="mt-4 px-6 py-2.5 rounded-full bg-gray-100 text-gray-800 font-mono text-xs uppercase tracking-wider"
+                    className="mt-4 px-6 py-2.5 rounded-full bg-[#EDE8DE] hover:bg-white text-[#171717] font-mono text-xs uppercase tracking-wider cursor-pointer border border-[#EDE8DE]"
                   >
                     Send Another Message
                   </button>

@@ -62,11 +62,10 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         </Link>
       </div>
 
-      {/* Hero Showcase Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 border-b border-gray-200">
-        {/* Section Management Header Bar for Hero */}
+      {/* Hero Header */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 border-b border-[#EDE8DE]">
         <SectionEditorBar
-          sectionName={`${service.title} / Overview & Hero`}
+          className="mb-8 justify-end"
           addImageLabel="Change Hero Image"
           editTextLabel="Edit Description & Title"
           onAddImage={() => setIsAddHeroImageOpen(true)}
@@ -76,30 +75,30 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold text-[#008BA3] px-3 py-1 rounded-full bg-[#00BCD4]/10 border border-[#00BCD4]/25">
+              <span className="font-mono text-xs font-bold text-[#7A1F2B] px-3 py-1 rounded-full bg-[#7A1F2B]/10 border border-[#7A1F2B]/25">
                 Pillar {service.number}
               </span>
-              <span className="font-mono text-xs text-gray-500 uppercase tracking-widest font-semibold">
+              <span className="font-mono text-xs text-[#B8955A] uppercase tracking-widest font-bold">
                 Specialized Production
               </span>
             </div>
 
-            <h1 className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl text-[#0A0B0D] tracking-tight uppercase leading-[1.02]">
+            <h1 className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl text-[#171717] tracking-tight uppercase leading-[1.02]">
               {service.title}
             </h1>
 
-            <p className="text-xl sm:text-2xl font-medium text-[#008BA3] leading-snug">
+            <p className="text-xl sm:text-2xl font-medium text-[#7A1F2B] leading-snug">
               “{service.subtitle}”
             </p>
 
-            <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+            <p className="text-base sm:text-lg text-[#555555] leading-relaxed">
               {service.fullDescription}
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <button
                 onClick={onOpenQuoteModal}
-                className="px-8 py-4 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.35)] cursor-pointer"
+                className="px-8 py-4 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)] cursor-pointer hover:scale-105"
               >
                 <span>Request {service.title} Quote</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -109,7 +108,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
                 href={`https://wa.me/97433635098?text=Hello%20FACE%20PRINTING%20SERVICES,%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-mono text-xs uppercase tracking-wider border border-gray-200 transition-all font-medium"
+                className="px-6 py-4 rounded-full bg-white hover:bg-[#EDE8DE] text-[#171717] font-mono text-xs uppercase tracking-wider border border-[#EDE8DE] transition-all font-semibold shadow-xs"
               >
                 Direct WhatsApp
               </a>
@@ -117,7 +116,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           </div>
 
           <div className="lg:col-span-6">
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 shadow-2xl group">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-white border border-[#EDE8DE] shadow-2xl group">
               <img
                 src={service.heroImage}
                 alt={service.title}
@@ -129,18 +128,18 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
       </section>
 
       {/* Specifications & Materials 3-Column Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-gray-200 bg-[#F8FAFC]">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#EDE8DE] bg-[#EDE8DE]/30">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Key Deliverables */}
-          <div className="p-8 rounded-3xl bg-white border border-gray-200 flex flex-col gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3]">
+          <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B]">
               <Layers className="w-6 h-6" />
             </div>
-            <h3 className="font-display font-bold text-xl text-gray-900">Key Deliverables</h3>
+            <h3 className="font-display font-bold text-xl text-[#171717]">Key Deliverables</h3>
             <ul className="flex flex-col gap-2.5 mt-2">
               {service.features.map((feat, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm font-mono text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#00BCD4] shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm font-mono text-[#555555]">
+                  <CheckCircle2 className="w-4 h-4 text-[#B8955A] shrink-0 mt-0.5" />
                   <span>{feat}</span>
                 </li>
               ))}
@@ -148,15 +147,15 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           </div>
 
           {/* Substrates & Materials */}
-          <div className="p-8 rounded-3xl bg-white border border-gray-200 flex flex-col gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3]">
+          <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B]">
               <Cpu className="w-6 h-6" />
             </div>
-            <h3 className="font-display font-bold text-xl text-gray-900">Substrates & Specs</h3>
+            <h3 className="font-display font-bold text-xl text-[#171717]">Substrates & Specs</h3>
             <ul className="flex flex-col gap-2.5 mt-2">
               {service.materials.map((mat, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm font-mono text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#00BCD4] shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm font-mono text-[#555555]">
+                  <CheckCircle2 className="w-4 h-4 text-[#B8955A] shrink-0 mt-0.5" />
                   <span>{mat}</span>
                 </li>
               ))}
@@ -164,15 +163,15 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           </div>
 
           {/* Core Applications */}
-          <div className="p-8 rounded-3xl bg-white border border-gray-200 flex flex-col gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3]">
+          <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B]">
               <Compass className="w-6 h-6" />
             </div>
-            <h3 className="font-display font-bold text-xl text-gray-900">Applications in Qatar</h3>
+            <h3 className="font-display font-bold text-xl text-[#171717]">Applications in Qatar</h3>
             <ul className="flex flex-col gap-2.5 mt-2">
               {service.applications.map((app, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm font-mono text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#00BCD4] shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm font-mono text-[#555555]">
+                  <CheckCircle2 className="w-4 h-4 text-[#B8955A] shrink-0 mt-0.5" />
                   <span>{app}</span>
                 </li>
               ))}
@@ -203,9 +202,9 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           {service.gallery.map((item, idx) => (
             <div
               key={idx}
-              className="group relative rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-xs hover:border-[#00BCD4]/40 hover:shadow-lg transition-all"
+              className="group relative rounded-2xl bg-white border border-[#EDE8DE] overflow-hidden shadow-xs hover:border-[#B8955A]/60 hover:shadow-lg transition-all"
             >
-              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+              <div className="relative aspect-[4/3] bg-[#F7F4EE] overflow-hidden">
                 <img
                   src={item.url}
                   alt={item.title}
@@ -214,11 +213,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
                 />
               </div>
               <div className="p-4 flex flex-col">
-                <h4 className="font-display font-bold text-sm text-gray-900 truncate">
+                <h4 className="font-display font-bold text-sm text-[#171717] truncate">
                   {item.title}
                 </h4>
-                <p className="font-mono text-xs text-gray-500 mt-1 line-clamp-2">
-                  {item.caption}
+                <p className="font-mono text-xs text-[#777777] mt-1 line-clamp-2">
+                  {item.caption || 'Project deliverable executed with precision in Doha, Qatar.'}
                 </p>
               </div>
             </div>
@@ -226,11 +225,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         </div>
 
         {service.gallery.length === 0 && (
-          <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
-            <p className="font-mono text-sm text-gray-500">No exhibits currently in this gallery.</p>
+          <div className="p-12 text-center border-2 border-dashed border-[#EDE8DE] rounded-3xl bg-white flex flex-col items-center justify-center gap-3">
+            <p className="font-mono text-sm text-[#555555]">No exhibits currently in this gallery.</p>
             <button
               onClick={() => setIsAddGalleryImageOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+              className="px-5 py-2.5 rounded-full bg-[#7A1F2B] text-white font-mono text-xs uppercase font-bold cursor-pointer"
             >
               + Add First Exhibit Image & Description
             </button>

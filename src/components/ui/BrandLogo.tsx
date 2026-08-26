@@ -45,13 +45,13 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
         />
       </div>
 
-      {/* Brand Typography matching PDF branding */}
+      {/* Brand Typography matching Royal Maroon and Gold branding */}
       <div className="flex flex-col">
-        <span className={`font-display font-black text-[#00BCD4] leading-none ${textSizes[size]} transition-colors group-hover:text-[#008BA3]`}>
+        <span className={`font-display font-black text-[#7A1F2B] leading-none ${textSizes[size]} transition-colors group-hover:text-[#631621]`}>
           FACE
         </span>
         {showSubtitle && (
-          <span className={`font-mono text-[#008BA3] font-semibold uppercase mt-1 leading-none ${subtitleSizes[size]} transition-colors`}>
+          <span className={`font-mono text-[#B8955A] font-semibold uppercase mt-1 leading-none ${subtitleSizes[size]} transition-colors`}>
             PRINTING SERVICES
           </span>
         )}

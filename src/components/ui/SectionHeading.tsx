@@ -32,12 +32,12 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           className="flex items-center gap-3 mb-4"
         >
           {number && (
-            <span className="font-mono text-xs font-bold text-[#00BCD4] px-2.5 py-1 rounded-full bg-[#00BCD4]/10 border border-[#00BCD4]/25">
+            <span className="font-mono text-xs font-bold text-[#7A1F2B] px-2.5 py-1 rounded-full bg-[#7A1F2B]/10 border border-[#7A1F2B]/25">
               {number}
             </span>
           )}
           {tag && (
-            <span className="font-mono text-xs text-gray-500 uppercase tracking-[0.25em] font-semibold">
+            <span className="font-mono text-xs text-[#B8955A] uppercase tracking-[0.25em] font-bold">
               {tag}
             </span>
           )}
@@ -50,7 +50,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#0A0B0D] tracking-tight uppercase leading-[1.05]"
+        className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#171717] tracking-tight uppercase leading-[1.05]"
       >
         {title}
       </motion.h2>
@@ -62,7 +62,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-4 text-base sm:text-lg md:text-xl text-gray-600 font-medium max-w-3xl leading-relaxed"
+          className="mt-4 text-base sm:text-lg md:text-xl text-[#555555] font-medium max-w-3xl leading-relaxed"
         >
           {subtitle}
         </motion.p>

@@ -7,19 +7,20 @@
     --font-editorial: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
     
-    --color-brand-cyan: #00BCD4;
-    --color-brand-cyan-light: #38E1FF;
-    --color-brand-cyan-dark: #008BA3;
-    --color-brand-dark: #0A0B0D;
-    --color-brand-surface: #FFFFFF;
-    --color-brand-surface-light: #F8FAFC;
-    --color-brand-border: rgba(0, 0, 0, 0.08);
+    --color-bg-base: #F7F4EE;
+    --color-text-base: #171717;
+    --color-brand-maroon: #7A1F2B;
+    --color-brand-maroon-dark: #631621;
+    --color-brand-gold: #B8955A;
+    --color-brand-gold-dark: #9E7D46;
+    --color-brand-secondary: #EDE8DE;
+    --color-brand-card: #FFFFFF;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #FFFFFF;
-    color: #0A0B0D;
+    background-color: #F7F4EE;
+    color: #171717;
     overflow-x: hidden;
   }
 
@@ -36,12 +37,12 @@
   }
 }
 
-/* Custom Utilities for White Theme */
+/* Custom Utilities for Luxury Qatari Theme */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid #EDE8DE;
 }
 
 .glass-panel-hover {
@@ -50,22 +51,34 @@
 
 .glass-panel-hover:hover {
   background: #FFFFFF;
-  border-color: rgba(0, 188, 212, 0.4);
-  box-shadow: 0 14px 35px -10px rgba(0, 188, 212, 0.15);
+  border-color: #B8955A;
+  box-shadow: 0 14px 35px -10px rgba(122, 31, 43, 0.12);
 }
 
-.glow-cyan {
-  box-shadow: 0 0 40px -10px rgba(0, 188, 212, 0.3);
+.glow-primary {
+  box-shadow: 0 0 40px -10px rgba(122, 31, 43, 0.3);
+}
+
+.glow-gold {
+  box-shadow: 0 0 40px -10px rgba(184, 149, 90, 0.3);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #0A0B0D 0%, #1E293B 50%, #475569 100%);
+  background: linear-gradient(135deg, #171717 0%, #333333 50%, #555555 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #008BA3 0%, #00BCD4 70%, #0288D1 100%);
+.text-gradient-cyan,
+.text-gradient-maroon,
+.text-gradient-primary {
+  background: linear-gradient(135deg, #7A1F2B 0%, #B8955A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #B8955A 0%, #D4AF37 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -77,16 +90,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #EDE8DE;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #B8955A;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00BCD4;
+  background: #7A1F2B;
 }
 
 /* Background grid pattern (light mode) */

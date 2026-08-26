@@ -36,10 +36,10 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantStyles = {
-    primary: "bg-[#00BCD4] text-[#0A0B0D] hover:bg-[#38E1FF] hover:shadow-[0_0_25px_rgba(0,188,212,0.4)] active:scale-[0.98]",
-    secondary: "bg-white/10 text-white backdrop-blur-md border border-white/15 hover:bg-white/20 hover:border-white/30 active:scale-[0.98]",
-    outline: "bg-transparent text-white border border-white/20 hover:border-[#00BCD4] hover:text-[#00BCD4] hover:bg-[#00BCD4]/5 active:scale-[0.98]",
-    ghost: "bg-transparent text-[#94A3B8] hover:text-white hover:bg-white/5 active:scale-[0.98]"
+    primary: "bg-[#7A1F2B] text-white hover:bg-[#631621] hover:shadow-[0_4px_20px_rgba(122,31,43,0.35)] active:scale-[0.98]",
+    secondary: "bg-[#EDE8DE] text-[#171717] hover:bg-white hover:border-[#EDE8DE] border border-[#EDE8DE] active:scale-[0.98]",
+    outline: "bg-transparent text-[#171717] border border-[#EDE8DE] hover:border-[#7A1F2B] hover:text-[#7A1F2B] hover:bg-[#7A1F2B]/5 active:scale-[0.98]",
+    ghost: "bg-transparent text-[#555555] hover:text-[#171717] hover:bg-[#EDE8DE]/50 active:scale-[0.98]"
   };
 
   const combinedClasses = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`;

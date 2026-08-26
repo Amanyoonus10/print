@@ -189,7 +189,7 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
           <div className="absolute top-6 right-6 z-20">
             <button
               onClick={handleFinish}
-              className="px-5 py-2.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_25px_rgba(0,188,212,0.45)] cursor-pointer hover:scale-105"
+              className="px-5 py-2.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_25px_rgba(122,31,43,0.45)] cursor-pointer hover:scale-105 border border-[#B8955A]/30"
             >
               <span>Skip to Site</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

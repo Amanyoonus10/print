@@ -19,7 +19,7 @@ export const EditorToolbar: React.FC = () => {
             onClick={toggleEditMode}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-full font-mono text-xs uppercase font-bold tracking-wider transition-all cursor-pointer shadow-md ${
               isEditMode
-                ? 'bg-[#00BCD4] text-[#0A0B0D] hover:bg-[#00ACC1]'
+                ? 'bg-[#7A1F2B] text-white hover:bg-[#631621]'
                 : 'bg-white/10 text-gray-300 hover:bg-white/20'
             }`}
           >
@@ -71,7 +71,7 @@ export const EditorToolbar: React.FC = () => {
                 <button
                   onClick={exportContentJSON}
                   title="Download a JSON backup of your current images & text"
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#00BCD4]/20 text-gray-300 hover:text-[#38E1FF] font-mono text-[10px] uppercase font-bold tracking-wider transition-colors cursor-pointer border border-white/10"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#B8955A]/20 text-gray-300 hover:text-[#B8955A] font-mono text-[10px] uppercase font-bold tracking-wider transition-colors cursor-pointer border border-white/10"
                 >
                   <Download className="w-3 h-3" />
                   <span>Export JSON</span>

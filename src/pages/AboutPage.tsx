@@ -10,29 +10,29 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
   return (
-    <div className="w-full pt-32 pb-24 bg-[#FFFFFF] overflow-hidden">
+    <div className="w-full pt-32 pb-24 bg-[#F7F4EE] overflow-hidden">
       {/* Hero Header */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 border-b border-gray-200">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 border-b border-[#EDE8DE]">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00BCD4]/10 border border-[#00BCD4]/25 text-[#008BA3] font-mono text-xs uppercase tracking-widest mb-6 font-bold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 text-[#7A1F2B] font-mono text-xs uppercase tracking-widest mb-6 font-bold">
             <span>Doha, Qatar</span>
             <span>•</span>
             <span>CR 158065</span>
           </div>
 
-          <h1 className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl text-[#0A0B0D] tracking-tight uppercase leading-[1.02]">
+          <h1 className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl text-[#171717] tracking-tight uppercase leading-[1.02]">
             ABOUT FACE <br />
-            <span className="text-gradient-cyan">PRINTING SERVICES</span>
+            <span className="text-gradient-primary">PRINTING SERVICES</span>
           </h1>
 
-          <p className="mt-8 text-xl sm:text-2xl font-display font-medium text-gray-800 leading-relaxed">
+          <p className="mt-8 text-xl sm:text-2xl font-display font-medium text-[#171717]/90 leading-relaxed">
             “{companyData.description.body1}”
           </p>
         </div>
       </section>
 
       {/* 01 WHO WE ARE */}
-      <section className="py-24 border-b border-gray-200 relative bg-[#FFFFFF]">
+      <section className="py-24 border-b border-[#EDE8DE] relative bg-[#F7F4EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 flex flex-col gap-6">
@@ -43,27 +43,27 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
                 subtitle="A dedicated full-service printing and branding partner in Qatar."
               />
 
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-[#555555] leading-relaxed">
                 {companyData.description.body2}
               </p>
 
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-[#555555] leading-relaxed">
                 {companyData.description.body3}
               </p>
 
-              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-200 flex items-center gap-4 mt-2">
-                <div className="w-12 h-12 rounded-xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3] shrink-0">
+              <div className="p-6 rounded-2xl bg-white border border-[#EDE8DE] flex items-center gap-4 mt-2 shadow-xs">
+                <div className="w-12 h-12 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-gray-900 text-base">Commercial Registration: 158065</h4>
-                  <p className="font-mono text-xs text-gray-500">Doha, State of Qatar • Official Corporate Provider</p>
+                  <h4 className="font-display font-bold text-[#171717] text-base">Commercial Registration: 158065</h4>
+                  <p className="font-mono text-xs text-[#B8955A] font-bold">Doha, State of Qatar • Official Corporate Provider</p>
                 </div>
               </div>
             </div>
 
             <div className="lg:col-span-6">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 shadow-xl">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-white border border-[#EDE8DE] shadow-xl">
                 <img
                   src="/images/user_extracted/Page_02_Image_01.jpeg"
                   alt="FACE PRINTING SERVICES Facility"
@@ -71,7 +71,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="font-mono text-xs text-[#38E1FF] uppercase tracking-widest font-bold">
+                  <p className="font-mono text-xs text-[#B8955A] uppercase tracking-widest font-bold">
                     Production Excellence
                   </p>
                   <p className="font-display font-bold text-lg text-white mt-1">
@@ -85,7 +85,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
       </section>
 
       {/* 02 WHAT WE DO */}
-      <section className="py-24 border-b border-gray-200 bg-[#F8FAFC]">
+      <section className="py-24 border-b border-[#EDE8DE] bg-[#EDE8DE]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             number="02"
@@ -108,16 +108,16 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-white border border-gray-200 hover:border-[#00BCD4]/50 hover:shadow-md transition-all flex flex-col justify-between"
+                className="p-6 rounded-2xl bg-white border border-[#EDE8DE] hover:border-[#B8955A]/60 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
-                  <span className="font-mono text-xs text-[#008BA3] font-bold">0{idx + 1}</span>
-                  <h4 className="font-display font-bold text-xl text-gray-900 mt-2">{item.title}</h4>
-                  <p className="text-sm text-gray-600 mt-2 leading-relaxed">{item.desc}</p>
+                  <span className="font-mono text-xs text-[#7A1F2B] font-bold">0{idx + 1}</span>
+                  <h4 className="font-display font-bold text-xl text-[#171717] mt-2">{item.title}</h4>
+                  <p className="text-sm text-[#555555] mt-2 leading-relaxed">{item.desc}</p>
                 </div>
                 <Link
                   to={`/services/${item.slug}`}
-                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-mono text-[#008BA3] hover:text-[#00BCD4] font-semibold"
+                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-mono text-[#7A1F2B] hover:text-[#B8955A] font-bold"
                 >
                   <span>Explore pillar</span>
                 </Link>
@@ -128,7 +128,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
       </section>
 
       {/* 03 OUR APPROACH */}
-      <section className="py-24 border-b border-gray-200 bg-[#FFFFFF]">
+      <section className="py-24 border-b border-[#EDE8DE] bg-[#F7F4EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             number="03"
@@ -139,32 +139,32 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-200 flex flex-col gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3]">
+            <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-2xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B]">
                 <Cpu className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-bold text-2xl text-gray-900">Advanced Technology</h3>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              <h3 className="font-display font-bold text-2xl text-[#171717]">Advanced Technology</h3>
+              <p className="text-sm sm:text-base text-[#555555] leading-relaxed">
                 Utilizing state-of-the-art wide format printers, precision CNC laser cutters, and calibrated offset lithography presses to ensure color precision and sharp resolution.
               </p>
             </div>
 
-            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-200 flex flex-col gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3]">
+            <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-2xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B]">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-bold text-2xl text-gray-900">Skilled Designers</h3>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              <h3 className="font-display font-bold text-2xl text-[#171717]">Skilled Designers</h3>
+              <p className="text-sm sm:text-base text-[#555555] leading-relaxed">
                 Our pre-press and creative team ensures your brand guidelines are strictly respected, with spot color calibration and structural engineering for all physical materials.
               </p>
             </div>
 
-            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-200 flex flex-col gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#00BCD4]/10 border border-[#00BCD4]/30 flex items-center justify-center text-[#008BA3]">
+            <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-2xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B]">
                 <HeartHandshake className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-bold text-2xl text-gray-900">Reliable Service</h3>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              <h3 className="font-display font-bold text-2xl text-[#171717]">Reliable Service</h3>
+              <p className="text-sm sm:text-base text-[#555555] leading-relaxed">
                 Committed delivery schedules, transparent cost-effective printing solutions, and full on-site installation across Doha and all municipalities in Qatar.
               </p>
             </div>
@@ -173,11 +173,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
       </section>
 
       {/* 04 QUALITY & CRAFTSMANSHIP */}
-      <section className="py-24 border-b border-gray-200 bg-[#F8FAFC]">
+      <section className="py-24 border-b border-[#EDE8DE] bg-[#EDE8DE]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 shadow-md">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-white border border-[#EDE8DE] shadow-md">
                 <img
                   src="/images/user_extracted/Page_02_Image_02.jpeg"
                   alt="Craftsmanship & Detail"
@@ -194,7 +194,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
                 subtitle="We combine quality materials, modern equipment and expert craftsmanship."
               />
 
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-[#555555] leading-relaxed">
                 Every project produced by FACE PRINTING SERVICES stands out with precision and impact. From the diamond-polished edges of our acrylic awards to the seamless air-release cast vinyls on fleet vehicles, our focus on tactile perfection is unrelenting.
               </p>
 
@@ -206,8 +206,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
                   "Precision Color Matching & G7 Standards"
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#00BCD4] shrink-0" />
-                    <span className="text-xs font-mono text-gray-800 font-medium">{item}</span>
+                    <CheckCircle2 className="w-4 h-4 text-[#B8955A] shrink-0" />
+                    <span className="text-xs font-mono text-[#171717] font-semibold">{item}</span>
                   </div>
                 ))}
               </div>
@@ -215,7 +215,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
               <div className="pt-4">
                 <button
                   onClick={onOpenQuoteModal}
-                  className="px-8 py-4 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.35)] cursor-pointer"
+                  className="px-8 py-4 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)] cursor-pointer hover:scale-105"
                 >
                   Discuss Your Project
                 </button>

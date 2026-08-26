@@ -24,7 +24,7 @@ export const Introduction: React.FC = () => {
   };
 
   return (
-    <section id="introduction" className="relative py-28 md:py-36 bg-[#FFFFFF] overflow-hidden border-b border-gray-200">
+    <section id="introduction" className="relative py-28 md:py-36 bg-[#F7F4EE] overflow-hidden border-b border-[#EDE8DE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header with Pill Action Buttons */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
@@ -54,48 +54,48 @@ export const Introduction: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="p-8 sm:p-10 rounded-3xl bg-[#F8FAFC] border border-gray-200 relative overflow-hidden shadow-xs"
+              className="p-8 sm:p-10 rounded-3xl bg-white border border-[#EDE8DE] relative overflow-hidden shadow-md"
             >
               {/* Top Accent Line */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00BCD4] via-[#00ACC1] to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#7A1F2B] via-[#B8955A] to-transparent" />
 
-              <p className="font-display font-medium text-xl sm:text-2xl text-gray-900 leading-relaxed">
+              <p className="font-display font-medium text-xl sm:text-2xl text-[#171717] leading-relaxed">
                 “{company.description.body1}”
               </p>
 
-              <div className="my-6 h-[1px] bg-gray-200" />
+              <div className="my-6 h-[1px] bg-[#EDE8DE]" />
 
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-[#555555] leading-relaxed">
                 {company.description.body2}
               </p>
 
-              <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+              <p className="mt-4 text-base sm:text-lg text-[#555555] leading-relaxed">
                 {company.description.body3}
               </p>
 
               {/* Verified Strengths List */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-gray-200">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-[#EDE8DE]">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#00BCD4] shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-mono text-gray-800 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-[#B8955A] shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm font-mono text-[#171717] font-semibold">
                     Advanced Printing Technology
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#00BCD4] shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-mono text-gray-800 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-[#B8955A] shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm font-mono text-[#171717] font-semibold">
                     Skilled Designers & Pre-Press
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#00BCD4] shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-mono text-gray-800 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-[#B8955A] shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm font-mono text-[#171717] font-semibold">
                     Quality Certified Materials
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#00BCD4] shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-mono text-gray-800 font-medium">
+                  <CheckCircle2 className="w-5 h-5 text-[#B8955A] shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm font-mono text-[#171717] font-semibold">
                     Expert Craftsmanship
                   </span>
                 </div>
@@ -108,7 +108,7 @@ export const Introduction: React.FC = () => {
                     const el = document.getElementById('services');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#008BA3] hover:text-[#00BCD4] transition-colors uppercase font-bold cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#7A1F2B] hover:text-[#B8955A] transition-colors uppercase font-bold cursor-pointer"
                 >
                   <span>Explore 8 Production Pillars</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -126,7 +126,7 @@ export const Introduction: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: idx * 0.1 }}
-                className="relative rounded-3xl overflow-hidden aspect-[16/11] bg-gray-100 border border-gray-200 group shadow-md"
+                className="relative rounded-3xl overflow-hidden aspect-[16/11] bg-white border border-[#EDE8DE] group shadow-md"
               >
                 <img
                   src={img.url}
@@ -137,7 +137,7 @@ export const Introduction: React.FC = () => {
 
                 <div className="absolute bottom-6 left-6 right-6">
                   {img.subtitle && (
-                    <span className="font-mono text-[10px] text-[#38E1FF] uppercase tracking-widest font-bold block">
+                    <span className="font-mono text-[10px] text-[#B8955A] uppercase tracking-widest font-bold block">
                       {img.subtitle}
                     </span>
                   )}
@@ -149,11 +149,11 @@ export const Introduction: React.FC = () => {
             ))}
 
             {introImages.length === 0 && (
-              <div className="p-10 rounded-3xl border-2 border-dashed border-gray-300 text-center flex flex-col items-center justify-center gap-3 bg-gray-50/50">
-                <p className="text-sm font-mono text-gray-500">No images in this section.</p>
+              <div className="p-10 rounded-3xl border-2 border-dashed border-[#EDE8DE] text-center flex flex-col items-center justify-center gap-3 bg-white">
+                <p className="text-sm font-mono text-[#555555]">No images in this section.</p>
                 <button
                   onClick={() => setIsAddImageOpen(true)}
-                  className="px-4 py-2 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+                  className="px-4 py-2 rounded-full bg-[#7A1F2B] text-white font-mono text-xs uppercase font-bold cursor-pointer"
                 >
                   + Add An Image
                 </button>

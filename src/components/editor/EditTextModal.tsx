@@ -74,23 +74,23 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
           className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-8 text-gray-900"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-gray-50/50">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-[#EDE8DE] bg-[#F7F4EE]">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#00BCD4]/10 text-[#008BA3] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-full bg-[#7A1F2B]/10 text-[#7A1F2B] flex items-center justify-center">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] text-[#008BA3] uppercase tracking-widest font-bold block">
+                <span className="font-mono text-[10px] text-[#B8955A] uppercase tracking-widest font-bold block">
                   {subtitle || 'Text & Copy Editor'}
                 </span>
-                <h3 className="font-display font-bold text-xl text-gray-900 mt-0.5">
+                <h3 className="font-display font-bold text-xl text-[#171717] mt-0.5">
                   {title}
                 </h3>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-full hover:bg-gray-200 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+              className="p-2 rounded-full hover:bg-[#EDE8DE] text-gray-400 hover:text-[#171717] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -105,7 +105,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
 
             {fields.map(field => (
               <div key={field.key}>
-                <label className="block text-xs font-mono uppercase tracking-wider text-gray-700 font-bold mb-1.5">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#171717] font-bold mb-1.5">
                   {field.label}
                 </label>
                 {field.multiline ? (
@@ -114,7 +114,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                     placeholder={field.placeholder}
                     value={formValues[field.key] ?? ''}
                     onChange={e => handleChange(field.key, e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-[#00BCD4] focus:ring-2 focus:ring-[#00BCD4]/20 outline-none text-sm text-gray-900 resize-y leading-relaxed"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#7A1F2B] focus:ring-2 focus:ring-[#7A1F2B]/20 outline-none text-sm text-[#171717] resize-y leading-relaxed bg-[#F7F4EE]"
                   />
                 ) : (
                   <input
@@ -122,7 +122,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                     placeholder={field.placeholder}
                     value={formValues[field.key] ?? ''}
                     onChange={e => handleChange(field.key, e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-[#00BCD4] focus:ring-2 focus:ring-[#00BCD4]/20 outline-none text-sm text-gray-900"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#7A1F2B] focus:ring-2 focus:ring-[#7A1F2B]/20 outline-none text-sm text-[#171717] bg-[#F7F4EE]"
                   />
                 )}
               </div>
@@ -130,7 +130,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
 
             {/* Security Passcode Field */}
             <div className="pt-2">
-              <label className="block text-xs font-semibold text-gray-900 mb-1.5 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-[#171717] mb-1.5 flex items-center justify-between">
                 <span>Security Passcode</span>
                 <span className="text-[11px] font-mono text-gray-400 font-normal">PIN required</span>
               </label>
@@ -142,22 +142,22 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                   setPinCode(e.target.value);
                   if (error) setError('');
                 }}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-sm text-[#171717] placeholder:text-gray-400 bg-[#F7F4EE]"
               />
             </div>
 
             {/* Footer Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#EDE8DE]">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-full text-xs font-mono uppercase font-bold text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-full text-xs font-mono uppercase font-bold text-gray-600 hover:bg-[#EDE8DE] transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                className="px-6 py-2.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md transition-all cursor-pointer"
               >
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Changes</span>
