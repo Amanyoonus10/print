@@ -49,6 +49,8 @@ interface ContentContextType {
   addProject: (project: Omit<ProjectItem, 'id' | 'slug'> & { slug?: string }) => void;
   removeProject: (id: string) => void;
   updateProject: (id: string, updates: Partial<ProjectItem>) => void;
+  addProjectGalleryImage: (projectId: string, image: { url: string; title: string; caption?: string }) => void;
+  removeProjectGalleryImage: (projectId: string, imageIndex: number) => void;
 
   // Reset / Export
   resetToDefaults: () => void;
@@ -232,6 +234,40 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setProjects(prev => prev.map(p => (p.id === id ? { ...p, ...updates } : p)));
   };
 
+  const addProjectGalleryImage = (
+    projectId: string,
+    image: { url: string; title: string; caption?: string }
+  ) => {
+    setProjects(prev =>
+      prev.map(p => {
+        if (p.id !== projectId) return p;
+        return {
+          ...p,
+          gallery: [
+            ...p.gallery,
+            {
+              url: image.url,
+              title: image.title || p.title,
+              caption: image.caption || 'Project Exhibition Photo',
+            },
+          ],
+        };
+      })
+    );
+  };
+
+  const removeProjectGalleryImage = (projectId: string, imageIndex: number) => {
+    setProjects(prev =>
+      prev.map(p => {
+        if (p.id !== projectId) return p;
+        return {
+          ...p,
+          gallery: p.gallery.filter((_, idx) => idx !== imageIndex),
+        };
+      })
+    );
+  };
+
   // Reset to original repository defaults
   const resetToDefaults = () => {
     if (window.confirm('Are you sure you want to reset all content, images, and descriptions to original defaults?')) {
@@ -285,6 +321,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         addProject,
         removeProject,
         updateProject,
+        addProjectGalleryImage,
+        removeProjectGalleryImage,
         resetToDefaults,
         exportContentJSON,
       }}

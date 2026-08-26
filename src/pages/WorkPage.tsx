@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ProjectCard } from '../components/ui/ProjectCard';
-import { projectsData } from '../data/projects';
+import { useContent } from '../context/ContentContext';
+import { SectionEditorBar } from '../components/editor/SectionEditorBar';
+import { AddImageModal } from '../components/editor/AddImageModal';
 
 interface WorkPageProps {
   onOpenQuoteModal: () => void;
 }
 
 export const WorkPage: React.FC<WorkPageProps> = () => {
+  const { projects, addProject, removeProject } = useContent();
   const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
 
   const categories = [
     'All',
@@ -21,13 +25,36 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
   ];
 
   const filteredProjects = activeCategory === 'All'
-    ? projectsData
-    : projectsData.filter(p => p.category === activeCategory);
+    ? projects
+    : projects.filter(p => p.category === activeCategory);
+
+  const handleAddProject = (data: { url: string; title: string; subtitle?: string; caption?: string; description?: string }) => {
+    addProject({
+      title: data.title,
+      category: data.subtitle || (activeCategory !== 'All' ? activeCategory : 'Branding & Spatial'),
+      serviceSlug: 'branding-spatial',
+      client: 'Doha Client',
+      year: '2026',
+      coverImage: data.url,
+      summary: data.caption || data.description || 'Custom print and fabrication case study executed in Qatar.',
+      description: data.description || data.caption || 'Detailed execution case study for Qatar client.',
+      scope: ['Precision Printing', 'Quality Finishing'],
+      gallery: [{ url: data.url, title: data.title, caption: data.caption || 'Case Study Photo' }],
+      featured: true,
+    });
+  };
 
   return (
     <div className="w-full pt-32 pb-24 bg-[#FFFFFF] overflow-hidden">
       {/* Page Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 border-b border-gray-200">
+        {/* Section Management Header Bar */}
+        <SectionEditorBar
+          sectionName={`Selected Portfolio (${projects.length} Projects)`}
+          addImageLabel="Add Project Case Study"
+          onAddImage={() => setIsAddProjectOpen(true)}
+        />
+
         <SectionHeading
           number="03"
           tag="CASE STUDIES & EXHIBITS"
@@ -62,10 +89,34 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
               project={project}
               aspectRatio="wide"
               priority={idx < 2}
+              onRemove={() => removeProject(project.id)}
             />
           ))}
         </div>
+
+        {filteredProjects.length === 0 && (
+          <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
+            <p className="font-mono text-sm text-gray-500">No projects found in category "{activeCategory}".</p>
+            <button
+              onClick={() => setIsAddProjectOpen(true)}
+              className="px-5 py-2.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+            >
+              + Add Project to {activeCategory}
+            </button>
+          </div>
+        )}
       </section>
+
+      {/* Add Project Modal */}
+      <AddImageModal
+        isOpen={isAddProjectOpen}
+        onClose={() => setIsAddProjectOpen(false)}
+        title="Add New Project Case Study"
+        subtitle="Portfolio Showcase"
+        requireDescription={true}
+        onAdd={handleAddProject}
+      />
     </div>
   );
 };
+

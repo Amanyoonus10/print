@@ -1,14 +1,16 @@
 import React from 'react';
-import { servicesData } from '../data/services';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../context/ContentContext';
 
 interface ServicesPageProps {
   onOpenQuoteModal: () => void;
 }
 
 export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenQuoteModal }) => {
+  const { services } = useContent();
+
   return (
     <div className="w-full pt-32 pb-24 bg-[#FFFFFF] overflow-hidden">
       {/* Header */}
@@ -16,7 +18,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenQuoteModal }) 
         <SectionHeading
           number="02"
           tag="SERVICES DIRECTORY"
-          title="8 PRODUCTION DISCIPLINES."
+          title={`${services.length} PRODUCTION DISCIPLINES.`}
           subtitle="Precision printing, large-format staging, illuminated systems, and bespoke corporate merchandise in Doha."
         />
       </section>
@@ -24,7 +26,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenQuoteModal }) 
       {/* Services Grid with Rich Content */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {servicesData.map((service) => (
+          {services.map((service) => (
             <div
               key={service.slug}
               className="group rounded-3xl bg-[#F8FAFC] border border-gray-200 overflow-hidden hover:border-[#00BCD4]/50 transition-all duration-400 flex flex-col justify-between shadow-xs hover:shadow-lg"

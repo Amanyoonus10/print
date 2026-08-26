@@ -6,7 +6,6 @@ import { Footer } from './components/layout/Footer';
 import { ScrollToTop } from './components/ui/ScrollToTop';
 import { QuoteModal } from './components/ui/QuoteModal';
 import { ContentProvider } from './context/ContentContext';
-import { EditorToolbar } from './components/editor/EditorToolbar';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -61,9 +60,6 @@ export function App() {
 
         {/* Interactive Project Estimator / Quote Modal */}
         <QuoteModal isOpen={quoteModalOpen} onClose={handleCloseQuote} />
-
-        {/* Global Section Content Management Toolbar */}
-        <EditorToolbar />
       </div>
     </ContentProvider>
   );

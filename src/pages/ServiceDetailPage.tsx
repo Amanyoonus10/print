@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { servicesData } from '../data/services';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Layers, Cpu, Compass } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
+import { SectionEditorBar, RemoveImageButton } from '../components/editor/SectionEditorBar';
+import { AddImageModal } from '../components/editor/AddImageModal';
+import { EditTextModal } from '../components/editor/EditTextModal';
 
 interface ServiceDetailPageProps {
   onOpenQuoteModal: () => void;
@@ -10,11 +13,39 @@ interface ServiceDetailPageProps {
 
 export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuoteModal }) => {
   const { slug } = useParams<{ slug: string }>();
-  const service = servicesData.find(s => s.slug === slug);
+  const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage } = useContent();
+  
+  const [isAddHeroImageOpen, setIsAddHeroImageOpen] = useState<boolean>(false);
+  const [isEditHeroTextOpen, setIsEditHeroTextOpen] = useState<boolean>(false);
+  const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
+
+  const service = services.find(s => s.slug === slug);
 
   if (!service) {
     return <Navigate to="/services" replace />;
   }
+
+  const handleSaveHeroText = (values: Record<string, string>) => {
+    updateService(service.slug, {
+      title: values.title || service.title,
+      subtitle: values.subtitle || service.subtitle,
+      fullDescription: values.fullDescription || service.fullDescription,
+    });
+  };
+
+  const handleSaveHeroImage = (data: { url: string }) => {
+    updateService(service.slug, {
+      heroImage: data.url,
+    });
+  };
+
+  const handleAddGalleryImage = (data: { url: string; title: string; caption?: string; description?: string }) => {
+    addServiceGalleryImage(service.slug, {
+      url: data.url,
+      title: data.title,
+      caption: data.caption || data.description || 'Authentic Delivered Exhibit',
+    });
+  };
 
   return (
     <div className="w-full pt-32 pb-24 bg-[#FFFFFF] overflow-hidden">
@@ -25,12 +56,21 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           className="inline-flex items-center gap-2 font-mono text-xs text-gray-500 hover:text-black uppercase tracking-wider transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to All 8 Services</span>
+          <span>Back to All {services.length} Services</span>
         </Link>
       </div>
 
-      {/* Hero Showcase */}
+      {/* Hero Showcase Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 border-b border-gray-200">
+        {/* Section Management Header Bar for Hero */}
+        <SectionEditorBar
+          sectionName={`${service.title} / Overview & Hero`}
+          addImageLabel="Change Hero Image"
+          editTextLabel="Edit Description & Title"
+          onAddImage={() => setIsAddHeroImageOpen(true)}
+          onEditText={() => setIsEditHeroTextOpen(true)}
+        />
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 flex flex-col gap-6">
             <div className="flex items-center gap-3">
@@ -75,7 +115,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           </div>
 
           <div className="lg:col-span-6">
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 shadow-2xl group">
               <img
                 src={service.heroImage}
                 alt={service.title}
@@ -139,44 +179,117 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         </div>
       </section>
 
-      {/* Gallery Showcase */}
-      {service.gallery.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <SectionHeading
-            number={service.number}
-            tag="AUTHENTIC GALLERY"
-            title={`${service.title} EXHIBITS.`}
-            subtitle="Genuine project deliverables executed for organizations across Qatar."
-            className="mb-12"
-          />
+      {/* Gallery Showcase Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Section Management Header Bar for Gallery */}
+        <SectionEditorBar
+          sectionName={`${service.title} Gallery (${service.gallery.length} Images)`}
+          addImageLabel="Add Exhibit Image & Description"
+          onAddImage={() => setIsAddGalleryImageOpen(true)}
+        />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {service.gallery.map((item, idx) => (
-              <div
-                key={idx}
-                className="group rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-xs hover:border-[#00BCD4]/40 hover:shadow-lg transition-all"
-              >
-                <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
-                  <img
-                    src={item.url}
-                    alt={item.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 flex flex-col">
-                  <h4 className="font-display font-bold text-sm text-gray-900 truncate">
-                    {item.title}
-                  </h4>
-                  <p className="font-mono text-xs text-gray-500 mt-1 line-clamp-2">
-                    {item.caption}
-                  </p>
-                </div>
+        <SectionHeading
+          number={service.number}
+          tag="AUTHENTIC GALLERY"
+          title={`${service.title} EXHIBITS.`}
+          subtitle="Genuine project deliverables executed for organizations across Qatar."
+          className="mb-12"
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {service.gallery.map((item, idx) => (
+            <div
+              key={idx}
+              className="group relative rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-xs hover:border-[#00BCD4]/40 hover:shadow-lg transition-all"
+            >
+              {/* Remove Button on each individual card */}
+              <div className="absolute top-3 right-3 z-30">
+                <RemoveImageButton
+                  onClick={() => removeServiceGalleryImage(service.slug, idx)}
+                  label="Remove"
+                />
               </div>
-            ))}
+
+              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                <img
+                  src={item.url}
+                  alt={item.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-4 flex flex-col">
+                <h4 className="font-display font-bold text-sm text-gray-900 truncate">
+                  {item.title}
+                </h4>
+                <p className="font-mono text-xs text-gray-500 mt-1 line-clamp-2">
+                  {item.caption}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {service.gallery.length === 0 && (
+          <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50/50 flex flex-col items-center justify-center gap-3">
+            <p className="font-mono text-sm text-gray-500">No exhibits currently in this gallery.</p>
+            <button
+              onClick={() => setIsAddGalleryImageOpen(true)}
+              className="px-5 py-2.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+            >
+              + Add First Exhibit Image & Description
+            </button>
           </div>
-        </section>
-      )}
+        )}
+      </section>
+
+      {/* Hero Image Modal */}
+      <AddImageModal
+        isOpen={isAddHeroImageOpen}
+        onClose={() => setIsAddHeroImageOpen(false)}
+        title={`Change Hero Image for ${service.title}`}
+        subtitle="Hero Artwork"
+        onAdd={handleSaveHeroImage}
+      />
+
+      {/* Hero Text Modal */}
+      <EditTextModal
+        isOpen={isEditHeroTextOpen}
+        onClose={() => setIsEditHeroTextOpen(false)}
+        title={`Edit ${service.title} Overview`}
+        subtitle="Hero Details"
+        fields={[
+          {
+            key: 'title',
+            label: 'Service Title',
+            value: service.title,
+          },
+          {
+            key: 'subtitle',
+            label: 'Subtitle Quote',
+            value: service.subtitle,
+          },
+          {
+            key: 'fullDescription',
+            label: 'Full Detailed Description',
+            value: service.fullDescription,
+            multiline: true,
+            rows: 4,
+          },
+        ]}
+        onSave={handleSaveHeroText}
+      />
+
+      {/* Gallery Image & Description Modal */}
+      <AddImageModal
+        isOpen={isAddGalleryImageOpen}
+        onClose={() => setIsAddGalleryImageOpen(false)}
+        title={`Add Exhibit to ${service.title}`}
+        subtitle="Authentic Gallery"
+        requireDescription={true}
+        onAdd={handleAddGalleryImage}
+      />
     </div>
   );
 };
+
