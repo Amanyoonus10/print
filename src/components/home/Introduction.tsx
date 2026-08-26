@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionHeading } from '../ui/SectionHeading';
-import { companyData } from '../../data/company';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../../context/ContentContext';
+import { SectionEditorBar, RemoveImageButton } from '../editor/SectionEditorBar';
+import { AddImageModal } from '../editor/AddImageModal';
+import { EditTextModal } from '../editor/EditTextModal';
 
 export const Introduction: React.FC = () => {
+  const { company, introImages, updateCompanyDescription, addIntroImage, removeIntroImage } = useContent();
+
+  const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
+  const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
+
+  const handleSaveText = (values: Record<string, string>) => {
+    updateCompanyDescription({
+      body1: values.body1,
+      body2: values.body2,
+      body3: values.body3,
+    });
+  };
+
   return (
     <section id="introduction" className="relative py-28 md:py-36 bg-[#FFFFFF] overflow-hidden border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Management Header Bar */}
+        <SectionEditorBar
+          sectionName="01 / Company Story & Imagery"
+          addImageLabel="Add Facility Image"
+          editTextLabel="Edit Narrative Text"
+          onAddImage={() => setIsAddImageOpen(true)}
+          onEditText={() => setIsEditTextOpen(true)}
+        />
+
         {/* Section Heading */}
         <SectionHeading
           number="01"
@@ -33,17 +58,17 @@ export const Introduction: React.FC = () => {
               <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00BCD4] via-[#00ACC1] to-transparent" />
 
               <p className="font-display font-medium text-xl sm:text-2xl text-gray-900 leading-relaxed">
-                “{companyData.description.body1}”
+                “{company.description.body1}”
               </p>
 
               <div className="my-6 h-[1px] bg-gray-200" />
 
               <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-                {companyData.description.body2}
+                {company.description.body2}
               </p>
 
               <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
-                {companyData.description.body3}
+                {company.description.body3}
               </p>
 
               {/* Verified Strengths List */}
@@ -87,58 +112,101 @@ export const Introduction: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Right Column: Visual Composition & Production Machinery from User Uploaded Page 02 */}
+          {/* Right Column: Visual Composition & Production Machinery */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            {/* Top Large Workshop Visual (Page_02_Image_01.jpeg) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 group shadow-md"
-            >
-              <img
-                src="/images/user_extracted/Page_02_Image_01.jpeg"
-                alt="FACE Advanced Printing Technology"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="font-mono text-[10px] text-[#38E1FF] uppercase tracking-widest font-bold">
-                  Modern Equipment & Technology
-                </span>
-                <h4 className="font-display font-bold text-lg text-white mt-1">
-                  High-Speed Roll-to-Roll Wide-Format Printing
-                </h4>
-              </div>
-            </motion.div>
+            {introImages.map((img, idx) => (
+              <motion.div
+                key={img.id}
+                initial={{ opacity: 0, scale: 0.96 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: idx * 0.1 }}
+                className="relative rounded-3xl overflow-hidden aspect-[16/11] bg-gray-100 border border-gray-200 group shadow-md"
+              >
+                <img
+                  src={img.url}
+                  alt={img.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                
+                {/* Remove Image Button */}
+                <div className="absolute top-4 right-4">
+                  <RemoveImageButton
+                    onClick={() => removeIntroImage(img.id)}
+                    label="Remove"
+                  />
+                </div>
 
-            {/* Bottom Photo 2 (Page_02_Image_02.jpeg) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="relative rounded-3xl overflow-hidden aspect-[16/9] bg-gray-100 border border-gray-200 group shadow-sm"
-            >
-              <img
-                src="/images/user_extracted/Page_02_Image_02.jpeg"
-                alt="FACE Modern Flatbed Equipment"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
-                <span className="font-display font-bold text-sm text-white">
-                  Precision UV Flatbed Substrate Press
-                </span>
-                <span className="font-mono text-[10px] text-[#38E1FF] font-semibold">
-                  Doha Facility
-                </span>
+                <div className="absolute bottom-6 left-6 right-6">
+                  {img.subtitle && (
+                    <span className="font-mono text-[10px] text-[#38E1FF] uppercase tracking-widest font-bold block">
+                      {img.subtitle}
+                    </span>
+                  )}
+                  <h4 className="font-display font-bold text-base sm:text-lg text-white mt-1">
+                    {img.title}
+                  </h4>
+                </div>
+              </motion.div>
+            ))}
+
+            {introImages.length === 0 && (
+              <div className="p-10 rounded-3xl border-2 border-dashed border-gray-300 text-center flex flex-col items-center justify-center gap-3 bg-gray-50/50">
+                <p className="text-sm font-mono text-gray-500">No images in this section.</p>
+                <button
+                  onClick={() => setIsAddImageOpen(true)}
+                  className="px-4 py-2 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+                >
+                  + Add An Image
+                </button>
               </div>
-            </motion.div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Add Image Modal */}
+      <AddImageModal
+        isOpen={isAddImageOpen}
+        onClose={() => setIsAddImageOpen(false)}
+        title="Add Image to Company Story"
+        subtitle="Introduction Gallery"
+        onAdd={data => addIntroImage({ url: data.url, title: data.title, subtitle: data.subtitle })}
+      />
+
+      {/* Edit Text Modal */}
+      <EditTextModal
+        isOpen={isEditTextOpen}
+        onClose={() => setIsEditTextOpen(false)}
+        title="Edit Company Introduction Copy"
+        subtitle="Narrative & Quotations"
+        fields={[
+          {
+            key: 'body1',
+            label: 'Main Quote Statement (Body 1)',
+            value: company.description.body1,
+            multiline: true,
+            rows: 3,
+          },
+          {
+            key: 'body2',
+            label: 'Production Overview Paragraph (Body 2)',
+            value: company.description.body2,
+            multiline: true,
+            rows: 3,
+          },
+          {
+            key: 'body3',
+            label: 'Commitment to Excellence Paragraph (Body 3)',
+            value: company.description.body3,
+            multiline: true,
+            rows: 3,
+          },
+        ]}
+        onSave={handleSaveText}
+      />
     </section>
   );
 };
+

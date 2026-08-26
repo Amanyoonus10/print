@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { servicesData } from '../../data/services';
+import { useContent } from '../../context/ContentContext';
+import { SectionEditorBar, RemoveImageButton } from '../editor/SectionEditorBar';
+import { AddImageModal } from '../editor/AddImageModal';
+import { EditTextModal } from '../editor/EditTextModal';
+import type { ServiceItem } from '../../types';
 
 export const ServiceShowcases: React.FC = () => {
+  const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage } = useContent();
+
+  const [activeAddService, setActiveAddService] = useState<ServiceItem | null>(null);
+  const [activeEditService, setActiveEditService] = useState<ServiceItem | null>(null);
+
+  const handleSaveText = (values: Record<string, string>) => {
+    if (!activeEditService) return;
+    updateService(activeEditService.slug, {
+      title: values.title,
+      subtitle: values.subtitle,
+      fullDescription: values.fullDescription,
+    });
+  };
+
+  const handleAddImage = (data: { url: string; title: string; caption?: string }) => {
+    if (!activeAddService) return;
+    addServiceGalleryImage(activeAddService.slug, {
+      url: data.url,
+      title: data.title,
+      caption: data.caption,
+    });
+  };
+
   return (
     <div className="w-full flex flex-col bg-[#FFFFFF]">
-      {servicesData.map((service, index) => {
+      {services.map((service, index) => {
         const isEven = index % 2 === 0;
 
         return (
@@ -22,6 +49,15 @@ export const ServiceShowcases: React.FC = () => {
             <div className={`absolute top-1/2 ${isEven ? 'left-0' : 'right-0'} -translate-y-1/2 w-96 h-96 bg-[#00BCD4]/5 rounded-full blur-3xl pointer-events-none`} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              {/* Per-Section Editor Bar */}
+              <SectionEditorBar
+                sectionName={`${service.number} / ${service.title}`}
+                addImageLabel="Add Exhibit Image"
+                editTextLabel="Edit Description"
+                onAddImage={() => setActiveAddService(service)}
+                onEditText={() => setActiveEditService(service)}
+              />
+
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 {/* Content Side */}
                 <motion.div
@@ -122,7 +158,7 @@ export const ServiceShowcases: React.FC = () => {
 
                   {/* 2-Column Supporting Detail Images */}
                   <div className="grid grid-cols-2 gap-4">
-                    {service.gallery.slice(0, 2).map((item, gIdx) => (
+                    {service.gallery.slice(0, 4).map((item, gIdx) => (
                       <div
                         key={gIdx}
                         className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 group shadow-xs"
@@ -133,6 +169,15 @@ export const ServiceShowcases: React.FC = () => {
                           loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
+
+                        {/* Remove Image Button */}
+                        <div className="absolute top-2 right-2">
+                          <RemoveImageButton
+                            onClick={() => removeServiceGalleryImage(service.slug, gIdx)}
+                            label="Remove"
+                          />
+                        </div>
+
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-3 flex flex-col justify-end">
                           <p className="text-[11px] font-display font-semibold text-white truncate">
                             {item.title}
@@ -150,6 +195,48 @@ export const ServiceShowcases: React.FC = () => {
           </section>
         );
       })}
+
+      {/* Add Gallery Image Modal */}
+      {activeAddService && (
+        <AddImageModal
+          isOpen={!!activeAddService}
+          onClose={() => setActiveAddService(null)}
+          title={`Add Exhibit to ${activeAddService.title}`}
+          subtitle="Service Gallery"
+          onAdd={handleAddImage}
+        />
+      )}
+
+      {/* Edit Service Description Modal */}
+      {activeEditService && (
+        <EditTextModal
+          isOpen={!!activeEditService}
+          onClose={() => setActiveEditService(null)}
+          title={`Edit ${activeEditService.title}`}
+          subtitle="Service Copy & Description"
+          fields={[
+            {
+              key: 'title',
+              label: 'Service Heading',
+              value: activeEditService.title,
+            },
+            {
+              key: 'subtitle',
+              label: 'Subtitle Quote',
+              value: activeEditService.subtitle,
+            },
+            {
+              key: 'fullDescription',
+              label: 'Full Detailed Description',
+              value: activeEditService.fullDescription,
+              multiline: true,
+              rows: 4,
+            },
+          ]}
+          onSave={handleSaveText}
+        />
+      )}
     </div>
   );
 };
+

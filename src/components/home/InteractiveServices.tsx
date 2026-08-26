@@ -1,16 +1,57 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { servicesData } from '../../data/services';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../../context/ContentContext';
+import { SectionEditorBar } from '../editor/SectionEditorBar';
+import { AddImageModal } from '../editor/AddImageModal';
+import { EditTextModal } from '../editor/EditTextModal';
 
 export const InteractiveServices: React.FC = () => {
-  const [activeService, setActiveService] = useState(servicesData[0]);
+  const { services, updateService, addServiceGalleryImage } = useContent();
+  const [activeServiceSlug, setActiveServiceSlug] = useState<string>(services[0]?.slug || '');
+  const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
+  const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
+
+  const activeService = services.find(s => s.slug === activeServiceSlug) || services[0];
+
+  const handleSaveText = (values: Record<string, string>) => {
+    if (!activeService) return;
+    updateService(activeService.slug, {
+      title: values.title,
+      subtitle: values.subtitle,
+      shortDescription: values.shortDescription,
+    });
+  };
+
+  const handleAddImage = (data: { url: string; title: string; caption?: string }) => {
+    if (!activeService) return;
+    // Update hero image if requested or add to gallery
+    updateService(activeService.slug, {
+      heroImage: data.url,
+    });
+    addServiceGalleryImage(activeService.slug, {
+      url: data.url,
+      title: data.title,
+      caption: data.caption,
+    });
+  };
+
+  if (!activeService) return null;
 
   return (
     <section className="relative py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Editor Bar */}
+        <SectionEditorBar
+          sectionName={`02 / Services (${activeService.title})`}
+          addImageLabel="Change Preview Image"
+          editTextLabel="Edit Active Service"
+          onAddImage={() => setIsAddImageOpen(true)}
+          onEditText={() => setIsEditTextOpen(true)}
+        />
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <SectionHeading
@@ -24,7 +65,7 @@ export const InteractiveServices: React.FC = () => {
             to="/services"
             className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group"
           >
-            <span>View All 8 Service Hubs</span>
+            <span>View All {services.length} Service Hubs</span>
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
           </Link>
         </div>
@@ -33,14 +74,14 @@ export const InteractiveServices: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Interactive Service Item Stack */}
           <div className="lg:col-span-7 flex flex-col divide-y divide-gray-200">
-            {servicesData.map((service) => {
+            {services.map((service) => {
               const isCurrent = activeService.id === service.id;
 
               return (
                 <div
                   key={service.id}
                   onMouseEnter={() => {
-                    setActiveService(service);
+                    setActiveServiceSlug(service.slug);
                   }}
                   className="group relative py-6 sm:py-7 transition-all duration-300 cursor-pointer"
                 >
@@ -140,6 +181,44 @@ export const InteractiveServices: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Add / Change Image Modal */}
+      <AddImageModal
+        isOpen={isAddImageOpen}
+        onClose={() => setIsAddImageOpen(false)}
+        title={`Change Image for ${activeService.title}`}
+        subtitle="Service Preview Artwork"
+        onAdd={handleAddImage}
+      />
+
+      {/* Edit Service Details Modal */}
+      <EditTextModal
+        isOpen={isEditTextOpen}
+        onClose={() => setIsEditTextOpen(false)}
+        title={`Edit ${activeService.title}`}
+        subtitle="Pillar Specification"
+        fields={[
+          {
+            key: 'title',
+            label: 'Service Name',
+            value: activeService.title,
+          },
+          {
+            key: 'subtitle',
+            label: 'Subtitle / Tagline',
+            value: activeService.subtitle,
+          },
+          {
+            key: 'shortDescription',
+            label: 'Short Description',
+            value: activeService.shortDescription,
+            multiline: true,
+            rows: 3,
+          },
+        ]}
+        onSave={handleSaveText}
+      />
     </section>
   );
 };
+

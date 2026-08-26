@@ -1,30 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ProjectCard } from '../ui/ProjectCard';
-import { projectsData } from '../../data/projects';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../../context/ContentContext';
+import { SectionEditorBar } from '../editor/SectionEditorBar';
+import { AddImageModal } from '../editor/AddImageModal';
+import { EditTextModal } from '../editor/EditTextModal';
 
 export const FeaturedWork: React.FC = () => {
-  const featuredProjects = projectsData.filter(p => p.featured).slice(0, 4);
+  const { projects, addProject, removeProject } = useContent();
+  const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
+  const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
+  const [sectionHeading, setSectionHeading] = useState({
+    title: 'FEATURED WORK & EXHIBITS.',
+    subtitle: 'Explore high-impact branding, events, lightboxes, and packaging executed across Qatar.',
+  });
+
+  const featuredProjects = projects.filter(p => p.featured).slice(0, 6);
+
+  const handleAddProject = (data: { url: string; title: string; subtitle?: string; caption?: string; description?: string }) => {
+    addProject({
+      title: data.title,
+      category: data.subtitle || 'Signage & Fabrication',
+      serviceSlug: 'signage-fabrication',
+      client: 'Doha Client',
+      year: '2026',
+      coverImage: data.url,
+      summary: data.caption || data.description || 'Custom print and fabrication installation executed with precision in Qatar.',
+      description: data.description || data.caption || 'Detailed execution overview for Qatar projects.',
+      scope: ['Precision Printing', 'Installation & Finishing'],
+      gallery: [{ url: data.url, title: data.title, caption: data.caption || 'Project Showcase' }],
+      featured: true,
+    });
+  };
 
   return (
     <section className="relative py-28 md:py-36 bg-[#FFFFFF] border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Editor Bar */}
+        <SectionEditorBar
+          sectionName="03 / Featured Work & Portfolio"
+          addImageLabel="Add Project Exhibit"
+          editTextLabel="Edit Header Text"
+          onAddImage={() => setIsAddProjectOpen(true)}
+          onEditText={() => setIsEditTextOpen(true)}
+        />
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <SectionHeading
             number="03"
             tag="AUTHENTIC PORTFOLIO"
-            title="FEATURED WORK & EXHIBITS."
-            subtitle="Explore high-impact branding, events, lightboxes, and packaging executed across Qatar."
+            title={sectionHeading.title}
+            subtitle={sectionHeading.subtitle}
           />
 
           <Link
             to="/work"
             className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group"
           >
-            <span>View Full Portfolio</span>
+            <span>View Full Portfolio ({projects.length})</span>
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
           </Link>
         </div>
@@ -37,10 +73,62 @@ export const FeaturedWork: React.FC = () => {
               project={project}
               aspectRatio="wide"
               priority={idx < 2}
+              onRemove={() => removeProject(project.id)}
             />
           ))}
         </div>
+
+        {featuredProjects.length === 0 && (
+          <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50/50">
+            <p className="font-mono text-sm text-gray-500 mb-3">No featured projects currently listed.</p>
+            <button
+              onClick={() => setIsAddProjectOpen(true)}
+              className="px-5 py-2.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
+            >
+              + Add Project
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* Add Project Modal */}
+      <AddImageModal
+        isOpen={isAddProjectOpen}
+        onClose={() => setIsAddProjectOpen(false)}
+        title="Add New Project to Featured Portfolio"
+        subtitle="Portfolio Item"
+        requireDescription={true}
+        onAdd={handleAddProject}
+      />
+
+      {/* Edit Header Text Modal */}
+      <EditTextModal
+        isOpen={isEditTextOpen}
+        onClose={() => setIsEditTextOpen(false)}
+        title="Edit Section Heading"
+        subtitle="Featured Work Header"
+        fields={[
+          {
+            key: 'title',
+            label: 'Section Title',
+            value: sectionHeading.title,
+          },
+          {
+            key: 'subtitle',
+            label: 'Section Subtitle',
+            value: sectionHeading.subtitle,
+            multiline: true,
+            rows: 2,
+          },
+        ]}
+        onSave={(values) => {
+          setSectionHeading({
+            title: values.title || sectionHeading.title,
+            subtitle: values.subtitle || sectionHeading.subtitle,
+          });
+        }}
+      />
     </section>
   );
 };
+
