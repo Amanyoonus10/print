@@ -154,6 +154,14 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
+
+          {/* Close Button */}
+          <button
+            onClick={handleFinish}
+            className="absolute top-6 right-6 z-20 px-4 py-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white font-mono text-xs uppercase tracking-wider border border-white/20 transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg"
+          >
+            <span>✕ Close</span>
+          </button>
         </motion.div>
       )}
     </AnimatePresence>

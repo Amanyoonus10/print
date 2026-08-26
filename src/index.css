@@ -124,12 +124,18 @@
 .animate-marquee {
   display: flex;
   width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   animation: marquee 40s linear infinite;
 }
 
 .animate-marquee-reverse {
   display: flex;
   width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   animation: marquee-reverse 45s linear infinite;
 }
 

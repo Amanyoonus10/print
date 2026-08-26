@@ -13,64 +13,59 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
-  // Only play intro once per session; do NOT replay on back swipe or back navigation
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('face_intro_seen');
-    }
-    return false;
-  });
+  // Never block homepage scrolling on load; show commercial modal only on explicit button click
+  const [showCommercialModal, setShowCommercialModal] = useState<boolean>(false);
 
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    sessionStorage.setItem('face_intro_seen', 'true');
+  const handleOpenCommercial = () => {
+    setShowCommercialModal(true);
   };
 
-  const handleReplayIntro = () => {
-    setShowIntro(true);
+  const handleCloseCommercial = () => {
+    setShowCommercialModal(false);
   };
 
   // Restore scroll position when returning from sub-pages / back swipe
   useEffect(() => {
-    if (!showIntro) {
-      const savedPos = sessionStorage.getItem('face_home_scroll');
-      if (savedPos) {
-        const scrollY = parseInt(savedPos, 10);
-        if (!isNaN(scrollY) && scrollY > 0) {
-          // Small timeout to allow DOM to layout before scrolling back
-          const timer = setTimeout(() => {
-            window.scrollTo({ top: scrollY, behavior: 'instant' });
-          }, 30);
-          return () => clearTimeout(timer);
-        }
+    const savedPos = sessionStorage.getItem('face_home_scroll');
+    if (savedPos) {
+      const scrollY = parseInt(savedPos, 10);
+      if (!isNaN(scrollY) && scrollY > 0) {
+        const timer = setTimeout(() => {
+          window.scrollTo({ top: scrollY, behavior: 'instant' });
+        }, 50);
+        return () => clearTimeout(timer);
       }
     }
-  }, [showIntro]);
+  }, []);
 
-  // Save scroll position when leaving homepage
+  // Save scroll position when leaving homepage (debounced)
   useEffect(() => {
+    let timeoutId: number;
     const handleSaveScroll = () => {
-      if (window.scrollY > 0) {
-        sessionStorage.setItem('face_home_scroll', window.scrollY.toString());
-      }
+      clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        if (window.scrollY > 0) {
+          sessionStorage.setItem('face_home_scroll', window.scrollY.toString());
+        }
+      }, 150);
     };
 
     window.addEventListener('scroll', handleSaveScroll, { passive: true });
     return () => {
+      clearTimeout(timeoutId);
       window.removeEventListener('scroll', handleSaveScroll);
-      if (window.scrollY > 0) {
-        sessionStorage.setItem('face_home_scroll', window.scrollY.toString());
-      }
     };
   }, []);
 
   return (
     <div className="w-full flex flex-col bg-[#FFFFFF]">
-      {/* 00 ENTRY CINEMATIC INTRO: Plays once before site begins, then unmounts completely */}
-      {showIntro && <ScrollVideo onComplete={handleIntroComplete} />}
+      {/* Optional Commercial Film Lightbox Modal */}
+      {showCommercialModal && (
+        <ScrollVideo onComplete={handleCloseCommercial} />
+      )}
 
       {/* 01 HERO */}
-      <Hero onOpenQuoteModal={onOpenQuoteModal} onReplayIntro={handleReplayIntro} />
+      <Hero onOpenQuoteModal={onOpenQuoteModal} onReplayIntro={handleOpenCommercial} />
 
       {/* 02 COMPANY STORY / INTRODUCTION */}
       <Introduction />
