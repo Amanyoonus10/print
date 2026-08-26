@@ -176,7 +176,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                   Request Quote
                 </button>
                 <a
-                  href={`https://wa.me/97477889257`}
+                  href={companyData.contact.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 rounded-full bg-[#25D366]/15 border border-[#25D366]/30 flex items-center justify-center text-[#25D366]"

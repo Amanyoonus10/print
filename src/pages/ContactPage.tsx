@@ -27,7 +27,7 @@ export const ContactPage: React.FC = () => {
 
   const handleWhatsApp = () => {
     const text = `Hello FACE PRINTING SERVICES,%0A%0A*Name:* ${formData.name || 'N/A'}%0A*Company:* ${formData.company || 'N/A'}%0A*Service:* ${formData.service}%0A*Message:* ${formData.message || 'General Inquiry'}`;
-    window.open(`https://wa.me/97477889257?text=${text}`, '_blank');
+    window.open(`https://wa.me/97433635098?text=${text}`, '_blank');
   };
 
   return (
@@ -64,15 +64,28 @@ export const ContactPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Phone */}
+                {/* Office Phone */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-[#00BCD4]/10 border border-[#00BCD4]/25 flex items-center justify-center text-[#008BA3] shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">Phone & WhatsApp</span>
-                    <a href="tel:+97477889257" className="font-mono font-bold text-gray-900 hover:text-[#008BA3] transition-colors">
-                      {companyData.contact.phone}
+                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">Office Telephone</span>
+                    <a href="tel:+97441423938" className="font-mono font-bold text-gray-900 hover:text-[#008BA3] transition-colors">
+                      {companyData.contact.officePhone}
+                    </a>
+                  </div>
+                </div>
+
+                {/* WhatsApp Support */}
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#25D366]/15 border border-[#25D366]/30 flex items-center justify-center text-[#128C7E] shrink-0">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="font-mono text-xs text-gray-500 uppercase tracking-wider block">WhatsApp Direct</span>
+                    <a href={companyData.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="font-mono font-bold text-gray-900 hover:text-[#128C7E] transition-colors">
+                      {companyData.contact.whatsapp}
                     </a>
                   </div>
                 </div>

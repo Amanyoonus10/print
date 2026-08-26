@@ -119,7 +119,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                       </button>
                     ) : (
                       <a
-                        href={`https://wa.me/97477889257?text=Hello%20FACE%20PRINTING,%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}`}
+                        href={`https://wa.me/97433635098?text=Hello%20FACE%20PRINTING,%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-6 py-3.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.3)]"
@@ -130,7 +130,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                     )}
 
                     <a
-                      href="https://wa.me/97477889257"
+                      href="https://wa.me/97433635098"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-6 py-3.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-mono text-xs uppercase tracking-wider border border-gray-200 transition-all font-medium"

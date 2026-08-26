@@ -59,7 +59,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
 
     const message = `Hello FACE PRINTING SERVICES, I would like to request an estimate.%0A%0A*Name:* ${name || 'N/A'}%0A*Company:* ${company || 'N/A'}%0A*Services:* ${serviceTitles || 'General Inquiry'}%0A*Notes:* ${details || 'Please contact me.'}`;
 
-    window.open(`https://wa.me/97477889257?text=${message}`, '_blank');
+    window.open(`https://wa.me/97433635098?text=${message}`, '_blank');
   };
 
   return (

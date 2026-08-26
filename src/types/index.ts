@@ -16,6 +16,10 @@ export interface CompanyInfo {
   contact: {
     phone: string;
     phoneFormatted: string;
+    officePhone: string;
+    whatsapp: string;
+    whatsappFormatted: string;
+    whatsappLink: string;
     email: string;
     website: string;
     cr: string;

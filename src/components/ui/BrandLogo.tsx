@@ -35,31 +35,23 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   };
 
   return (
-    <Link to="/" className={`group inline-flex items-center gap-3.5 select-none ${className}`}>
-      {/* Brand Icon (Geometric Triangle + Monogram matching PDF) */}
+    <Link to="/" className={`group inline-flex items-center gap-3 select-none ${className}`}>
+      {/* Official Brand Monogram Icon from PDF */}
       <div className={`relative ${iconSizes[size]} shrink-0 transition-transform duration-500 group-hover:scale-105`}>
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-[0_2px_8px_rgba(0,188,212,0.2)]">
-          {/* Top Left Cyan Triangle */}
-          <path d="M15 50 L50 15 L50 50 Z" fill="#00BCD4" />
-          {/* Top Right Cyan Triangle */}
-          <path d="M50 50 L85 15 L85 50 Z" fill="#00BCD4" />
-          {/* Bottom Center Grey Triangle */}
-          <path d="M32.5 67.5 L50 50 L67.5 67.5 Z" fill="#94A3B8" />
-          {/* Circular Monogram Container */}
-          <circle cx="50" cy="73" r="14" stroke="#00BCD4" strokeWidth="2.5" fill="#FFFFFF" />
-          {/* Stylized 'face' glyph inside circle */}
-          <path d="M44 73 C44 70 47 70 50 70 C53 70 56 70 56 73 C56 76 53 76 50 76 C47 76 44 76 44 73 Z" stroke="#00BCD4" strokeWidth="1.8" fill="none" />
-          <line x1="42" y1="73" x2="58" y2="73" stroke="#00BCD4" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
+        <img
+          src="/logo-icon.png"
+          alt="FACE PRINTING SERVICES Logo"
+          className="w-full h-full object-contain"
+        />
       </div>
 
-      {/* Brand Typography */}
+      {/* Brand Typography matching PDF branding */}
       <div className="flex flex-col">
-        <span className={`font-display font-extrabold text-[#0A0B0D] leading-none ${textSizes[size]} transition-colors group-hover:text-[#00BCD4]`}>
+        <span className={`font-display font-black text-[#00BCD4] leading-none ${textSizes[size]} transition-colors group-hover:text-[#008BA3]`}>
           FACE
         </span>
         {showSubtitle && (
-          <span className={`font-mono text-[#64748B] font-medium uppercase mt-1 leading-none ${subtitleSizes[size]} transition-colors group-hover:text-[#00BCD4]`}>
+          <span className={`font-mono text-[#008BA3] font-semibold uppercase mt-1 leading-none ${subtitleSizes[size]} transition-colors`}>
             PRINTING SERVICES
           </span>
         )}

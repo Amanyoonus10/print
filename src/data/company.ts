@@ -46,8 +46,12 @@ export const companyData: CompanyInfo = {
     }
   ],
   contact: {
-    phone: "+974 7788 9257",
-    phoneFormatted: "+974 7788 9257",
+    phone: "+974 4142 3938",
+    phoneFormatted: "+974 4142 3938",
+    officePhone: "00974 41423938",
+    whatsapp: "+974 3363 5098",
+    whatsappFormatted: "00974 3363 5098",
+    whatsappLink: "https://wa.me/97433635098",
     email: "hello@face.qa",
     website: "www.face.qa",
     cr: "158065 Doha, Qatar",

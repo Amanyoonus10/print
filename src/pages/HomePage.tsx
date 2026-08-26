@@ -87,13 +87,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
               </button>
 
               <a
-                href="https://wa.me/97477889257"
+                href="https://wa.me/97433635098"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-7 py-4 rounded-full bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#128C7E] font-semibold text-xs transition-all duration-300 flex items-center gap-2 border border-[#25D366]/40"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>WhatsApp (+974 7788 9257)</span>
+                <span>WhatsApp (+974 3363 5098)</span>
               </a>
             </div>
           </div>

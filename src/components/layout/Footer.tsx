@@ -72,7 +72,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
             </button>
 
             <a
-              href="https://wa.me/97477889257"
+              href={companyData.contact.whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-mono text-xs uppercase tracking-wider border border-gray-200 transition-all font-semibold"
@@ -172,10 +172,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               </li>
               <li>
                 <button
-                  onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => scrollToSection('contact')}
                   className="hover:text-black transition-colors cursor-pointer"
                 >
-                  Contact & Quote
+                  Contact
                 </button>
               </li>
             </ul>
@@ -194,8 +194,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
 
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#00BCD4] shrink-0" />
-                <a href={`tel:${companyData.contact.phone.replace(/\s+/g, '')}`} className="hover:text-black font-mono text-xs font-semibold">
-                  {companyData.contact.phone}
+                <a href="tel:+97441423938" className="hover:text-black font-mono text-xs font-semibold">
+                  Office: {companyData.contact.officePhone}
+                </a>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <Globe className="w-4 h-4 text-[#25D366] shrink-0" />
+                <a href={companyData.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-[#128C7E] font-mono text-xs font-semibold text-gray-800">
+                  WhatsApp: {companyData.contact.whatsappFormatted}
                 </a>
               </div>
 
@@ -204,11 +211,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
                 <a href={`mailto:${companyData.contact.email}`} className="hover:text-black font-mono text-xs">
                   {companyData.contact.email}
                 </a>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Globe className="w-4 h-4 text-[#00BCD4] shrink-0" />
-                <span className="font-mono text-xs text-gray-900">{companyData.contact.website}</span>
               </div>
 
               <div className="pt-2 border-t border-gray-200">
