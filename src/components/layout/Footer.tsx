@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { BrandLogo } from '../ui/BrandLogo';
 import { companyData } from '../../data/company';
 import { servicesData } from '../../data/services';
@@ -10,6 +11,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
   const [dohaTime, setDohaTime] = useState<string>('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const updateTime = () => {
@@ -27,6 +30,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const scrollToSection = (targetId: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    } else {
+      const el = document.getElementById(targetId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <footer className="w-full bg-[#FFFFFF] text-gray-900 border-t border-gray-200 pt-20 pb-12 overflow-hidden relative">
@@ -49,32 +65,31 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={onOpenQuoteModal}
-              className="px-8 py-4 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2.5 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.35)] cursor-pointer group"
+              className="px-8 py-4 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.35)] cursor-pointer group"
             >
-              <span>Request An Estimate</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <span>Request Quote</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
 
             <a
               href="https://wa.me/97477889257"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-mono text-xs uppercase tracking-wider border border-gray-200 transition-all flex items-center gap-2 font-medium"
+              className="px-7 py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-mono text-xs uppercase tracking-wider border border-gray-200 transition-all font-semibold"
             >
-              <span>WhatsApp Direct</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              WhatsApp Support
             </a>
           </div>
         </div>
 
-        {/* 4-Column Directory Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-gray-200">
-          {/* Col 1: Brand & Official Registration */}
+        {/* 4-Column Editorial Links Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-gray-200">
+          {/* Col 1: Identity & Doha Time */}
           <div className="lg:col-span-4 flex flex-col gap-6">
             <BrandLogo size="md" showSubtitle={true} />
             
-            <p className="text-sm text-gray-600 leading-relaxed pr-6">
-              Full-service professional printing and branding company combining advanced technology, skilled designers, and expert craftsmanship in Doha, Qatar.
+            <p className="text-sm text-gray-600 leading-relaxed max-w-sm">
+              {companyData.description.heroStatement}
             </p>
 
             {/* Live Doha Time Card */}
@@ -97,8 +112,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
                 <li key={service.slug}>
                   <button
                     onClick={() => {
-                      const el = document.getElementById(service.slug) || document.getElementById('services');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      navigate(`/services/${service.slug}`);
                     }}
                     className="hover:text-black transition-colors flex items-center gap-2 group text-left cursor-pointer"
                   >
@@ -118,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
             <ul className="flex flex-col gap-2 text-sm text-gray-600">
               <li>
                 <button
-                  onClick={() => { const el = document.getElementById('hero-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => scrollToSection('hero-section')}
                   className="hover:text-black transition-colors cursor-pointer"
                 >
                   Home
@@ -126,7 +140,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               </li>
               <li>
                 <button
-                  onClick={() => { const el = document.getElementById('introduction'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => scrollToSection('introduction')}
                   className="hover:text-black transition-colors cursor-pointer"
                 >
                   Our Story
@@ -134,7 +148,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               </li>
               <li>
                 <button
-                  onClick={() => { const el = document.getElementById('services'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => scrollToSection('services')}
                   className="hover:text-black transition-colors cursor-pointer"
                 >
                   Services
@@ -142,7 +156,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               </li>
               <li>
                 <button
-                  onClick={() => { const el = document.getElementById('work'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => scrollToSection('work')}
                   className="hover:text-black transition-colors cursor-pointer"
                 >
                   Portfolio
@@ -150,7 +164,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               </li>
               <li>
                 <button
-                  onClick={() => { const el = document.getElementById('clients'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => scrollToSection('clients')}
                   className="hover:text-black transition-colors cursor-pointer"
                 >
                   Clients

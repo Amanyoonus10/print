@@ -54,11 +54,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
       {/* Back Link */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <Link
-          to="/services"
+          to="/"
           className="inline-flex items-center gap-2 font-mono text-xs text-gray-500 hover:text-black uppercase tracking-wider transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to All {services.length} Services</span>
+          <span>Back to Overview ({services.length} Pillars)</span>
         </Link>
       </div>
 

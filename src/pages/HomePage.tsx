@@ -4,7 +4,6 @@ import { Hero } from '../components/home/Hero';
 import { Introduction } from '../components/home/Introduction';
 import { InteractiveServices } from '../components/home/InteractiveServices';
 import { FeaturedWork } from '../components/home/FeaturedWork';
-import { ServiceShowcases } from '../components/home/ServiceShowcases';
 import { LogoWall } from '../components/ui/LogoWall';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowUpRight, MessageSquare } from 'lucide-react';
@@ -40,9 +39,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
 
       {/* 04 FEATURED WORK */}
       <FeaturedWork onOpenQuoteModal={onOpenQuoteModal} />
-
-      {/* 05 - 12 DEDICATED VISUAL SHOWCASES FOR ALL 8 SERVICES */}
-      <ServiceShowcases onOpenQuoteModal={onOpenQuoteModal} />
 
 
       {/* 13 OUR CLIENTS */}

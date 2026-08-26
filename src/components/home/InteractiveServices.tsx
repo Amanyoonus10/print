@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ArrowUpRight } from 'lucide-react';
@@ -6,11 +7,14 @@ import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
+import { RemoveItemModal } from '../editor/RemoveItemModal';
 
 export const InteractiveServices: React.FC = () => {
-  const { services, updateService, addServiceGalleryImage } = useContent();
+  const navigate = useNavigate();
+  const { services, updateService, addServiceGalleryImage, resetToDefaults } = useContent();
   const [activeServiceSlug, setActiveServiceSlug] = useState<string>(services[0]?.slug || '');
   const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
 
   const activeService = services.find(s => s.slug === activeServiceSlug) || services[0];
@@ -26,7 +30,6 @@ export const InteractiveServices: React.FC = () => {
 
   const handleAddImage = (data: { url: string; title: string; caption?: string }) => {
     if (!activeService) return;
-    // Update hero image if requested or add to gallery
     updateService(activeService.slug, {
       heroImage: data.url,
     });
@@ -48,25 +51,24 @@ export const InteractiveServices: React.FC = () => {
             number="02"
             tag="SERVICES & CAPABILITIES"
             title="EXPLORE OUR CORE PILLARS."
-            subtitle="Interactive capabilities directory engineered for modern brands in Qatar."
+            subtitle="Click any specialized pillar below to explore technical specifications, materials, and exhibits."
           />
 
           <div className="flex flex-wrap items-center gap-3">
             <SectionEditorBar
               addImageLabel="Add Service Item"
+              clearDataLabel="Clear Added Data"
               editTextLabel="Edit Active Service"
               onAddImage={() => setIsAddImageOpen(true)}
+              onClearData={() => setIsRemoveModalOpen(true)}
               onEditText={() => setIsEditTextOpen(true)}
             />
 
             <button
-              onClick={() => {
-                const el = document.getElementById('services-showcases');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => navigate('/services/' + activeService.slug)}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-gray-200/80 hover:bg-gray-300 text-gray-800 font-mono text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
             >
-              <span>Exhibits Directory ({services.length})</span>
+              <span>Open {activeService.title} Page</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -86,8 +88,7 @@ export const InteractiveServices: React.FC = () => {
                     setActiveServiceSlug(service.slug);
                   }}
                   onClick={() => {
-                    const el = document.getElementById(service.slug);
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    navigate(`/services/${service.slug}`);
                   }}
                   className="group relative py-6 sm:py-7 transition-all duration-300 cursor-pointer"
                 >
@@ -136,8 +137,11 @@ export const InteractiveServices: React.FC = () => {
           </div>
 
           {/* Right Column: Floating Visual Preview Card with Spring Physics */}
-          <div className="hidden lg:block lg:col-span-5 relative">
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-xl p-2">
+          <div
+            onClick={() => navigate(`/services/${activeService.slug}`)}
+            className="hidden lg:block lg:col-span-5 relative cursor-pointer group"
+          >
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-xl p-2 group-hover:border-[#00BCD4]/50 group-hover:shadow-2xl transition-all">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeService.id}
@@ -151,7 +155,7 @@ export const InteractiveServices: React.FC = () => {
                   <img
                     src={activeService.heroImage}
                     alt={activeService.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
 
                   {/* Gradient Overlay for Text Readability */}
@@ -173,8 +177,9 @@ export const InteractiveServices: React.FC = () => {
                       <span className="text-[11px] font-mono text-[#38E1FF]">
                         {activeService.materials[0]}
                       </span>
-                      <span className="text-[11px] font-mono text-white/80">
-                        {activeService.gallery.length} Verified Exhibits
+                      <span className="text-[11px] font-mono text-white/80 flex items-center gap-1">
+                        <span>Click to Open Page</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
@@ -192,6 +197,27 @@ export const InteractiveServices: React.FC = () => {
         title={`Change Image for ${activeService.title}`}
         subtitle="Service Preview Artwork"
         onAdd={handleAddImage}
+      />
+
+      {/* Remove / Reset Modal */}
+      <RemoveItemModal
+        isOpen={isRemoveModalOpen}
+        onClose={() => setIsRemoveModalOpen(false)}
+        title={`Manage ${activeService.title} Exhibits`}
+        subtitle="Remove Service Exhibits"
+        items={activeService.gallery.map((g, idx) => ({
+          index: idx,
+          title: g.title,
+          subtitle: g.caption,
+          url: g.url,
+        }))}
+        onRemoveItem={(_, idx) => {
+          // Remove gallery item
+          updateService(activeService.slug, {
+            gallery: activeService.gallery.filter((_, i) => i !== idx),
+          });
+        }}
+        onClearAll={resetToDefaults}
       />
 
       {/* Edit Service Details Modal */}

@@ -1,15 +1,21 @@
-import { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ScrollToTop } from './components/ui/ScrollToTop';
 import { QuoteModal } from './components/ui/QuoteModal';
 import { ContentProvider } from './context/ContentContext';
 import { HomePage } from './pages/HomePage';
+import { ServicesPage } from './pages/ServicesPage';
+import { ServiceDetailPage } from './pages/ServiceDetailPage';
+import { WorkPage } from './pages/WorkPage';
+import { ProjectDetailPage } from './pages/ProjectDetailPage';
+import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 export function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-  const location = useLocation();
 
   const handleOpenQuote = () => {
     setQuoteModalOpen(true);
@@ -19,27 +25,6 @@ export function App() {
     setQuoteModalOpen(false);
   };
 
-  // Smoothly scroll to section if a sub-route was visited (e.g. /services -> #services)
-  useEffect(() => {
-    const path = location.pathname.replace('/', '').toLowerCase();
-    if (path) {
-      let targetId = path;
-      if (path.startsWith('service')) targetId = 'services';
-      if (path.startsWith('about')) targetId = 'introduction';
-      if (path.startsWith('work')) targetId = 'work';
-      if (path.startsWith('client')) targetId = 'clients';
-      if (path.startsWith('contact')) targetId = 'contact';
-
-      const timer = setTimeout(() => {
-        const el = document.getElementById(targetId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [location.pathname]);
-
   return (
     <ContentProvider>
       <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#0A0B0D] relative">
@@ -48,10 +33,17 @@ export function App() {
         {/* Sticky Global Navigation */}
         <Navbar onOpenQuoteModal={handleOpenQuote} />
 
-        {/* Main Single-Page Content */}
+        {/* Routes */}
         <main className="flex-grow">
           <Routes>
-            <Route path="*" element={<HomePage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/" element={<HomePage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/services" element={<ServicesPage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/work" element={<WorkPage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/work/:slug" element={<ProjectDetailPage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/about" element={<AboutPage onOpenQuoteModal={handleOpenQuote} />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
 
