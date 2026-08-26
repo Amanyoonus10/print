@@ -15,13 +15,9 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    // Show intro on initial arrival
-    return !sessionStorage.getItem('seen_film_intro');
-  });
+  const [showIntro, setShowIntro] = useState<boolean>(true);
 
   const handleIntroComplete = () => {
-    sessionStorage.setItem('seen_film_intro', 'true');
     setShowIntro(false);
   };
 
