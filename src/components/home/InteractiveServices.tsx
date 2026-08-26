@@ -54,7 +54,7 @@ export const InteractiveServices: React.FC = () => {
             subtitle="Click any specialized pillar below to explore technical specifications, materials, and exhibits."
           />
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center">
             <SectionEditorBar
               addImageLabel="Add Service Item"
               clearDataLabel="Clear Added Data"
@@ -63,14 +63,6 @@ export const InteractiveServices: React.FC = () => {
               onClearData={() => setIsRemoveModalOpen(true)}
               onEditText={() => setIsEditTextOpen(true)}
             />
-
-            <button
-              onClick={() => navigate('/services/' + activeService.slug)}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-gray-200/80 hover:bg-gray-300 text-gray-800 font-mono text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
-            >
-              <span>Open {activeService.title} Page</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
 

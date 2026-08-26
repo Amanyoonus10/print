@@ -35,13 +35,13 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
   };
 
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
+    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
       {onAddImage && (
         <button
           onClick={onAddImage}
-          className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-sans text-xs sm:text-sm font-semibold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer group active:scale-98"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 hover:border-gray-300 font-mono text-xs font-semibold shadow-xs transition-all duration-200 cursor-pointer group active:scale-98"
         >
-          <PlusCircle className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
+          <PlusCircle className="w-3.5 h-3.5 text-gray-700 stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
           <span>{addImageLabel}</span>
         </button>
       )}
@@ -49,9 +49,9 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
       {onClearData && (
         <button
           onClick={handleClear}
-          className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 font-sans text-xs sm:text-sm font-semibold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer active:scale-98"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 font-mono text-xs font-semibold shadow-xs transition-all duration-200 cursor-pointer active:scale-98"
         >
-          <Trash2 className="w-4 sm:w-5 h-4 sm:h-5 stroke-[2]" />
+          <Trash2 className="w-3.5 h-3.5 stroke-[2]" />
           <span>{clearDataLabel}</span>
         </button>
       )}
@@ -59,9 +59,9 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
       {onEditText && (
         <button
           onClick={onEditText}
-          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-sans text-xs sm:text-sm font-medium shadow-xs transition-all duration-200 cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 font-mono text-xs font-semibold shadow-xs transition-all duration-200 cursor-pointer"
         >
-          <Edit3 className="w-4 h-4 text-gray-500" />
+          <Edit3 className="w-3.5 h-3.5 text-gray-500" />
           <span>{editTextLabel}</span>
         </button>
       )}
