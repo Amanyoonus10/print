@@ -56,7 +56,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (pinCode.trim() !== '7227') {
-      setError('Invalid Security Passcode. Please enter 7227 to save changes.');
+      setError('Invalid Security Passcode. Access denied.');
       return;
     }
     setError('');
@@ -136,7 +136,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
               </label>
               <input
                 type="password"
-                placeholder="Enter passcode 7227 to save"
+                placeholder="Enter PIN to save"
                 value={pinCode}
                 onChange={e => {
                   setPinCode(e.target.value);

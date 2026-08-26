@@ -71,7 +71,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       return;
     }
     if (pinCode.trim() !== '7227') {
-      setError('Invalid Security Passcode. Please enter 7227 to publish.');
+      setError('Invalid Security Passcode. Access denied.');
       return;
     }
 

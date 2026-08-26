@@ -36,7 +36,7 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
 
   const handleAuthorizedRemove = (item: RemovableItem, index: number) => {
     if (pinCode.trim() !== '7227') {
-      setError('Invalid Passcode. Please enter security passcode 7227 to remove items.');
+      setError('Invalid security passcode. Access denied.');
       return;
     }
     setError('');
@@ -45,7 +45,7 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
 
   const handleAuthorizedClearAll = () => {
     if (pinCode.trim() !== '7227') {
-      setError('Invalid Passcode. Please enter security passcode 7227 to reset section.');
+      setError('Invalid security passcode. Access denied.');
       return;
     }
     if (window.confirm('Are you sure you want to clear all added items in this section?')) {
@@ -93,7 +93,7 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
             </label>
             <input
               type="password"
-              placeholder="Enter passcode 7227 to authorize"
+              placeholder="Enter PIN to authorize"
               value={pinCode}
               onChange={(e) => {
                 setPinCode(e.target.value);
@@ -111,7 +111,7 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
 
           {/* Notice */}
           <p className="text-xs text-gray-500 font-sans mt-2 mb-3">
-            Enter passcode <strong className="text-gray-800">7227</strong> and click Remove next to any item below:
+            Enter security passcode and click Remove next to any item below:
           </p>
 
           {/* Items List */}
