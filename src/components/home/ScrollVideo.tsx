@@ -20,19 +20,21 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
   const currentProgressRef = useRef<number>(0);
   const touchStartYRef = useRef<number>(0);
 
-  // Preload all frames for instant 0ms canvas painting
+  // Preload all frames for instant 0ms canvas painting (mobile vertical vs desktop landscape)
   useEffect(() => {
+    const isMob = window.innerWidth < 768;
+    const folder = isMob ? '/videos/frames_mobile' : '/videos/frames';
     let loadedCount = 0;
     const images: HTMLImageElement[] = [];
 
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       const frameNum = String(i).padStart(3, '0');
-      img.src = `/videos/frames/frame_${frameNum}.jpg`;
+      img.src = `${folder}/frame_${frameNum}.jpg`;
       img.onload = () => {
         loadedCount++;
-        // As soon as first 10 frames load, start rendering immediately
-        if (loadedCount >= 10 && !isLoaded) {
+        // As soon as first few frames load, start rendering immediately
+        if (loadedCount >= 5 && !isLoaded) {
           setIsLoaded(true);
         }
       };
