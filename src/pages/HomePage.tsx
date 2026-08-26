@@ -54,8 +54,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
           </div>
         </div>
 
-        {/* Client Marquee & Interactive Filterable Grid */}
-        <LogoWall variant="both" showFilters={true} />
+        {/* Clean Infinite Client Logo Marquee */}
+        <LogoWall />
       </section>
 
       {/* 14 FINAL CTA / CONTACT */}
