@@ -29,6 +29,8 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
   onSave,
 }) => {
   const [formValues, setFormValues] = useState<Record<string, string>>({});
+  const [pinCode, setPinCode] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     if (isOpen) {
@@ -37,6 +39,8 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
         initial[f.key] = f.value || '';
       });
       setFormValues(initial);
+      setPinCode('');
+      setError('');
     }
   }, [isOpen, fields]);
 
@@ -51,6 +55,11 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (pinCode.trim() !== '7227') {
+      setError('Invalid Security Passcode. Please enter 7227 to save changes.');
+      return;
+    }
+    setError('');
     onSave(formValues);
     onClose();
   };
@@ -62,7 +71,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-8"
+          className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-8 text-gray-900"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-gray-50/50">
@@ -88,6 +97,12 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            {error && (
+              <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-sans">
+                {error}
+              </div>
+            )}
+
             {fields.map(field => (
               <div key={field.key}>
                 <label className="block text-xs font-mono uppercase tracking-wider text-gray-700 font-bold mb-1.5">
@@ -112,6 +127,24 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                 )}
               </div>
             ))}
+
+            {/* Security Passcode Field */}
+            <div className="pt-2">
+              <label className="block text-xs font-semibold text-gray-900 mb-1.5 flex items-center justify-between">
+                <span>Security Passcode</span>
+                <span className="text-[11px] font-mono text-gray-400 font-normal">PIN required</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Enter passcode 7227 to save"
+                value={pinCode}
+                onChange={e => {
+                  setPinCode(e.target.value);
+                  if (error) setError('');
+                }}
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400"
+              />
+            </div>
 
             {/* Footer Buttons */}
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">

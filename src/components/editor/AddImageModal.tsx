@@ -63,11 +63,15 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!imagePreview) {
-      setError('Please upload an image file or provide an image.');
+      setError('Please upload an image file or provide an image URL.');
       return;
     }
     if (!itemTitle.trim()) {
       setError('Please enter a Title / Headline / Caption.');
+      return;
+    }
+    if (pinCode.trim() !== '7227') {
+      setError('Invalid Security Passcode. Please enter 7227 to publish.');
       return;
     }
 

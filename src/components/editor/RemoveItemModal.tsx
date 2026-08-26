@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, RotateCcw } from 'lucide-react';
 
@@ -29,7 +29,31 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
   onRemoveItem,
   onClearAll,
 }) => {
+  const [pinCode, setPinCode] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
   if (!isOpen) return null;
+
+  const handleAuthorizedRemove = (item: RemovableItem, index: number) => {
+    if (pinCode.trim() !== '7227') {
+      setError('Invalid Passcode. Please enter security passcode 7227 to remove items.');
+      return;
+    }
+    setError('');
+    onRemoveItem(item, index);
+  };
+
+  const handleAuthorizedClearAll = () => {
+    if (pinCode.trim() !== '7227') {
+      setError('Invalid Passcode. Please enter security passcode 7227 to reset section.');
+      return;
+    }
+    if (window.confirm('Are you sure you want to clear all added items in this section?')) {
+      setError('');
+      if (onClearAll) onClearAll();
+      onClose();
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -61,9 +85,33 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
             </button>
           </div>
 
+          {/* Security Passcode Field */}
+          <div className="pt-4 pb-2">
+            <label className="block text-xs font-semibold text-gray-900 mb-1.5 flex items-center justify-between">
+              <span>Security Passcode</span>
+              <span className="text-[11px] font-mono text-gray-400 font-normal">PIN required</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter passcode 7227 to authorize"
+              value={pinCode}
+              onChange={(e) => {
+                setPinCode(e.target.value);
+                if (error) setError('');
+              }}
+              className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none text-sm text-gray-900 placeholder:text-gray-400"
+            />
+          </div>
+
+          {error && (
+            <div className="p-3 my-2 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-sans">
+              {error}
+            </div>
+          )}
+
           {/* Notice */}
-          <p className="text-xs text-gray-500 font-sans mt-3 mb-4">
-            Click the delete button next to any item to remove it immediately from this section.
+          <p className="text-xs text-gray-500 font-sans mt-2 mb-3">
+            Enter passcode <strong className="text-gray-800">7227</strong> and click Remove next to any item below:
           </p>
 
           {/* Items List */}
@@ -95,7 +143,7 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
 
                 <button
                   type="button"
-                  onClick={() => onRemoveItem(item, idx)}
+                  onClick={() => handleAuthorizedRemove(item, idx)}
                   title="Remove this item"
                   className="px-3.5 py-1.5 rounded-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white border border-red-200 hover:border-red-600 font-sans text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer shrink-0"
                 >
@@ -117,12 +165,7 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
             {onClearAll && items.length > 0 ? (
               <button
                 type="button"
-                onClick={() => {
-                  if (window.confirm('Are you sure you want to clear all added items in this section?')) {
-                    onClearAll();
-                    onClose();
-                  }
-                }}
+                onClick={handleAuthorizedClearAll}
                 className="px-4 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-sans text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
