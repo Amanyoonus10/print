@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 interface ScrollVideoProps {
   onComplete: () => void;
@@ -14,7 +14,6 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
   const [duration, setDuration] = useState<number>(10);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isDismissing, setIsDismissing] = useState<boolean>(false);
-  const [progressPercent, setProgressPercent] = useState<number>(0);
 
   const targetProgressRef = useRef<number>(0);
   const currentProgressRef = useRef<number>(0);
@@ -45,10 +44,10 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
     setIsDismissing(true);
     setTimeout(() => {
       onComplete();
-    }, 600);
+    }, 500);
   }, [isDismissing, onComplete]);
 
-  // Smooth 60fps lerp loop for scrubbing
+  // Ultra-smooth 60-120fps direct hardware seek loop (0 React re-renders)
   useEffect(() => {
     const loop = () => {
       const video = videoRef.current;
@@ -58,10 +57,9 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
         const diff = targetP - currentP;
 
         if (Math.abs(diff) > 0.0001) {
-          // Ultra-smooth easing lerp
-          const nextP = currentP + diff * 0.085;
+          // Responsive spring lerp damping
+          const nextP = currentP + diff * 0.12;
           currentProgressRef.current = nextP;
-          setProgressPercent(Math.min(100, Math.round(nextP * 100)));
 
           const nextTime = nextP * duration;
           try {
@@ -104,7 +102,7 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
   const handleWheel = (e: React.WheelEvent) => {
     if (isDismissing) return;
     const delta = e.deltaY;
-    const step = delta * 0.0006;
+    const step = delta * 0.0007;
     const nextTarget = Math.max(0, Math.min(1, targetProgressRef.current + step));
     targetProgressRef.current = nextTarget;
   };
@@ -120,7 +118,7 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
     const diff = touchStartYRef.current - touchY;
     touchStartYRef.current = touchY;
 
-    const step = (diff / window.innerHeight) * 0.65;
+    const step = (diff / window.innerHeight) * 0.75;
     const nextTarget = Math.max(0, Math.min(1, targetProgressRef.current + step));
     targetProgressRef.current = nextTarget;
   };
@@ -139,10 +137,10 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
           onTouchMove={handleTouchMove}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -40, scale: 0.98, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
+          exit={{ opacity: 0, y: -40, scale: 0.98, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
           className="fixed inset-0 z-[9999] w-screen h-screen bg-[#07080A] text-white flex items-center justify-center select-none overflow-hidden touch-none"
         >
-          {/* Fullscreen Video */}
+          {/* Fullscreen Video with All-Intra 0ms frame seek */}
           <video
             key={videoSrc}
             ref={videoRef}
@@ -157,42 +155,15 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
             <source src={videoSrc} type="video/mp4" />
           </video>
 
-          {/* Top Brand & Skip Pill */}
-          <div className="absolute top-6 left-6 right-6 z-20 flex items-center justify-between">
-            <div className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md border border-white/15">
-              <span className="w-2 h-2 rounded-full bg-[#00BCD4] animate-pulse" />
-              <span className="font-mono text-xs text-white uppercase tracking-widest font-bold">
-                FACE PRINTING SERVICES
-              </span>
-            </div>
-
+          {/* Top Clean Skip Pill Only */}
+          <div className="absolute top-6 right-6 z-20">
             <button
               onClick={handleFinish}
-              className="px-5 py-2.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_20px_rgba(0,188,212,0.4)] cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_20px_rgba(0,188,212,0.4)] cursor-pointer hover:scale-105"
             >
               <span>Skip to Site</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
-          </div>
-
-          {/* Bottom HUD: Scroll Indicator & Progress Bar */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 pointer-events-none">
-            <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-xl">
-              <div className="w-5 h-5 rounded-full bg-[#00BCD4]/20 border border-[#00BCD4] flex items-center justify-center">
-                <ArrowDown className="w-3 h-3 text-[#00BCD4] animate-bounce" />
-              </div>
-              <span className="font-mono text-xs tracking-[0.25em] text-white font-bold uppercase">
-                SCROLL TO EXPLORE • {progressPercent}%
-              </span>
-            </div>
-
-            {/* Slim Cyan Progress Line */}
-            <div className="w-48 h-1 rounded-full bg-white/20 overflow-hidden">
-              <div
-                className="h-full bg-[#00BCD4] transition-all duration-100 ease-out"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
           </div>
         </motion.div>
       )}
