@@ -13,30 +13,38 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
-  // Never block homepage scrolling on load; show commercial modal only on explicit button click
-  const [showCommercialModal, setShowCommercialModal] = useState<boolean>(false);
+  // Show cinematic scroll video on initial entry; skip automatically on back swipe
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('face_intro_seen');
+    }
+    return true;
+  });
 
-  const handleOpenCommercial = () => {
-    setShowCommercialModal(true);
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    sessionStorage.setItem('face_intro_seen', 'true');
   };
 
-  const handleCloseCommercial = () => {
-    setShowCommercialModal(false);
+  const handleReplayIntro = () => {
+    setShowIntro(true);
   };
 
   // Restore scroll position when returning from sub-pages / back swipe
   useEffect(() => {
-    const savedPos = sessionStorage.getItem('face_home_scroll');
-    if (savedPos) {
-      const scrollY = parseInt(savedPos, 10);
-      if (!isNaN(scrollY) && scrollY > 0) {
-        const timer = setTimeout(() => {
-          window.scrollTo({ top: scrollY, behavior: 'instant' });
-        }, 50);
-        return () => clearTimeout(timer);
+    if (!showIntro) {
+      const savedPos = sessionStorage.getItem('face_home_scroll');
+      if (savedPos) {
+        const scrollY = parseInt(savedPos, 10);
+        if (!isNaN(scrollY) && scrollY > 0) {
+          const timer = setTimeout(() => {
+            window.scrollTo({ top: scrollY, behavior: 'instant' });
+          }, 50);
+          return () => clearTimeout(timer);
+        }
       }
     }
-  }, []);
+  }, [showIntro]);
 
   // Save scroll position when leaving homepage (debounced)
   useEffect(() => {
@@ -59,13 +67,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
 
   return (
     <div className="w-full flex flex-col bg-[#FFFFFF]">
-      {/* Optional Commercial Film Lightbox Modal */}
-      {showCommercialModal && (
-        <ScrollVideo onComplete={handleCloseCommercial} />
-      )}
+      {/* 00 ENTRY CINEMATIC SCROLL VIDEO: 60fps scrubbable entry film with instant skip */}
+      {showIntro && <ScrollVideo onComplete={handleIntroComplete} />}
 
       {/* 01 HERO */}
-      <Hero onOpenQuoteModal={onOpenQuoteModal} onReplayIntro={handleOpenCommercial} />
+      <Hero onOpenQuoteModal={onOpenQuoteModal} onReplayIntro={handleReplayIntro} />
 
       {/* 02 COMPANY STORY / INTRODUCTION */}
       <Introduction />
