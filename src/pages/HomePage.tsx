@@ -12,18 +12,16 @@ interface HomePageProps {
   onOpenQuoteModal: () => void;
 }
 
+// In-memory flag: resets on browser refresh, but persists during in-app navigation & back swipe
+let hasCompletedIntroThisSession = false;
+
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
-  // Show cinematic scroll video on initial entry; skip automatically on back swipe
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('face_intro_seen');
-    }
-    return true;
-  });
+  // Always start from beginning on fresh page load or refresh; skip on back swipe from sub-pages
+  const [showIntro, setShowIntro] = useState<boolean>(!hasCompletedIntroThisSession);
 
   const handleIntroComplete = () => {
     setShowIntro(false);
-    sessionStorage.setItem('face_intro_seen', 'true');
+    hasCompletedIntroThisSession = true;
   };
 
   const handleReplayIntro = () => {
