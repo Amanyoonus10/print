@@ -5,11 +5,15 @@ export const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant'
-    });
+    // Only force scroll to top for new subpages (e.g. /services/branding, /work/...)
+    // Allow homepage to restore previous scroll position smoothly
+    if (pathname !== '/') {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+      });
+    }
   }, [pathname]);
 
   return null;

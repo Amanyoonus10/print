@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollVideo } from '../components/home/ScrollVideo';
 import { Hero } from '../components/home/Hero';
 import { Introduction } from '../components/home/Introduction';
@@ -13,15 +13,56 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
-  const [showIntro, setShowIntro] = useState<boolean>(true);
+  // Only play intro once per session; do NOT replay on back swipe or back navigation
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('face_intro_seen');
+    }
+    return false;
+  });
 
   const handleIntroComplete = () => {
     setShowIntro(false);
+    sessionStorage.setItem('face_intro_seen', 'true');
   };
 
   const handleReplayIntro = () => {
     setShowIntro(true);
   };
+
+  // Restore scroll position when returning from sub-pages / back swipe
+  useEffect(() => {
+    if (!showIntro) {
+      const savedPos = sessionStorage.getItem('face_home_scroll');
+      if (savedPos) {
+        const scrollY = parseInt(savedPos, 10);
+        if (!isNaN(scrollY) && scrollY > 0) {
+          // Small timeout to allow DOM to layout before scrolling back
+          const timer = setTimeout(() => {
+            window.scrollTo({ top: scrollY, behavior: 'instant' });
+          }, 30);
+          return () => clearTimeout(timer);
+        }
+      }
+    }
+  }, [showIntro]);
+
+  // Save scroll position when leaving homepage
+  useEffect(() => {
+    const handleSaveScroll = () => {
+      if (window.scrollY > 0) {
+        sessionStorage.setItem('face_home_scroll', window.scrollY.toString());
+      }
+    };
+
+    window.addEventListener('scroll', handleSaveScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleSaveScroll);
+      if (window.scrollY > 0) {
+        sessionStorage.setItem('face_home_scroll', window.scrollY.toString());
+      }
+    };
+  }, []);
 
   return (
     <div className="w-full flex flex-col bg-[#FFFFFF]">
