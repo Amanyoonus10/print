@@ -55,8 +55,9 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
         const currentP = currentProgressRef.current;
         const diff = targetP - currentP;
 
-        if (Math.abs(diff) > 0.0005) {
-          const nextP = currentP + diff * 0.15;
+        if (Math.abs(diff) > 0.0001) {
+          // Ultra-smooth easing lerp
+          const nextP = currentP + diff * 0.065;
           currentProgressRef.current = nextP;
 
           const nextTime = nextP * duration;
@@ -70,8 +71,8 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
             video.currentTime = nextTime;
           }
 
-          // If reached the end, automatically transition
-          if (nextP >= 0.98) {
+          // If reached the end, automatically transition smoothly
+          if (nextP >= 0.985 && targetP >= 0.99) {
             handleFinish();
           }
         }
@@ -96,16 +97,17 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
     };
   }, []);
 
-  // Wheel scrubbing handler
+  // Wheel scrubbing handler (Continuous, slow, and smooth)
   const handleWheel = (e: React.WheelEvent) => {
     if (isDismissing) return;
     const delta = e.deltaY;
-    const step = delta > 0 ? 0.04 : -0.04;
+    // Granular proportional scaling for slow, luxurious scrubbing
+    const step = delta * 0.00045;
     const nextTarget = Math.max(0, Math.min(1, targetProgressRef.current + step));
     targetProgressRef.current = nextTarget;
   };
 
-  // Touch scrubbing handler (Mobile)
+  // Touch scrubbing handler (Mobile - slow and controlled)
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartYRef.current = e.touches[0].clientY;
   };
@@ -116,7 +118,7 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
     const diff = touchStartYRef.current - touchY;
     touchStartYRef.current = touchY;
 
-    const step = (diff / window.innerHeight) * 1.5;
+    const step = (diff / window.innerHeight) * 0.45;
     const nextTarget = Math.max(0, Math.min(1, targetProgressRef.current + step));
     targetProgressRef.current = nextTarget;
   };
