@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
@@ -8,7 +7,7 @@ import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
 import type { ServiceItem } from '../../types';
 
-export const ServiceShowcases: React.FC = () => {
+export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ onOpenQuoteModal }) => {
   const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage } = useContent();
 
   const [activeAddService, setActiveAddService] = useState<ServiceItem | null>(null);
@@ -33,7 +32,7 @@ export const ServiceShowcases: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col bg-[#FFFFFF]">
+    <div id="services-showcases" className="w-full flex flex-col bg-[#FFFFFF]">
       {services.map((service, index) => {
         const isEven = index % 2 === 0;
 
@@ -106,20 +105,34 @@ export const ServiceShowcases: React.FC = () => {
 
                   {/* Deep Dive Action Links */}
                   <div className="flex flex-wrap items-center gap-4 pt-4">
-                    <Link
-                      to={`/services/${service.slug}`}
-                      className="px-6 py-3.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.3)] group"
-                    >
-                      <span>Explore {service.title} Hub</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
+                    {onOpenQuoteModal ? (
+                      <button
+                        onClick={onOpenQuoteModal}
+                        className="px-6 py-3.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.3)] cursor-pointer group"
+                      >
+                        <span>Inquire {service.title}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </button>
+                    ) : (
+                      <a
+                        href={`https://wa.me/97477889257?text=Hello%20FACE%20PRINTING,%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3.5 rounded-full bg-[#00BCD4] hover:bg-[#00ACC1] text-[#0A0B0D] font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,188,212,0.3)]"
+                      >
+                        <span>Inquire {service.title}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
 
-                    <Link
-                      to="/contact"
+                    <a
+                      href="https://wa.me/97477889257"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="px-6 py-3.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-mono text-xs uppercase tracking-wider border border-gray-200 transition-all font-medium"
                     >
-                      Inquire Specs
-                    </Link>
+                      WhatsApp Specs
+                    </a>
                   </div>
                 </motion.div>
 

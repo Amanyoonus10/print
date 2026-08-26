@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { BrandLogo } from '../ui/BrandLogo';
 import { companyData } from '../../data/company';
 import { servicesData } from '../../data/services';
@@ -96,13 +95,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
             <ul className="flex flex-col gap-2 text-sm text-gray-600">
               {servicesData.map((service) => (
                 <li key={service.slug}>
-                  <Link
-                    to={`/services/${service.slug}`}
-                    className="hover:text-black transition-colors flex items-center gap-2 group"
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById(service.slug) || document.getElementById('services');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="hover:text-black transition-colors flex items-center gap-2 group text-left cursor-pointer"
                   >
                     <span className="text-[10px] font-mono text-gray-400 group-hover:text-[#008BA3] font-bold">{service.number}</span>
                     <span>{service.title}</span>
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -111,15 +113,57 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           {/* Col 3: Navigation Links */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <h4 className="font-mono text-xs text-[#008BA3] uppercase tracking-widest font-bold">
-              Company
+              Navigation
             </h4>
             <ul className="flex flex-col gap-2 text-sm text-gray-600">
-              <li><Link to="/" className="hover:text-black transition-colors">Home</Link></li>
-              <li><Link to="/about" className="hover:text-black transition-colors">About Us</Link></li>
-              <li><Link to="/services" className="hover:text-black transition-colors">All Services</Link></li>
-              <li><Link to="/work" className="hover:text-black transition-colors">Portfolio & Work</Link></li>
-              <li><Link to="/clients" className="hover:text-black transition-colors">Our Clients</Link></li>
-              <li><Link to="/contact" className="hover:text-black transition-colors">Contact & Quote</Link></li>
+              <li>
+                <button
+                  onClick={() => { const el = document.getElementById('hero-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="hover:text-black transition-colors cursor-pointer"
+                >
+                  Home
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => { const el = document.getElementById('introduction'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="hover:text-black transition-colors cursor-pointer"
+                >
+                  Our Story
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => { const el = document.getElementById('services'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="hover:text-black transition-colors cursor-pointer"
+                >
+                  Services
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => { const el = document.getElementById('work'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="hover:text-black transition-colors cursor-pointer"
+                >
+                  Portfolio
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => { const el = document.getElementById('clients'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="hover:text-black transition-colors cursor-pointer"
+                >
+                  Clients
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="hover:text-black transition-colors cursor-pointer"
+                >
+                  Contact & Quote
+                </button>
+              </li>
             </ul>
           </div>
 

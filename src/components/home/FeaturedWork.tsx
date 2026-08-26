@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ProjectCard } from '../ui/ProjectCard';
-import { ArrowUpRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ProjectDetailModal } from '../ui/ProjectDetailModal';
 import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
+import type { ProjectItem } from '../../types';
 
-export const FeaturedWork: React.FC = () => {
+interface FeaturedWorkProps {
+  onOpenQuoteModal?: () => void;
+}
+
+export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) => {
   const { projects, addProject, removeProject } = useContent();
+  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
+  const [showAll, setShowAll] = useState<boolean>(false);
   const [sectionHeading, setSectionHeading] = useState({
     title: 'FEATURED WORK & EXHIBITS.',
     subtitle: 'Explore high-impact branding, events, lightboxes, and packaging executed across Qatar.',
   });
 
-  const featuredProjects = projects.filter(p => p.featured).slice(0, 6);
+  const displayedProjects = showAll ? projects : projects.filter(p => p.featured).slice(0, 6);
 
   const handleAddProject = (data: { url: string; title: string; subtitle?: string; caption?: string; description?: string }) => {
     addProject({
@@ -36,7 +42,7 @@ export const FeaturedWork: React.FC = () => {
   };
 
   return (
-    <section className="relative py-28 md:py-36 bg-[#FFFFFF] border-b border-gray-200 overflow-hidden">
+    <section id="work" className="relative py-28 md:py-36 bg-[#FFFFFF] border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Editor Bar */}
         <SectionEditorBar
@@ -56,31 +62,31 @@ export const FeaturedWork: React.FC = () => {
             subtitle={sectionHeading.subtitle}
           />
 
-          <Link
-            to="/work"
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group"
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group cursor-pointer"
           >
-            <span>View Full Portfolio ({projects.length})</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </Link>
+            <span>{showAll ? 'Show Featured Only' : `View All Projects (${projects.length})`}</span>
+          </button>
         </div>
 
-        {/* 2x2 Portfolio Grid */}
+        {/* 2x2 / 3x2 Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {featuredProjects.map((project, idx) => (
+          {displayedProjects.map((project, idx) => (
             <ProjectCard
               key={project.id}
               project={project}
               aspectRatio="wide"
               priority={idx < 2}
+              onClick={() => setSelectedProject(project)}
               onRemove={() => removeProject(project.id)}
             />
           ))}
         </div>
 
-        {featuredProjects.length === 0 && (
+        {displayedProjects.length === 0 && (
           <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50/50">
-            <p className="font-mono text-sm text-gray-500 mb-3">No featured projects currently listed.</p>
+            <p className="font-mono text-sm text-gray-500 mb-3">No projects currently listed.</p>
             <button
               onClick={() => setIsAddProjectOpen(true)}
               className="px-5 py-2.5 rounded-full bg-[#00BCD4] text-[#0A0B0D] font-mono text-xs uppercase font-bold"
@@ -91,11 +97,19 @@ export const FeaturedWork: React.FC = () => {
         )}
       </div>
 
+      {/* In-Place Project Detail Modal */}
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        onOpenQuoteModal={onOpenQuoteModal}
+      />
+
       {/* Add Project Modal */}
       <AddImageModal
         isOpen={isAddProjectOpen}
         onClose={() => setIsAddProjectOpen(false)}
-        title="Add New Project to Featured Portfolio"
+        title="Add New Project to Portfolio"
         subtitle="Portfolio Item"
         requireDescription={true}
         onAdd={handleAddProject}
@@ -131,4 +145,5 @@ export const FeaturedWork: React.FC = () => {
     </section>
   );
 };
+
 

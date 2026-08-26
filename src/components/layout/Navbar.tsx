@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, MessageSquare, ArrowUpRight } from 'lucide-react';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -33,13 +33,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
   }, [location]);
 
   const navLinks = [
-    { name: 'HOME', path: '/' },
-    { name: 'ABOUT', path: '/about' },
-    { name: 'SERVICES', path: '/services' },
-    { name: 'WORK', path: '/work' },
-    { name: 'CLIENTS', path: '/clients' },
-    { name: 'CONTACT', path: '/contact' }
+    { name: 'HOME', targetId: 'hero-section' },
+    { name: 'STORY', targetId: 'introduction' },
+    { name: 'SERVICES', targetId: 'services' },
+    { name: 'WORK', targetId: 'work' },
+    { name: 'CLIENTS', targetId: 'clients' },
+    { name: 'CONTACT', targetId: 'contact' }
   ];
+
+  const scrollToSection = (targetId: string) => {
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
@@ -53,26 +60,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Left: Brand Logo */}
-            <div className="shrink-0">
+            <div
+              onClick={() => scrollToSection('hero-section')}
+              className="shrink-0 cursor-pointer"
+            >
               <BrandLogo size="md" showSubtitle={true} />
             </div>
 
             {/* Center: Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full bg-gray-100/90 border border-gray-200/80 backdrop-blur-md shadow-xs">
               {navLinks.map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  className={({ isActive }) =>
-                    `px-4 py-2 rounded-full font-mono text-xs tracking-[0.18em] transition-all duration-300 ${
-                      isActive
-                        ? 'text-[#0A0B0D] bg-[#00BCD4] font-bold shadow-[0_0_15px_rgba(0,188,212,0.35)]'
-                        : 'text-gray-600 hover:text-black hover:bg-white'
-                    }`
-                  }
+                <button
+                  key={link.targetId}
+                  onClick={() => scrollToSection(link.targetId)}
+                  className="px-4 py-2 rounded-full font-mono text-xs tracking-[0.18em] transition-all duration-300 text-gray-600 hover:text-black hover:bg-white cursor-pointer"
                 >
                   {link.name}
-                </NavLink>
+                </button>
               ))}
             </nav>
 
@@ -111,7 +115,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           >
             {/* Top Bar inside Overlay */}
             <div className="flex items-center justify-between">
-              <BrandLogo size="md" showSubtitle={true} />
+              <div onClick={() => { setMobileMenuOpen(false); scrollToSection('hero-section'); }} className="cursor-pointer">
+                <BrandLogo size="md" showSubtitle={true} />
+              </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 aria-label="Close Mobile Menu"
@@ -127,22 +133,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                 Navigation
               </span>
               {navLinks.map((link, idx) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={({ isActive }) =>
-                    `font-display text-3xl sm:text-4xl font-extrabold uppercase tracking-tight flex items-center justify-between py-2 border-b border-gray-100 transition-colors ${
-                      isActive ? 'text-[#00BCD4]' : 'text-gray-800 hover:text-black'
-                    }`
-                  }
+                <button
+                  key={link.targetId}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    scrollToSection(link.targetId);
+                  }}
+                  className="font-display text-3xl sm:text-4xl font-extrabold uppercase tracking-tight flex items-center justify-between py-2 border-b border-gray-100 transition-colors text-gray-800 hover:text-[#00BCD4] text-left cursor-pointer"
                 >
                   <div className="flex items-center gap-4">
                     <span className="font-mono text-xs text-gray-400">0{idx + 1}</span>
                     <span>{link.name}</span>
                   </div>
                   <ArrowUpRight className="w-6 h-6 text-[#00BCD4]" />
-                </NavLink>
+                </button>
               ))}
             </div>
 

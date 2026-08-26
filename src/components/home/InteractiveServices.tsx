@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ArrowUpRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useContent } from '../../context/ContentContext';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
@@ -41,7 +40,7 @@ export const InteractiveServices: React.FC = () => {
   if (!activeService) return null;
 
   return (
-    <section className="relative py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 overflow-hidden">
+    <section id="services" className="relative py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Editor Bar */}
         <SectionEditorBar
@@ -61,13 +60,16 @@ export const InteractiveServices: React.FC = () => {
             subtitle="Interactive capabilities directory engineered for modern brands in Qatar."
           />
 
-          <Link
-            to="/services"
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group"
+          <button
+            onClick={() => {
+              const el = document.getElementById('services-showcases');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] font-bold uppercase tracking-widest self-start md:self-end pb-2 group cursor-pointer"
           >
-            <span>View All {services.length} Service Hubs</span>
+            <span>View All {services.length} Service Exhibits</span>
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </Link>
+          </button>
         </div>
 
         {/* 2-Column Desktop Grid: Left List + Right Floating Live Preview Viewport */}
@@ -83,12 +85,13 @@ export const InteractiveServices: React.FC = () => {
                   onMouseEnter={() => {
                     setActiveServiceSlug(service.slug);
                   }}
+                  onClick={() => {
+                    const el = document.getElementById(service.slug);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="group relative py-6 sm:py-7 transition-all duration-300 cursor-pointer"
                 >
-                  <Link
-                    to={`/services/${service.slug}`}
-                    className="flex items-center justify-between gap-4"
-                  >
+                  <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4 sm:gap-6">
                       {/* Index Number */}
                       <span className={`font-mono text-xs sm:text-sm transition-colors duration-300 font-bold ${
@@ -115,7 +118,7 @@ export const InteractiveServices: React.FC = () => {
                     }`}>
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
-                  </Link>
+                  </div>
 
                   {/* Subtitle preview for mobile */}
                   {isCurrent && (

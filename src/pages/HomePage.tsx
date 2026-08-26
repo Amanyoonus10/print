@@ -8,7 +8,6 @@ import { ServiceShowcases } from '../components/home/ServiceShowcases';
 import { LogoWall } from '../components/ui/LogoWall';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowUpRight, MessageSquare } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 interface HomePageProps {
   onOpenQuoteModal: () => void;
@@ -40,14 +39,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
       <InteractiveServices />
 
       {/* 04 FEATURED WORK */}
-      <FeaturedWork />
+      <FeaturedWork onOpenQuoteModal={onOpenQuoteModal} />
 
       {/* 05 - 12 DEDICATED VISUAL SHOWCASES FOR ALL 8 SERVICES */}
-      <ServiceShowcases />
+      <ServiceShowcases onOpenQuoteModal={onOpenQuoteModal} />
 
 
       {/* 13 OUR CLIENTS */}
-      <section className="py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
+      <section id="clients" className="py-28 md:py-36 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <SectionHeading
@@ -56,23 +55,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
               title="OUR CLIENTS & PARTNERS."
               subtitle="Proudly supporting government entities, global corporations, educational academies, and luxury hospitality."
             />
-
-            <Link
-              to="/clients"
-              className="inline-flex items-center gap-2 font-mono text-xs text-[#008BA3] hover:text-[#00BCD4] tracking-widest uppercase font-bold self-start md:self-auto"
-            >
-              <span>View Client Index</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
 
-        {/* Client Marquee & Grid */}
-        <LogoWall variant="both" limit={12} showFilters={false} />
+        {/* Client Marquee & Interactive Filterable Grid */}
+        <LogoWall variant="both" showFilters={true} />
       </section>
 
-      {/* 14 FINAL CTA */}
-      <section className="py-24 md:py-32 bg-[#FFFFFF] relative overflow-hidden border-b border-gray-200">
+      {/* 14 FINAL CTA / CONTACT */}
+      <section id="contact" className="py-24 md:py-32 bg-[#FFFFFF] relative overflow-hidden border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="p-10 sm:p-16 md:p-20 rounded-3xl bg-[#F8FAFC] border border-gray-200 relative overflow-hidden shadow-lg">
             {/* Top Cyan Glow Line */}

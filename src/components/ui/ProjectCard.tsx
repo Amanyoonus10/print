@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import type { ProjectItem } from '../../types';
@@ -10,6 +9,7 @@ interface ProjectCardProps {
   aspectRatio?: 'square' | 'video' | 'portrait' | 'wide';
   priority?: boolean;
   onRemove?: () => void;
+  onClick?: () => void;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -17,6 +17,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   aspectRatio = 'wide',
   priority = false,
   onRemove,
+  onClick,
 }) => {
   const aspectClasses = {
     square: 'aspect-square',
@@ -31,11 +32,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col gap-4 relative"
+      className="group flex flex-col gap-4 relative cursor-pointer"
+      onClick={onClick}
     >
       {/* Image Container with Hover Scale */}
-      <Link
-        to={`/work/${project.slug}`}
+      <div
         className={`relative w-full ${aspectClasses[aspectRatio]} rounded-3xl overflow-hidden bg-gray-100 border border-gray-200 shadow-sm transition-all duration-500 group-hover:border-[#00BCD4]/50 group-hover:shadow-xl`}
       >
         <img
@@ -79,7 +80,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
-      </Link>
+      </div>
 
       {/* Narrative summary below card */}
       <div className="px-2">
@@ -90,4 +91,5 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     </motion.div>
   );
 };
+
 
