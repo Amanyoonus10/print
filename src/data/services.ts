@@ -9,7 +9,7 @@ export const servicesData: ServiceItem[] = [
     subtitle: "Creative branding applications produced with precision and attention to detail.",
     shortDescription: "End-to-end spatial, retail, and corporate branding solutions crafted to amplify brand presence.",
     fullDescription: "From corporate headquarters to major retail centers and outdoor flagships, we transform brand identities into immersive physical experiences. Our branding team crafts architectural wall graphics, bespoke pop-up backdrops, premium roll-up systems, teardrop flags, promotional canopies, and retail store displays engineered for maximum visual impact.",
-    heroImage: "/images/user_extracted/Page_04_Image_01.jpeg",
+    heroImage: "/images/user_extracted/Page_04_Image_03.jpeg",
     previewImage: "/images/user_extracted/Page_04_Image_02.jpeg",
     features: [
       "Custom Pop-Up Media Walls & Photo Backdrops",
@@ -41,27 +41,27 @@ export const servicesData: ServiceItem[] = [
         caption: "High-contrast luxury travel banner with razor-sharp typography."
       },
       {
-        url: "/images/user_extracted/Page_04_Image_03.jpeg",
+        url: "/images/user_extracted/Page_04_Image_04.jpeg",
         title: "Doha Bank Digital App Standee",
         caption: "Sleek metallic base retractable banner for mobile banking promotion."
       },
       {
-        url: "/images/user_extracted/Page_04_Image_01.jpeg",
+        url: "/images/user_extracted/Page_04_Image_03.jpeg",
         title: "Jetour Brand Backdrop & Step Wall",
         caption: "Geometric motif media backdrop for automotive launch in Qatar."
       },
       {
-        url: "/images/user_extracted/Page_04_Image_06.jpeg",
+        url: "/images/user_extracted/Page_04_Image_01.jpeg",
         title: "Awsaj Academy Reception Branding",
         caption: "Three-dimensional wall graphics and values installation."
       },
       {
-        url: "/images/user_extracted/Page_05_Image_01.jpeg",
+        url: "/images/user_extracted/Page_05_Image_07.jpeg",
         title: "WISH Foundation Media Wall",
         caption: "High-definition clean corporate step-and-repeat media wall."
       },
       {
-        url: "/images/user_extracted/Page_05_Image_04.jpeg",
+        url: "/images/user_extracted/Page_05_Image_09.jpeg",
         title: "Ladies Sport Night A-Frame Field Banner",
         caption: "Durable triangular pitch-side sports field graphics."
       },
@@ -79,6 +79,21 @@ export const servicesData: ServiceItem[] = [
         url: "/images/user_extracted/Page_06_Image_05.png",
         title: "Promotional Canopy Gazebo",
         caption: "Weather-resistant branded outdoor exhibition canopy."
+      },
+      {
+        url: "/images/user_extracted/Page_05_Image_06.jpeg",
+        title: "Qatar Airways Starlink Pillar Wrap",
+        caption: "Seamless corner architectural wall & pillar branding."
+      },
+      {
+        url: "/images/user_extracted/Page_05_Image_04.jpeg",
+        title: "Awsaj Academy Secondary Reception",
+        caption: "Architectural reception desk and wave background wall."
+      },
+      {
+        url: "/images/user_extracted/Page_05_Image_05.jpeg",
+        title: "Education City Entrance Glass Graphics",
+        caption: "Custom frosted and colored window decal illustrations."
       }
     ]
   },
@@ -90,8 +105,8 @@ export const servicesData: ServiceItem[] = [
     subtitle: "Illuminated signage and tension fabric systems with uniform edge-to-edge brilliance.",
     shortDescription: "Ultra-slim backlit displays, architectural totem lightboxes, and frameless fabric lightboxes.",
     fullDescription: "Light up your brand narrative with state-of-the-art illumination systems. We engineer ultra-slim LED lightboxes, frameless silicone edge graphics (SEG), double-sided freestanding totems, and monumental facade lightboxes. Our precision lighting diffusion ensures zero hot spots, crisp color saturation, and striking night-and-day visibility.",
-    heroImage: "/images/user_extracted/Page_07_Image_01.jpeg",
-    previewImage: "/images/user_extracted/Page_07_Image_03.jpeg",
+    heroImage: "/images/user_extracted/Page_07_Image_09.jpeg",
+    previewImage: "/images/user_extracted/Page_07_Image_01.jpeg",
     features: [
       "Frameless SEG (Silicone Edge Graphic) Fabric Lightboxes",
       "Double-Sided Freestanding Retail Totems",
@@ -118,38 +133,48 @@ export const servicesData: ServiceItem[] = [
     gallery: [
       {
         url: "/images/user_extracted/Page_07_Image_01.jpeg",
-        title: "Retail Fashion Store Lightbox",
+        title: "LuLu Fashion Store Lightbox",
         caption: "Edge-to-edge frameless fabric lightbox highlighting apparel collections."
       },
       {
-        url: "/images/user_extracted/Page_07_Image_02.jpeg",
-        title: "LuLu Fashion Store Lightbox",
-        caption: "Vivid multi-panel illuminated retail store installation."
-      },
-      {
-        url: "/images/user_extracted/Page_07_Image_03.jpeg",
-        title: "Apple Watch & iPhone Totem Display",
-        caption: "High-lumen illuminated pillar display in electronics showroom."
+        url: "/images/user_extracted/Page_07_Image_09.jpeg",
+        title: "Louis Philippe & Allen Solly Storefronts",
+        caption: "Architectural illuminated retail entrance columns."
       },
       {
         url: "/images/user_extracted/Page_07_Image_05.jpeg",
-        title: "Apple Watch Ultra Column Kiosk",
-        caption: "Ultra-bright backlit display column with edge-lit LED matrix."
+        title: "Apple Watch & iPhone Column Kiosks",
+        caption: "Four-sided illuminated column kiosk in LuLu Connect showroom."
       },
       {
         url: "/images/user_extracted/Page_07_Image_06.jpeg",
+        title: "Apple Watch Ultra Column Lightbox",
+        caption: "Ultra-bright backlit display column with edge-lit LED matrix."
+      },
+      {
+        url: "/images/user_extracted/Page_07_Image_07.jpeg",
         title: "Allen Solly Backlit Boutique Poster",
         caption: "Ultra-thin magnetic illuminated frame for premium fashion retail."
       },
       {
-        url: "/images/user_extracted/Page_07_Image_09.jpeg",
-        title: "Fitting Room Accent Illumination",
-        caption: "Warm ambiance integrated backlit lightbox in retail fitting suites."
+        url: "/images/user_extracted/Page_07_Image_03.jpeg",
+        title: "Shopping Mall Digital App Totem",
+        caption: "Slim profile double-sided illuminated retail kiosk."
+      },
+      {
+        url: "/images/user_extracted/Page_07_Image_10.jpeg",
+        title: "LuLu Happiness Loyalty Program Wall Lightbox",
+        caption: "Large-format wall-mounted ultra-slim LED lightbox with QR code."
       },
       {
         url: "/images/user_extracted/Page_07_Image_11.jpeg",
-        title: "Freestanding Mobile Totem Display",
-        caption: "Slim profile double-sided illuminated retail kiosk."
+        title: "Men Fitting Room Overhead Illuminated Sign",
+        caption: "Custom 3D backlit lettering signage for retail store wayfinding."
+      },
+      {
+        url: "/images/user_extracted/Page_04_Image_06.jpeg",
+        title: "Luxury Fashion Store SEG Lightbox",
+        caption: "High-impact edge-lit fabric display inside high-end fashion boutique."
       }
     ]
   },
@@ -162,7 +187,7 @@ export const servicesData: ServiceItem[] = [
     shortDescription: "Turnkey event branding, sports arena graphics, press backdrops, and stadium hoardings.",
     fullDescription: "We deliver turnkey visual production for major international sporting tournaments, global summits, VIP press conferences, and corporate galas across Qatar. From towering arena hoardings and stage backdrops to dynamic entrance tunnels and photo op installations, we execute with rapid precision under demanding deadlines.",
     heroImage: "/images/user_extracted/Page_08_Image_01.jpeg",
-    previewImage: "/images/user_extracted/Page_08_Image_02.jpeg",
+    previewImage: "/images/user_extracted/Page_08_Image_03.jpeg",
     features: [
       "Sports Arena & Stadium Perimeter Graphics",
       "VIP Press Conference & Step-and-Repeat Backdrops",
@@ -189,43 +214,48 @@ export const servicesData: ServiceItem[] = [
     gallery: [
       {
         url: "/images/user_extracted/Page_08_Image_01.jpeg",
-        title: "Jr. NBA Mascot & Fan Experience",
+        title: "Jr. NBA Mascot & Tournament Activation",
         caption: "Custom fabricated event backdrop and mascot photo op installation."
       },
       {
-        url: "/images/user_extracted/Page_08_Image_02.jpeg",
-        title: "VIP Press Conference Media Wall",
+        url: "/images/user_extracted/Page_08_Image_03.jpeg",
+        title: "VIP Press Conference Media Wall & Stage",
         caption: "Non-glare step-and-repeat backdrop engineered for television broadcasting."
       },
       {
-        url: "/images/user_extracted/Page_08_Image_03.jpeg",
-        title: "Jr. NBA Arena Overhead Banner",
-        caption: "Large-format suspended arena graphics for national youth basketball league."
+        url: "/images/user_extracted/Page_08_Image_02.jpeg",
+        title: "Jr. NBA Championship Stage & Trophy Backdrop",
+        caption: "Podium stage background structure for awards ceremony."
       },
       {
         url: "/images/user_extracted/Page_08_Image_04.jpeg",
-        title: "Champions Tournament Backdrop",
-        caption: "Widescreen podium backdrop for awards presentation."
+        title: "Jr. NBA Arena Overhead Balcony Banner",
+        caption: "Large-format suspended arena graphics for national youth basketball league."
       },
       {
         url: "/images/user_extracted/Page_08_Image_05.jpeg",
-        title: "Qatar Media Lounge & Broadcast Staging",
+        title: "Qatar Airways QVERSE Interactive Lounge",
         caption: "Experiential lounge branding with integrated display screens."
       },
       {
         url: "/images/user_extracted/Page_08_Image_06.jpeg",
-        title: "Jetour Automotive Launch Stage",
+        title: "Jetour Automotive Showroom Launch Stage",
         caption: "Stage fascias and podium dressing for VIP vehicle unveil."
       },
       {
         url: "/images/user_extracted/Page_08_Image_07.jpeg",
-        title: "FIFA World Cup Community Celebration",
+        title: "National Sport Day Stadium Archway",
         caption: "Grand entrance archway and staging graphics in Doha."
       },
       {
         url: "/images/user_extracted/Page_08_Image_08.jpeg",
-        title: "Indoor Sports Court Graphics",
+        title: "Indoor Sports Court Overhead Banners",
         caption: "High-contrast arena wall and perimeter banners."
+      },
+      {
+        url: "/images/user_extracted/Page_05_Image_01.jpeg",
+        title: "Volkswagen & Qatar Foundation Stadium Hoarding",
+        caption: "Long-run sports perimeter hoardings ('We drive football')."
       }
     ]
   },
@@ -237,8 +267,8 @@ export const servicesData: ServiceItem[] = [
     subtitle: "High-volume precision printing, bespoke corporate literature, and tactile luxury finishes.",
     shortDescription: "Annual reports, executive brochures, luxury presentation folders, desk calendars, and stationery.",
     fullDescription: "Our offset and high-definition commercial print division delivers unmatched color fidelity, crisp micro-typography, and bespoke finishing. Whether producing thousands of corporate annual reports, luxury spot-UV brochures, custom presentation folders, or desk calendars, we combine premium paper stocks with masterful press craftsmanship.",
-    heroImage: "/images/user_extracted/Page_09_Image_01.jpeg",
-    previewImage: "/images/user_extracted/Page_09_Image_04.jpeg",
+    heroImage: "/images/user_extracted/Page_09_Image_02.jpeg",
+    previewImage: "/images/user_extracted/Page_09_Image_01.jpeg",
     features: [
       "High-Volume Multi-Color Offset Lithography",
       "Executive Annual Reports & Company Profiles",
@@ -265,23 +295,23 @@ export const servicesData: ServiceItem[] = [
     gallery: [
       {
         url: "/images/user_extracted/Page_09_Image_01.jpeg",
-        title: "Corporate Booklets & Profiles",
-        caption: "Textured paper stocks with precision offset color rendering."
-      },
-      {
-        url: "/images/user_extracted/Page_09_Image_02.jpeg",
         title: "Duplex Geometric Business Cards",
         caption: "Heavyweight 350gsm duplex cards with geometric spot-UV."
       },
       {
+        url: "/images/user_extracted/Page_09_Image_02.jpeg",
+        title: "Corporate Lookbooks & Catalogues",
+        caption: "Textured paper stocks with precision offset color rendering."
+      },
+      {
         url: "/images/user_extracted/Page_09_Image_03.jpeg",
-        title: "Custom Desk Calendar 2023",
-        caption: "Twin-loop wire bound monthly calendar with custom easel."
+        title: "Creative Tri-Fold Brochures",
+        caption: "Multi-panel brochures with sharp folding and vibrant photography."
       },
       {
         url: "/images/user_extracted/Page_09_Image_04.jpeg",
-        title: "Creative Tri-Fold Brochures",
-        caption: "Multi-panel brochures with sharp folding and vibrant photography."
+        title: "Custom Desk Calendar 2023",
+        caption: "Twin-loop wire bound monthly calendar with custom easel."
       },
       {
         url: "/images/user_extracted/Page_09_Image_05.jpeg",
@@ -326,18 +356,13 @@ export const servicesData: ServiceItem[] = [
     gallery: [
       {
         url: "/images/user_extracted/Page_10_Image_02.jpeg",
-        title: "VIP Executive Gift Set",
-        caption: "Custom foam cradle with matching thermo bottle, journal, pen, and keychain."
+        title: "Toyota VIP Executive Gift Set",
+        caption: "Custom foam cradle with matching thermo bottle, journal, pen, powerbank, and keychain."
       },
       {
-        url: "/images/user_extracted/Page_10_Image_06.jpeg",
-        title: "Luxury Velvet Gift Pouches & Tags",
+        url: "/images/user_extracted/Page_10_Image_10.jpeg",
+        title: "Oceanic Opal Luxury Velvet Pouches & Gift Boxes",
         caption: "Gold-foil stamped presentation boxes and velvet drawstring pouches."
-      },
-      {
-        url: "/images/user_extracted/Page_10_Image_11.jpeg",
-        title: "Qatar Foundation & Doha Bank Eco Bags",
-        caption: "Heavyweight organic cotton tote bags with precision screen printing."
       },
       {
         url: "/images/user_extracted/Page_10_Image_13.jpeg",
@@ -346,13 +371,28 @@ export const servicesData: ServiceItem[] = [
       },
       {
         url: "/images/user_extracted/Page_10_Image_15.jpeg",
-        title: "Tournament Gold & Silver Medals",
-        caption: "Cast metal medals with embossed national sport ribbons."
+        title: "Executive Desk Journal & Pen Tray",
+        caption: "Minimalist desk notebook and pen presentation set."
       },
       {
         url: "/images/user_extracted/Page_10_Image_16.jpeg",
-        title: "Champion Trophy Cup",
-        caption: "Polished gold trophy cup mounted on black marble pedestal."
+        title: "Sadu Pattern Hardwood Box & Journal Set",
+        caption: "Luxury wooden presentation case with embroidered Sadu journal."
+      },
+      {
+        url: "/images/user_extracted/Page_10_Image_06.jpeg",
+        title: "Certificate of Appreciation Wooden Plaque",
+        caption: "Silver-finish engraved plate on dark walnut wooden plaque."
+      },
+      {
+        url: "/images/user_extracted/Page_10_Image_11.jpeg",
+        title: "Qatar Airways Privilege Club Cotton Tote Bags",
+        caption: "Heavyweight organic cotton tote bags with precision screen printing."
+      },
+      {
+        url: "/images/user_extracted/Page_10_Image_14.jpeg",
+        title: "Sidra Qatar Academy Eco Tote Bags",
+        caption: "Custom branded canvas tote bag for educational events."
       },
       {
         url: "/images/user_extracted/Page_11_Image_01.jpeg",
@@ -361,8 +401,13 @@ export const servicesData: ServiceItem[] = [
       },
       {
         url: "/images/user_extracted/Page_11_Image_08.jpeg",
-        title: "QDB VIP Executive Presentation Set",
-        caption: "Hardbound notebook and insulated drinkware set in luxury magnetic case."
+        title: "Qatar Foundation Eco Tote Bags",
+        caption: "Contrasting black and white organic cotton shopping bags."
+      },
+      {
+        url: "/images/user_extracted/Page_10_Image_08.png",
+        title: "National Sport Day Branded Neck Lanyards",
+        caption: "Full-color dye-sublimated event badge lanyards."
       }
     ]
   },
@@ -374,7 +419,7 @@ export const servicesData: ServiceItem[] = [
     subtitle: "Precision laser-cut acrylic awards, dimensional architectural signage, and luxury displays.",
     shortDescription: "Custom crystal-clear trophies, executive desk plates, building wayfinding directories, and safety signs.",
     fullDescription: "Acrylic combines glass-like optical clarity with exceptional durability and structural versatility. We manufacture bespoke recognition awards, dimensional cut-out lettering, polished corporate desk nameplates, building directories, safety signs, and luxury product display stands using high-precision CNC routing, laser cutting, and diamond edge polishing.",
-    heroImage: "/images/user_extracted/Page_12_Image_07.jpeg",
+    heroImage: "/images/user_extracted/Page_12_Image_09.jpeg",
     previewImage: "/images/user_extracted/Page_12_Image_01.jpeg",
     features: [
       "Custom Multi-Layered Recognition Awards & Trophies",
@@ -411,7 +456,7 @@ export const servicesData: ServiceItem[] = [
         caption: "Curved optical crystal flame on blue-tinted beveled pedestal."
       },
       {
-        url: "/images/user_extracted/Page_12_Image_07.jpeg",
+        url: "/images/user_extracted/Page_12_Image_09.jpeg",
         title: "Hilton Resorts Diamond Trophy",
         caption: "Faceted diamond crystal trophy honoring top sales leadership."
       },
@@ -421,17 +466,27 @@ export const servicesData: ServiceItem[] = [
         caption: "Frosted acrylic room plaque with brushed stainless steel standoffs."
       },
       {
-        url: "/images/user_extracted/Page_12_Image_05.jpeg",
+        url: "/images/user_extracted/Page_12_Image_03.jpeg",
         title: "Executive Triangular Desk Nameplate",
         caption: "High-gloss clear acrylic prism with laser-engraved title."
       },
       {
-        url: "/images/user_extracted/Page_12_Image_08.jpeg",
+        url: "/images/user_extracted/Page_12_Image_05.jpeg",
+        title: "Metallic Door & Office Signs",
+        caption: "Brushed silver and gold acrylic door nameplates."
+      },
+      {
+        url: "/images/user_extracted/Page_12_Image_06.jpeg",
+        title: "Countertop Acrylic Brochure Holder",
+        caption: "Clear acrylic slant-back brochure and leaflet stand."
+      },
+      {
+        url: "/images/user_extracted/Page_12_Image_07.jpeg",
         title: "Compliant Facility Safety Signage",
         caption: "High-durability acrylic safety icons (Fire, Exit, First Aid, Warning)."
       },
       {
-        url: "/images/user_extracted/Page_12_Image_09.jpeg",
+        url: "/images/user_extracted/Page_12_Image_08.jpeg",
         title: "Multi-Floor Elevator Directory Board",
         caption: "Brushed metallic architectural directory with clear acrylic facing."
       }
@@ -473,7 +528,7 @@ export const servicesData: ServiceItem[] = [
     gallery: [
       {
         url: "/images/user_extracted/Page_13_Image_03.jpeg",
-        title: "Industrial Safety Coveralls & Boilersuits",
+        title: "Veolia Industrial Safety Coveralls & Boilersuits",
         caption: "Heavy-duty reflective workwear with embroidered corporate branding."
       },
       {
@@ -483,23 +538,33 @@ export const servicesData: ServiceItem[] = [
       },
       {
         url: "/images/user_extracted/Page_13_Image_05.jpeg",
-        title: "LuLu Hypermarket Staff Uniform",
-        caption: "Durable combed cotton staff tee with vibrant chest logo."
-      },
-      {
-        url: "/images/user_extracted/Page_13_Image_06.jpeg",
         title: "Qatar Duty Free Executive Polo",
         caption: "Black polo shirt with gold metallic crest embroidery."
       },
       {
         url: "/images/user_extracted/Page_13_Image_02.jpeg",
+        title: "LuLu Hypermarket Staff Uniform Tee",
+        caption: "Durable combed cotton staff tee with vibrant chest logo."
+      },
+      {
+        url: "/images/user_extracted/Page_13_Image_06.jpeg",
         title: "Custom Sublimated Team Kit (Heyson 10)",
         caption: "Moisture-wicking athletic jerseys for tournaments and leagues."
       },
       {
+        url: "/images/user_extracted/Page_13_Image_01.jpeg",
+        title: "Jr. NBA Branded Baseball Cap",
+        caption: "White structured twill cap with embroidered league logo."
+      },
+      {
         url: "/images/user_extracted/Page_13_Image_07.jpeg",
-        title: "Branded Headwear & Caps",
-        caption: "Structured cotton twill baseball caps with dimensional 3D embroidery."
+        title: "Education City Maroon Embroidered Cap",
+        caption: "Maroon athletic baseball cap with contrast brim piping."
+      },
+      {
+        url: "/images/user_extracted/Page_13_Image_08.jpeg",
+        title: "Jr. NBA Silicone Athletic Wristband",
+        caption: "Durable debossed silicone sports wristband."
       }
     ]
   },
@@ -549,13 +614,18 @@ export const servicesData: ServiceItem[] = [
       },
       {
         url: "/images/user_extracted/Page_14_Image_03.jpeg",
-        title: "Green Energy Commercial Pickup",
-        caption: "Eco-fleet branding with custom side decals and tailgate graphics."
+        title: "Medical Center SUV Fleet Wrap",
+        caption: "DNA helix and QR-code commercial wrap on Toyota Fortuner."
       },
       {
         url: "/images/user_extracted/Page_14_Image_04.jpeg",
-        title: "Medical Center SUV Fleet Wrap",
-        caption: "DNA helix and QR-code commercial wrap on Toyota Fortuner."
+        title: "Green Energy Commercial Pickup Fleet",
+        caption: "Eco-fleet branding with custom side decals and tailgate graphics."
+      },
+      {
+        url: "/images/user_extracted/Page_06_Image_01.jpeg",
+        title: "Jr. NBA City Transit Tram Wrap",
+        caption: "Full exterior blue livery wrap on municipal passenger tram."
       }
     ]
   }

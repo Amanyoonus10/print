@@ -60,10 +60,10 @@ interface ContentContextType {
 const ContentContext = createContext<ContentContextType | null>(null);
 
 const STORAGE_KEYS = {
-  COMPANY: 'face_printing_company_content_v1',
-  INTRO_IMAGES: 'face_printing_intro_images_v1',
-  SERVICES: 'face_printing_services_content_v1',
-  PROJECTS: 'face_printing_projects_content_v1',
+  COMPANY: 'face_printing_company_content_v2',
+  INTRO_IMAGES: 'face_printing_intro_images_v2',
+  SERVICES: 'face_printing_services_content_v2',
+  PROJECTS: 'face_printing_projects_content_v2',
   EDIT_MODE: 'face_printing_edit_mode_active',
 };
 

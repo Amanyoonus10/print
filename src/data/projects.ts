@@ -29,14 +29,19 @@ export const projectsData: ProjectItem[] = [
         caption: "Custom backdrop and mascot photo station for fans and players."
       },
       {
-        url: "/images/user_extracted/Page_08_Image_02.jpeg",
-        title: "VIP Press Conference Media Wall",
+        url: "/images/user_extracted/Page_08_Image_03.jpeg",
+        title: "VIP Press Conference Media Wall & Stage",
         caption: "Non-glare multi-brand media wall designed for photography and TV broadcasting."
       },
       {
-        url: "/images/user_extracted/Page_08_Image_04.jpeg",
+        url: "/images/user_extracted/Page_08_Image_02.jpeg",
         title: "Championship Stage & Trophy Backdrop",
         caption: "Podium stage background structure for awards ceremony."
+      },
+      {
+        url: "/images/user_extracted/Page_08_Image_04.jpeg",
+        title: "Indoor Arena Balcony Banner",
+        caption: "Suspended large-format arena balcony graphics."
       },
       {
         url: "/images/user_extracted/Page_08_Image_08.jpeg",
@@ -54,7 +59,7 @@ export const projectsData: ProjectItem[] = [
     client: "Jetour Auto Qatar",
     year: "2025",
     featured: true,
-    coverImage: "/images/user_extracted/Page_04_Image_01.jpeg",
+    coverImage: "/images/user_extracted/Page_04_Image_03.jpeg",
     summary: "Large-scale pop-up media walls, showroom podium graphics, and high-impact automotive launch backdrops.",
     description: "To launch the latest SUV fleet in Doha, FACE PRINTING SERVICES engineered seamless curved pop-up media walls featuring intricate geometric motifs, high-durability floor decals, and precision-cut acrylic vehicle spec stands.",
     challenge: "Achieving flawless color consistency across mixed materials including fabric pop-ups, metallic vinyls, and acrylic podiums.",
@@ -67,7 +72,7 @@ export const projectsData: ProjectItem[] = [
     ],
     gallery: [
       {
-        url: "/images/user_extracted/Page_04_Image_01.jpeg",
+        url: "/images/user_extracted/Page_04_Image_03.jpeg",
         title: "Jetour Launch Media Wall",
         caption: "Intricate geometric pattern step-and-repeat backdrop for automotive launch."
       },
@@ -87,7 +92,7 @@ export const projectsData: ProjectItem[] = [
     client: "Allen Solly & Louis Philippe Flagships",
     year: "2024",
     featured: true,
-    coverImage: "/images/user_extracted/Page_07_Image_01.jpeg",
+    coverImage: "/images/user_extracted/Page_07_Image_09.jpeg",
     summary: "Architectural frameless silicone edge fabric lightboxes and double-sided freestanding totems for premier fashion boutiques.",
     description: "Fabrication and installation of ultra-slim, high-lumen SEG fabric lightboxes across flagship fashion boutiques in premier Doha shopping destinations. The installation featured floor-to-ceiling seamless backlit graphics and double-sided freestanding totems.",
     challenge: "Engineering ultra-thin profiles with edge-to-edge illumination that allows seasonal fabric graphic changes in under 3 minutes.",
@@ -100,17 +105,22 @@ export const projectsData: ProjectItem[] = [
     ],
     gallery: [
       {
-        url: "/images/user_extracted/Page_07_Image_01.jpeg",
-        title: "Fashion Boutique Lightbox",
+        url: "/images/user_extracted/Page_07_Image_09.jpeg",
+        title: "Louis Philippe & Allen Solly Storefronts",
         caption: "Evenly diffused illumination highlighting seasonal collections."
       },
       {
-        url: "/images/user_extracted/Page_07_Image_03.jpeg",
-        title: "Electronics Showroom Totem",
-        caption: "High-lumen Apple Watch & iPhone totem display with uniform illumination."
+        url: "/images/user_extracted/Page_07_Image_01.jpeg",
+        title: "LuLu Fashion Store Lightbox",
+        caption: "Edge-to-edge frameless fabric lightbox highlighting apparel collections."
       },
       {
-        url: "/images/user_extracted/Page_07_Image_06.jpeg",
+        url: "/images/user_extracted/Page_07_Image_05.jpeg",
+        title: "Apple Watch & iPhone Column Kiosks",
+        caption: "High-lumen illuminated pillar display in electronics showroom."
+      },
+      {
+        url: "/images/user_extracted/Page_07_Image_07.jpeg",
         title: "Allen Solly Backlit Boutique Poster",
         caption: "Ultra-thin magnetic backlit frame for fashion retail."
       }
@@ -119,10 +129,10 @@ export const projectsData: ProjectItem[] = [
   {
     id: "qdb-executive-gift-collection",
     slug: "qdb-executive-gift-collection",
-    title: "QDB & Corporate VIP Executive Gift Suite",
+    title: "VIP Corporate Executive Gift Suite",
     category: "Gift Items & Packaging",
     serviceSlug: "gift-items",
-    client: "Qatar Development Bank & Partners",
+    client: "Corporate VIP Clients & Partners",
     year: "2025",
     featured: true,
     coverImage: "/images/user_extracted/Page_10_Image_02.jpeg",
@@ -148,9 +158,14 @@ export const projectsData: ProjectItem[] = [
         caption: "Precision laser marked stainless steel flask with temperature touch display."
       },
       {
-        url: "/images/user_extracted/Page_11_Image_08.jpeg",
-        title: "QDB Hardbound Notebook Set",
-        caption: "Custom executive notebook and drinkware in rigid gift box."
+        url: "/images/user_extracted/Page_10_Image_16.jpeg",
+        title: "Sadu Pattern Hardwood Box & Journal",
+        caption: "Luxury wooden presentation case with embroidered Sadu journal."
+      },
+      {
+        url: "/images/user_extracted/Page_10_Image_10.jpeg",
+        title: "Oceanic Opal Luxury Velvet Pouches",
+        caption: "Gold-foil stamped presentation boxes and velvet drawstring pouches."
       }
     ]
   },
@@ -162,7 +177,7 @@ export const projectsData: ProjectItem[] = [
     serviceSlug: "vehicle-wrapping",
     client: "Green Energy & City Transit",
     year: "2024",
-    featured: false,
+    featured: true,
     coverImage: "/images/user_extracted/Page_14_Image_02.jpeg",
     summary: "Full exterior vinyl wrapping for 12m electric transit buses, commercial vans, and utility pickup fleets.",
     description: "Execution of full vehicle branding for modern zero-emission transit buses and corporate utility fleets in Qatar. The wraps featured dynamic livery graphics, perforated one-way window vision films, and UV-shielding laminate to withstand desert sun and sand.",
@@ -186,14 +201,19 @@ export const projectsData: ProjectItem[] = [
         caption: "High-contrast clean commercial wrap with crisp typography and contact livery."
       },
       {
-        url: "/images/user_extracted/Page_14_Image_03.jpeg",
-        title: "Green Energy Pickup Fleet",
+        url: "/images/user_extracted/Page_14_Image_04.jpeg",
+        title: "Green Energy Commercial Pickup Fleet",
         caption: "Commercial fleet decal application on side panels and tailgate."
       },
       {
-        url: "/images/user_extracted/Page_14_Image_04.jpeg",
+        url: "/images/user_extracted/Page_14_Image_03.jpeg",
         title: "Medical Center SUV Fleet",
         caption: "Full contour commercial SUV wrap with QR code and graphics."
+      },
+      {
+        url: "/images/user_extracted/Page_06_Image_01.jpeg",
+        title: "Jr. NBA City Transit Tram Wrap",
+        caption: "Full exterior blue livery wrap on municipal passenger tram."
       }
     ]
   },
@@ -205,8 +225,8 @@ export const projectsData: ProjectItem[] = [
     serviceSlug: "acrylic-works",
     client: "Hilton Resorts & Corporate Towers",
     year: "2025",
-    featured: false,
-    coverImage: "/images/user_extracted/Page_12_Image_07.jpeg",
+    featured: true,
+    coverImage: "/images/user_extracted/Page_12_Image_09.jpeg",
     summary: "Custom diamond-polished crystal acrylic trophies, standoff door number plaques, and directory boards.",
     description: "Precision CNC fabrication and laser engraving of bespoke employee recognition trophies, luxury hotel room numbering plaques, and commercial tower directories. Designed with multi-layered acrylics and brushed metallic accents.",
     challenge: "Producing crystal-clear edge finishes without stress marks or laser scorch.",
@@ -219,7 +239,7 @@ export const projectsData: ProjectItem[] = [
     ],
     gallery: [
       {
-        url: "/images/user_extracted/Page_12_Image_07.jpeg",
+        url: "/images/user_extracted/Page_12_Image_09.jpeg",
         title: "Hilton Resorts Diamond Trophy",
         caption: "Laser-contoured diamond crystal award on black marble base."
       },
@@ -229,14 +249,34 @@ export const projectsData: ProjectItem[] = [
         caption: "Multi-layered acrylic trophy with gold foil insignia."
       },
       {
+        url: "/images/user_extracted/Page_12_Image_02.jpeg",
+        title: "Crystal Flame Appreciation Award",
+        caption: "Curved optical crystal flame on blue-tinted beveled pedestal."
+      },
+      {
         url: "/images/user_extracted/Page_12_Image_04.jpeg",
         title: "Door Number Plaque 48",
         caption: "Frosted acrylic panel with brushed metal standoff mounts."
       },
       {
-        url: "/images/user_extracted/Page_12_Image_05.jpeg",
+        url: "/images/user_extracted/Page_12_Image_03.jpeg",
         title: "Executive Desk Nameplate",
         caption: "High-gloss triangular clear acrylic prism with laser-engraved title."
+      },
+      {
+        url: "/images/user_extracted/Page_12_Image_05.jpeg",
+        title: "Metallic Door & Office Signs",
+        caption: "Brushed silver and gold acrylic door nameplates."
+      },
+      {
+        url: "/images/user_extracted/Page_12_Image_07.jpeg",
+        title: "Compliant Facility Safety Signage",
+        caption: "High-durability acrylic safety icons (Fire, Exit, First Aid, Warning)."
+      },
+      {
+        url: "/images/user_extracted/Page_12_Image_08.jpeg",
+        title: "Multi-Floor Elevator Directory Board",
+        caption: "Brushed metallic architectural directory with clear acrylic facing."
       }
     ]
   }
