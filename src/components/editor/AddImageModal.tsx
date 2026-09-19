@@ -274,7 +274,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-sans text-sm font-bold tracking-wide transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-sans text-sm font-bold tracking-wide transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Publish to Website</span>
               </button>

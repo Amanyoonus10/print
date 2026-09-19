@@ -120,7 +120,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
             <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
               <button
                 onClick={onOpenQuoteModal}
-                className="px-8 py-4 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-extrabold text-xs uppercase tracking-wider flex items-center gap-2.5 transition-all duration-300 shadow-[0_4px_25px_rgba(0,132,200,0.35)] cursor-pointer group hover:scale-105"
+                className="px-8 py-4 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-display font-extrabold text-xs uppercase tracking-wider flex items-center gap-2.5 transition-all duration-300 shadow-[0_4px_25px_rgba(73,193,218,0.35)] cursor-pointer group hover:scale-105"
               >
                 <span>Request Project Quotation</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

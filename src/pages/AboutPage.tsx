@@ -14,7 +14,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
       {/* Hero Header */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 border-b border-[#EDE8DE]">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0084C8]/10 border border-[#0084C8]/25 text-[#0084C8] font-mono text-xs uppercase tracking-widest mb-6 font-bold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#49C1DA]/10 border border-[#49C1DA]/25 text-[#49C1DA] font-mono text-xs uppercase tracking-widest mb-6 font-bold">
             <span>Doha, Qatar</span>
             <span>•</span>
             <span>CR 158065</span>
@@ -52,7 +52,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
               </p>
 
               <div className="p-6 rounded-2xl bg-white border border-[#EDE8DE] flex items-center gap-4 mt-2 shadow-xs">
-                <div className="w-12 h-12 rounded-xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8] shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-[#49C1DA]/10 border border-[#49C1DA]/25 flex items-center justify-center text-[#49C1DA] shrink-0">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
@@ -111,13 +111,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
                 className="p-6 rounded-2xl bg-white border border-[#EDE8DE] hover:border-[#B8955A]/60 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
-                  <span className="font-mono text-xs text-[#0084C8] font-bold">0{idx + 1}</span>
+                  <span className="font-mono text-xs text-[#49C1DA] font-bold">0{idx + 1}</span>
                   <h4 className="font-display font-bold text-xl text-[#171717] mt-2">{item.title}</h4>
                   <p className="text-sm text-[#555555] mt-2 leading-relaxed">{item.desc}</p>
                 </div>
                 <Link
                   to={`/services/${item.slug}`}
-                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-mono text-[#0084C8] hover:text-[#B8955A] font-bold"
+                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-mono text-[#49C1DA] hover:text-[#B8955A] font-bold"
                 >
                   <span>Explore pillar</span>
                 </Link>
@@ -140,7 +140,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
-              <div className="w-12 h-12 rounded-2xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8]">
+              <div className="w-12 h-12 rounded-2xl bg-[#49C1DA]/10 border border-[#49C1DA]/25 flex items-center justify-center text-[#49C1DA]">
                 <Cpu className="w-6 h-6" />
               </div>
               <h3 className="font-display font-bold text-2xl text-[#171717]">Advanced Technology</h3>
@@ -150,7 +150,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
             </div>
 
             <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
-              <div className="w-12 h-12 rounded-2xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8]">
+              <div className="w-12 h-12 rounded-2xl bg-[#49C1DA]/10 border border-[#49C1DA]/25 flex items-center justify-center text-[#49C1DA]">
                 <Sparkles className="w-6 h-6" />
               </div>
               <h3 className="font-display font-bold text-2xl text-[#171717]">Skilled Designers</h3>
@@ -160,7 +160,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
             </div>
 
             <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
-              <div className="w-12 h-12 rounded-2xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8]">
+              <div className="w-12 h-12 rounded-2xl bg-[#49C1DA]/10 border border-[#49C1DA]/25 flex items-center justify-center text-[#49C1DA]">
                 <HeartHandshake className="w-6 h-6" />
               </div>
               <h3 className="font-display font-bold text-2xl text-[#171717]">Reliable Service</h3>
@@ -215,7 +215,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal }) => {
               <div className="pt-4">
                 <button
                   onClick={onOpenQuoteModal}
-                  className="px-8 py-4 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(0,132,200,0.3)] cursor-pointer hover:scale-105"
+                  className="px-8 py-4 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(73,193,218,0.3)] cursor-pointer hover:scale-105"
                 >
                   Discuss Your Project
                 </button>

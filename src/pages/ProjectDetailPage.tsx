@@ -58,7 +58,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Link
           to="/work"
-          className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#0084C8] hover:text-[#B8955A] uppercase tracking-wider"
+          className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#49C1DA] hover:text-[#B8955A] uppercase tracking-wider"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Authentic Portfolio</span>
@@ -77,7 +77,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
 
         <div className="max-w-4xl flex flex-col gap-6">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="font-mono text-xs font-bold text-[#0084C8] px-3 py-1.5 rounded-full bg-[#0084C8]/10 border border-[#0084C8]/25">
+            <span className="font-mono text-xs font-bold text-[#49C1DA] px-3 py-1.5 rounded-full bg-[#49C1DA]/10 border border-[#49C1DA]/25">
               {project.category}
             </span>
             <span className="font-mono text-xs text-[#B8955A] bg-white px-3 py-1.5 rounded-full border border-[#EDE8DE] font-bold">
@@ -98,7 +98,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 p-6 rounded-2xl bg-white border border-[#EDE8DE] shadow-xs">
           <div className="flex flex-col">
             <span className="text-[10px] font-mono text-[#B8955A] uppercase flex items-center gap-1.5 font-bold">
-              <Building2 className="w-3.5 h-3.5 text-[#0084C8]" />
+              <Building2 className="w-3.5 h-3.5 text-[#49C1DA]" />
               Client
             </span>
             <span className="text-sm font-display font-bold text-[#171717] mt-1">{project.client}</span>
@@ -106,7 +106,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
 
           <div className="flex flex-col">
             <span className="text-[10px] font-mono text-[#B8955A] uppercase flex items-center gap-1.5 font-bold">
-              <Tag className="w-3.5 h-3.5 text-[#0084C8]" />
+              <Tag className="w-3.5 h-3.5 text-[#49C1DA]" />
               Discipline
             </span>
             <span className="text-sm font-display font-bold text-[#171717] mt-1">{project.category}</span>
@@ -114,7 +114,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
 
           <div className="flex flex-col">
             <span className="text-[10px] font-mono text-[#B8955A] uppercase flex items-center gap-1.5 font-bold">
-              <Calendar className="w-3.5 h-3.5 text-[#0084C8]" />
+              <Calendar className="w-3.5 h-3.5 text-[#49C1DA]" />
               Completed
             </span>
             <span className="text-sm font-display font-bold text-[#171717] mt-1">{project.year}</span>
@@ -142,7 +142,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-[#EDE8DE]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-3 shadow-xs">
-            <span className="font-mono text-xs text-[#0084C8] uppercase tracking-widest font-bold">
+            <span className="font-mono text-xs text-[#49C1DA] uppercase tracking-widest font-bold">
               The Engineering Challenge
             </span>
             <h3 className="font-display font-bold text-2xl text-[#171717]">Demanding Deadlines & Precision</h3>
@@ -152,7 +152,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
           </div>
 
           <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-3 shadow-xs">
-            <span className="font-mono text-xs text-[#0084C8] uppercase tracking-widest font-bold">
+            <span className="font-mono text-xs text-[#49C1DA] uppercase tracking-widest font-bold">
               Our Technical Solution
             </span>
             <h3 className="font-display font-bold text-2xl text-[#171717]">Flawless Material Execution</h3>
@@ -220,7 +220,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
             <p className="font-mono text-sm text-[#555555]">No photos currently in this gallery.</p>
             <button
               onClick={() => setIsAddGalleryImageOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#0084C8] text-white font-mono text-xs uppercase font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-[#49C1DA] text-white font-mono text-xs uppercase font-bold cursor-pointer"
             >
               + Add First Photo Exhibit
             </button>
@@ -230,7 +230,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         <div className="mt-16 text-center">
           <button
             onClick={onOpenQuoteModal}
-            className="px-8 py-4 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-bold text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-[0_4px_20px_rgba(0,132,200,0.35)] cursor-pointer hover:scale-105 transition-all"
+            className="px-8 py-4 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-display font-bold text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-[0_4px_20px_rgba(73,193,218,0.35)] cursor-pointer hover:scale-105 transition-all"
           >
             <span>Inquire About Similar Project</span>
             <ArrowUpRight className="w-4 h-4" />

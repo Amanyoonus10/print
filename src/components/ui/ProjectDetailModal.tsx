@@ -31,7 +31,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           {/* Top Sticky Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-[#EDE8DE] bg-[#F7F4EE] sticky top-0 z-20 backdrop-blur-md">
             <div className="flex items-center gap-2.5">
-              <span className="font-mono text-xs font-bold text-[#0084C8] px-3 py-1 rounded-full bg-[#0084C8]/10 border border-[#0084C8]/25">
+              <span className="font-mono text-xs font-bold text-[#49C1DA] px-3 py-1 rounded-full bg-[#49C1DA]/10 border border-[#49C1DA]/25">
                 {project.category}
               </span>
               <span className="font-mono text-xs text-[#B8955A] font-bold">Year {project.year}</span>
@@ -61,19 +61,19 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-[#F7F4EE] border border-[#EDE8DE] text-xs font-mono">
               <div>
                 <span className="text-[#B8955A] uppercase flex items-center gap-1 font-bold">
-                  <Building2 className="w-3.5 h-3.5 text-[#0084C8]" /> Client
+                  <Building2 className="w-3.5 h-3.5 text-[#49C1DA]" /> Client
                 </span>
                 <span className="font-bold text-[#171717] block mt-0.5">{project.client}</span>
               </div>
               <div>
                 <span className="text-[#B8955A] uppercase flex items-center gap-1 font-bold">
-                  <Tag className="w-3.5 h-3.5 text-[#0084C8]" /> Discipline
+                  <Tag className="w-3.5 h-3.5 text-[#49C1DA]" /> Discipline
                 </span>
                 <span className="font-bold text-[#171717] block mt-0.5">{project.category}</span>
               </div>
               <div>
                 <span className="text-[#B8955A] uppercase flex items-center gap-1 font-bold">
-                  <Calendar className="w-3.5 h-3.5 text-[#0084C8]" /> Year
+                  <Calendar className="w-3.5 h-3.5 text-[#49C1DA]" /> Year
                 </span>
                 <span className="font-bold text-[#171717] block mt-0.5">{project.year}</span>
               </div>
@@ -97,7 +97,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {project.challenge && (
                   <div className="p-5 rounded-2xl bg-[#F7F4EE] border border-[#EDE8DE]">
-                    <span className="font-mono text-xs text-[#0084C8] uppercase font-bold block mb-1">
+                    <span className="font-mono text-xs text-[#49C1DA] uppercase font-bold block mb-1">
                       The Challenge
                     </span>
                     <p className="text-xs sm:text-sm text-[#555555] leading-relaxed">
@@ -107,7 +107,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 )}
                 {project.solution && (
                   <div className="p-5 rounded-2xl bg-[#F7F4EE] border border-[#EDE8DE]">
-                    <span className="font-mono text-xs text-[#0084C8] uppercase font-bold block mb-1">
+                    <span className="font-mono text-xs text-[#49C1DA] uppercase font-bold block mb-1">
                       Our Solution
                     </span>
                     <p className="text-xs sm:text-sm text-[#555555] leading-relaxed">
@@ -163,7 +163,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     onClose();
                     onOpenQuoteModal();
                   }}
-                  className="px-6 py-2.5 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md cursor-pointer hover:scale-102 transition-all"
+                  className="px-6 py-2.5 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md cursor-pointer hover:scale-102 transition-all"
                 >
                   <span>Inquire Similar Project</span>
                   <ArrowUpRight className="w-4 h-4" />

@@ -76,7 +76,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-[#EDE8DE] bg-[#F7F4EE]">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#0084C8]/10 text-[#0084C8] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-full bg-[#49C1DA]/10 text-[#49C1DA] flex items-center justify-center">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
@@ -114,7 +114,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                     placeholder={field.placeholder}
                     value={formValues[field.key] ?? ''}
                     onChange={e => handleChange(field.key, e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#0084C8] focus:ring-2 focus:ring-[#0084C8]/20 outline-none text-sm text-[#171717] resize-y leading-relaxed bg-[#F7F4EE]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#49C1DA] focus:ring-2 focus:ring-[#49C1DA]/20 outline-none text-sm text-[#171717] resize-y leading-relaxed bg-[#F7F4EE]"
                   />
                 ) : (
                   <input
@@ -122,7 +122,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                     placeholder={field.placeholder}
                     value={formValues[field.key] ?? ''}
                     onChange={e => handleChange(field.key, e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#0084C8] focus:ring-2 focus:ring-[#0084C8]/20 outline-none text-sm text-[#171717] bg-[#F7F4EE]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#49C1DA] focus:ring-2 focus:ring-[#49C1DA]/20 outline-none text-sm text-[#171717] bg-[#F7F4EE]"
                   />
                 )}
               </div>
@@ -142,7 +142,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
                   setPinCode(e.target.value);
                   if (error) setError('');
                 }}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#0084C8] focus:ring-1 focus:ring-[#0084C8] outline-none text-sm text-[#171717] placeholder:text-gray-400 bg-[#F7F4EE]"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#EDE8DE] focus:border-[#49C1DA] focus:ring-1 focus:ring-[#49C1DA] outline-none text-sm text-[#171717] placeholder:text-gray-400 bg-[#F7F4EE]"
               />
             </div>
 
@@ -157,7 +157,7 @@ export const EditTextModal: React.FC<EditTextModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                className="px-6 py-2.5 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md transition-all cursor-pointer"
               >
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Changes</span>

@@ -41,7 +41,7 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({ onOpenQuoteModal }) =>
 
           <button
             onClick={onOpenQuoteModal}
-            className="px-8 py-4 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_4px_25px_rgba(0,132,200,0.35)] shrink-0 cursor-pointer hover:scale-105 transition-all"
+            className="px-8 py-4 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_4px_25px_rgba(73,193,218,0.35)] shrink-0 cursor-pointer hover:scale-105 transition-all"
           >
             <span>Start Your Partnership</span>
             <ArrowUpRight className="w-4 h-4" />
