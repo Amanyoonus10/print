@@ -51,7 +51,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           FACE
         </span>
         {showSubtitle && (
-          <span className={`font-mono text-[#B8955A] font-semibold uppercase mt-1 leading-none ${subtitleSizes[size]} transition-colors`}>
+          <span className={`font-mono text-[#49C1DA] font-semibold uppercase mt-1 leading-none ${subtitleSizes[size]} transition-colors group-hover:text-[#32AEC8]`}>
             PRINTING SERVICES
           </span>
         )}
