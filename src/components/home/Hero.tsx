@@ -12,6 +12,7 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
 
   useEffect(() => {
     if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5;
       videoRef.current.play().catch(() => {
         // Autoplay policy fallback
       });
@@ -39,6 +40,12 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
             loop
             playsInline
             preload="auto"
+            onLoadedMetadata={(e) => {
+              e.currentTarget.playbackRate = 0.5;
+            }}
+            onPlay={(e) => {
+              e.currentTarget.playbackRate = 0.5;
+            }}
             style={{ width: '100%', height: '100%', objectFit: 'cover', minWidth: '100%', minHeight: '100%' }}
             className="w-full h-full object-cover"
           />
