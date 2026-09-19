@@ -35,34 +35,37 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
   };
 
   return (
-    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-1.5 sm:gap-2 ${className}`}>
       {onAddImage && (
         <button
           onClick={onAddImage}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 hover:border-gray-300 font-mono text-xs font-semibold shadow-xs transition-all duration-200 cursor-pointer group active:scale-98"
+          title={addImageLabel}
+          aria-label={addImageLabel}
+          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer group active:scale-95"
         >
-          <PlusCircle className="w-3.5 h-3.5 text-gray-700 stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
-          <span>{addImageLabel}</span>
+          <PlusCircle className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
         </button>
       )}
 
       {onClearData && (
         <button
           onClick={handleClear}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 font-mono text-xs font-semibold shadow-xs transition-all duration-200 cursor-pointer active:scale-98"
+          title={clearDataLabel}
+          aria-label={clearDataLabel}
+          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 shadow-xs transition-all duration-200 cursor-pointer active:scale-95"
         >
-          <Trash2 className="w-3.5 h-3.5 stroke-[2]" />
-          <span>{clearDataLabel}</span>
+          <Trash2 className="w-4 h-4 stroke-[2]" />
         </button>
       )}
 
       {onEditText && (
         <button
           onClick={onEditText}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 font-mono text-xs font-semibold shadow-xs transition-all duration-200 cursor-pointer"
+          title={editTextLabel}
+          aria-label={editTextLabel}
+          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer active:scale-95 group"
         >
-          <Edit3 className="w-3.5 h-3.5 text-gray-500" />
-          <span>{editTextLabel}</span>
+          <Edit3 className="w-4 h-4 text-gray-600 group-hover:text-[#49C1DA]" />
         </button>
       )}
 
