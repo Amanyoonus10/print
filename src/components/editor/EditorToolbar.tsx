@@ -19,7 +19,7 @@ export const EditorToolbar: React.FC = () => {
             onClick={toggleEditMode}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-full font-mono text-xs uppercase font-bold tracking-wider transition-all cursor-pointer shadow-md ${
               isEditMode
-                ? 'bg-[#7A1F2B] text-white hover:bg-[#631621]'
+                ? 'bg-[#0284C7] text-white hover:bg-[#0369A1]'
                 : 'bg-white/10 text-gray-300 hover:bg-white/20'
             }`}
           >

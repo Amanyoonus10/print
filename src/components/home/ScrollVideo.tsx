@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
 
 interface ScrollVideoProps {
   onComplete: () => void;
@@ -184,17 +183,6 @@ export const ScrollVideo: React.FC<ScrollVideoProps> = ({ onComplete }) => {
             className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
             style={{ width: '100vw', height: '100vh' }}
           />
-
-          {/* Top Skip Button */}
-          <div className="absolute top-6 right-6 z-20">
-            <button
-              onClick={handleFinish}
-              className="px-5 py-2.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-extrabold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_25px_rgba(122,31,43,0.45)] cursor-pointer hover:scale-105 border border-[#B8955A]/30"
-            >
-              <span>Skip to Site</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
         </motion.div>
       )}
     </AnimatePresence>

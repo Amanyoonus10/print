@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={onOpenQuoteModal}
-              className="px-8 py-4 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)] cursor-pointer group"
+              className="px-8 py-4 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(2,132,199,0.3)] cursor-pointer group"
             >
               <span>Request Quote</span>
               <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -104,7 +104,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
 
           {/* Col 2: All 8 Service Pillars */}
           <div className="lg:col-span-3 flex flex-col gap-4">
-            <h4 className="font-mono text-xs text-[#7A1F2B] uppercase tracking-widest font-bold">
+            <h4 className="font-mono text-xs text-[#0284C7] uppercase tracking-widest font-bold">
               Production Pillars
             </h4>
             <ul className="flex flex-col gap-2 text-sm text-[#555555]">
@@ -114,7 +114,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
                     onClick={() => {
                       navigate(`/services/${service.slug}`);
                     }}
-                    className="hover:text-[#7A1F2B] transition-colors flex items-center gap-2 group text-left cursor-pointer"
+                    className="hover:text-[#0284C7] transition-colors flex items-center gap-2 group text-left cursor-pointer"
                   >
                     <span className="text-[10px] font-mono text-[#B8955A] font-bold">{service.number}</span>
                     <span>{service.title}</span>
@@ -126,14 +126,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
 
           {/* Col 3: Navigation Links */}
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <h4 className="font-mono text-xs text-[#7A1F2B] uppercase tracking-widest font-bold">
+            <h4 className="font-mono text-xs text-[#0284C7] uppercase tracking-widest font-bold">
               Navigation
             </h4>
             <ul className="flex flex-col gap-2 text-sm text-[#555555]">
               <li>
                 <button
                   onClick={() => scrollToSection('hero-section')}
-                  className="hover:text-[#7A1F2B] transition-colors cursor-pointer"
+                  className="hover:text-[#0284C7] transition-colors cursor-pointer"
                 >
                   Home
                 </button>
@@ -141,7 +141,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('introduction')}
-                  className="hover:text-[#7A1F2B] transition-colors cursor-pointer"
+                  className="hover:text-[#0284C7] transition-colors cursor-pointer"
                 >
                   Our Story
                 </button>
@@ -149,7 +149,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('services')}
-                  className="hover:text-[#7A1F2B] transition-colors cursor-pointer"
+                  className="hover:text-[#0284C7] transition-colors cursor-pointer"
                 >
                   Services
                 </button>
@@ -157,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('work')}
-                  className="hover:text-[#7A1F2B] transition-colors cursor-pointer"
+                  className="hover:text-[#0284C7] transition-colors cursor-pointer"
                 >
                   Portfolio
                 </button>
@@ -165,7 +165,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('clients')}
-                  className="hover:text-[#7A1F2B] transition-colors cursor-pointer"
+                  className="hover:text-[#0284C7] transition-colors cursor-pointer"
                 >
                   Clients
                 </button>
@@ -173,7 +173,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               <li>
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="hover:text-[#7A1F2B] transition-colors cursor-pointer"
+                  className="hover:text-[#0284C7] transition-colors cursor-pointer"
                 >
                   Contact
                 </button>
@@ -183,7 +183,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
 
           {/* Col 4: Verified Contact Info & Registration */}
           <div className="lg:col-span-3 flex flex-col gap-4">
-            <h4 className="font-mono text-xs text-[#7A1F2B] uppercase tracking-widest font-bold">
+            <h4 className="font-mono text-xs text-[#0284C7] uppercase tracking-widest font-bold">
               Doha Credentials
             </h4>
             <div className="flex flex-col gap-3 text-sm text-[#555555]">
@@ -194,7 +194,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
 
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#B8955A] shrink-0" />
-                <a href="tel:+97441423938" className="hover:text-[#7A1F2B] font-mono text-xs font-semibold">
+                <a href="tel:+97441423938" className="hover:text-[#0284C7] font-mono text-xs font-semibold">
                   Office: {companyData.contact.officePhone}
                 </a>
               </div>
@@ -208,14 +208,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
 
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#B8955A] shrink-0" />
-                <a href={`mailto:${companyData.contact.email}`} className="hover:text-[#7A1F2B] font-mono text-xs">
+                <a href={`mailto:${companyData.contact.email}`} className="hover:text-[#0284C7] font-mono text-xs">
                   {companyData.contact.email}
                 </a>
               </div>
 
               <div className="pt-2 border-t border-[#EDE8DE]">
                 <p className="font-mono text-xs text-[#171717]">
-                  <span className="text-[#7A1F2B] font-bold">CR:</span> {companyData.contact.cr}
+                  <span className="text-[#0284C7] font-bold">CR:</span> {companyData.contact.cr}
                 </p>
               </div>
             </div>

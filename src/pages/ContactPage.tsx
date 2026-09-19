@@ -55,7 +55,7 @@ export const ContactPage: React.FC = () => {
               <div className="flex flex-col gap-5 text-sm text-[#555555]">
                 {/* Location */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7] shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -66,12 +66,12 @@ export const ContactPage: React.FC = () => {
 
                 {/* Office Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7] shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">Office Telephone</span>
-                    <a href="tel:+97441423938" className="font-mono font-bold text-[#171717] hover:text-[#7A1F2B] transition-colors">
+                    <a href="tel:+97441423938" className="font-mono font-bold text-[#171717] hover:text-[#0284C7] transition-colors">
                       {companyData.contact.officePhone}
                     </a>
                   </div>
@@ -92,12 +92,12 @@ export const ContactPage: React.FC = () => {
 
                 {/* Email */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7] shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-xs text-[#B8955A] uppercase tracking-wider block font-bold">Official Email</span>
-                    <a href={`mailto:${companyData.contact.email}`} className="font-mono text-[#171717] hover:text-[#7A1F2B] transition-colors font-medium">
+                    <a href={`mailto:${companyData.contact.email}`} className="font-mono text-[#171717] hover:text-[#0284C7] transition-colors font-medium">
                       {companyData.contact.email}
                     </a>
                   </div>
@@ -105,7 +105,7 @@ export const ContactPage: React.FC = () => {
 
                 {/* Web */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#7A1F2B]/10 border border-[#7A1F2B]/25 flex items-center justify-center text-[#7A1F2B] shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7] shrink-0">
                     <Globe className="w-5 h-5" />
                   </div>
                   <div>
@@ -162,7 +162,7 @@ export const ContactPage: React.FC = () => {
                         value={formData.name}
                         onChange={e => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Your full name"
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#0284C7] transition-colors"
                       />
                     </div>
 
@@ -175,7 +175,7 @@ export const ContactPage: React.FC = () => {
                         value={formData.company}
                         onChange={e => setFormData({ ...formData, company: e.target.value })}
                         placeholder="Company name"
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#0284C7] transition-colors"
                       />
                     </div>
                   </div>
@@ -191,7 +191,7 @@ export const ContactPage: React.FC = () => {
                         value={formData.phone}
                         onChange={e => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+974 7788 9257"
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#0284C7] transition-colors"
                       />
                     </div>
 
@@ -205,7 +205,7 @@ export const ContactPage: React.FC = () => {
                         value={formData.email}
                         onChange={e => setFormData({ ...formData, email: e.target.value })}
                         placeholder="email@domain.qa"
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#0284C7] transition-colors"
                       />
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export const ContactPage: React.FC = () => {
                     <select
                       value={formData.service}
                       onChange={e => setFormData({ ...formData, service: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#0284C7] transition-colors"
                     >
                       <option value="01 — BRANDING">01 — BRANDING (Roll-ups, Walls, Canopies)</option>
                       <option value="02 — LIGHT BOX">02 — LIGHT BOX (Fabric SEG, Backlit Displays)</option>
@@ -240,13 +240,13 @@ export const ContactPage: React.FC = () => {
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Please describe your requirements, timelines, quantities..."
-                      className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#7A1F2B] transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F7F4EE] border border-[#EDE8DE] text-[#171717] text-sm focus:outline-none focus:border-[#0284C7] transition-colors resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_4px_25px_rgba(122,31,43,0.35)] transition-all cursor-pointer hover:scale-102"
+                    className="w-full py-4 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_4px_25px_rgba(2,132,199,0.35)] transition-all cursor-pointer hover:scale-102"
                   >
                     <Send className="w-4 h-4" />
                     <span>Send Message to FACE Team</span>
@@ -254,7 +254,7 @@ export const ContactPage: React.FC = () => {
                 </form>
               ) : (
                 <div className="py-12 flex flex-col items-center text-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-[#7A1F2B]/10 border border-[#7A1F2B] flex items-center justify-center text-[#7A1F2B] shadow-md">
+                  <div className="w-16 h-16 rounded-full bg-[#0284C7]/10 border border-[#0284C7] flex items-center justify-center text-[#0284C7] shadow-md">
                     <Sparkles className="w-8 h-8" />
                   </div>
                   <h4 className="font-display font-extrabold text-2xl text-[#171717]">

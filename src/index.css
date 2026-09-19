@@ -9,8 +9,8 @@
     
     --color-bg-base: #F7F4EE;
     --color-text-base: #171717;
-    --color-brand-maroon: #7A1F2B;
-    --color-brand-maroon-dark: #631621;
+    --color-brand-blue: #0284C7;
+    --color-brand-blue-dark: #0369A1;
     --color-brand-gold: #B8955A;
     --color-brand-gold-dark: #9E7D46;
     --color-brand-secondary: #EDE8DE;
@@ -52,11 +52,11 @@
 .glass-panel-hover:hover {
   background: #FFFFFF;
   border-color: #B8955A;
-  box-shadow: 0 14px 35px -10px rgba(122, 31, 43, 0.12);
+  box-shadow: 0 14px 35px -10px rgba(2, 132, 199, 0.12);
 }
 
 .glow-primary {
-  box-shadow: 0 0 40px -10px rgba(122, 31, 43, 0.3);
+  box-shadow: 0 0 40px -10px rgba(2, 132, 199, 0.3);
 }
 
 .glow-gold {
@@ -70,9 +70,9 @@
 }
 
 .text-gradient-cyan,
-.text-gradient-maroon,
+.text-gradient-blue,
 .text-gradient-primary {
-  background: linear-gradient(135deg, #7A1F2B 0%, #B8955A 100%);
+  background: linear-gradient(135deg, #0284C7 0%, #B8955A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -99,7 +99,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7A1F2B;
+  background: #0284C7;
 }
 
 /* Background grid pattern (light mode) */

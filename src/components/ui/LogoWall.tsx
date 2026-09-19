@@ -40,7 +40,7 @@ export const LogoWall: React.FC<LogoWallProps> = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-sm tracking-wide text-[#171717] group-hover:text-[#7A1F2B] transition-colors whitespace-nowrap">
+              <span className="font-display font-bold text-sm tracking-wide text-[#171717] group-hover:text-[#0284C7] transition-colors whitespace-nowrap">
                 {client.name}
               </span>
               <span className="font-mono text-[10px] text-[#B8955A] font-semibold uppercase tracking-wider">
@@ -69,7 +69,7 @@ export const LogoWall: React.FC<LogoWallProps> = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-sm tracking-wide text-[#171717] group-hover:text-[#7A1F2B] transition-colors whitespace-nowrap">
+              <span className="font-display font-bold text-sm tracking-wide text-[#171717] group-hover:text-[#0284C7] transition-colors whitespace-nowrap">
                 {client.name}
               </span>
               <span className="font-mono text-[10px] text-[#B8955A] font-semibold uppercase tracking-wider">

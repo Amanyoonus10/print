@@ -36,9 +36,9 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantStyles = {
-    primary: "bg-[#7A1F2B] text-white hover:bg-[#631621] hover:shadow-[0_4px_20px_rgba(122,31,43,0.35)] active:scale-[0.98]",
+    primary: "bg-[#0284C7] text-white hover:bg-[#0369A1] hover:shadow-[0_4px_20px_rgba(2,132,199,0.35)] active:scale-[0.98]",
     secondary: "bg-[#EDE8DE] text-[#171717] hover:bg-white hover:border-[#EDE8DE] border border-[#EDE8DE] active:scale-[0.98]",
-    outline: "bg-transparent text-[#171717] border border-[#EDE8DE] hover:border-[#7A1F2B] hover:text-[#7A1F2B] hover:bg-[#7A1F2B]/5 active:scale-[0.98]",
+    outline: "bg-transparent text-[#171717] border border-[#EDE8DE] hover:border-[#0284C7] hover:text-[#0284C7] hover:bg-[#0284C7]/5 active:scale-[0.98]",
     ghost: "bg-transparent text-[#555555] hover:text-[#171717] hover:bg-[#EDE8DE]/50 active:scale-[0.98]"
   };
 

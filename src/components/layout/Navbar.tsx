@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           isScrolled
-            ? 'bg-[#F7F4EE]/90 backdrop-blur-xl border-b border-[#EDE8DE] py-3.5 shadow-[0_4px_25px_rgba(122,31,43,0.04)]'
+            ? 'bg-[#F7F4EE]/90 backdrop-blur-xl border-b border-[#EDE8DE] py-3.5 shadow-[0_4px_25px_rgba(2,132,199,0.04)]'
             : 'bg-transparent py-6 md:py-8'
         }`}
       >
@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                 <button
                   key={link.targetId}
                   onClick={() => scrollToSection(link.targetId)}
-                  className="px-4 py-2 rounded-full font-mono text-xs tracking-[0.18em] transition-all duration-300 text-[#171717]/80 hover:text-[#7A1F2B] hover:bg-white cursor-pointer font-medium"
+                  className="px-4 py-2 rounded-full font-mono text-xs tracking-[0.18em] transition-all duration-300 text-[#171717]/80 hover:text-[#0284C7] hover:bg-white cursor-pointer font-medium"
                 >
                   {link.name}
                 </button>
@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             <div className="flex items-center gap-3">
               <button
                 onClick={onOpenQuoteModal}
-                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)] cursor-pointer group"
+                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white font-display font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(2,132,199,0.3)] cursor-pointer group"
               >
                 <span>ESTIMATE PROJECT</span>
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -146,13 +146,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                     setMobileMenuOpen(false);
                     scrollToSection(link.targetId);
                   }}
-                  className="font-display text-3xl sm:text-4xl font-extrabold uppercase tracking-tight flex items-center justify-between py-2 border-b border-[#EDE8DE] transition-colors text-[#171717] hover:text-[#7A1F2B] text-left cursor-pointer"
+                  className="font-display text-3xl sm:text-4xl font-extrabold uppercase tracking-tight flex items-center justify-between py-2 border-b border-[#EDE8DE] transition-colors text-[#171717] hover:text-[#0284C7] text-left cursor-pointer"
                 >
                   <div className="flex items-center gap-4">
                     <span className="font-mono text-xs text-[#B8955A]">0{idx + 1}</span>
                     <span>{link.name}</span>
                   </div>
-                  <ArrowUpRight className="w-6 h-6 text-[#7A1F2B]" />
+                  <ArrowUpRight className="w-6 h-6 text-[#0284C7]" />
                 </button>
               ))}
             </div>
@@ -162,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
               <div className="flex flex-col gap-1">
                 <span className="text-xs font-mono text-[#555555]">Doha, State of Qatar</span>
                 <span className="text-sm font-semibold text-[#171717]">{companyData.contact.phone}</span>
-                <span className="text-xs font-mono text-[#7A1F2B] font-medium">{companyData.contact.email}</span>
+                <span className="text-xs font-mono text-[#0284C7] font-medium">{companyData.contact.email}</span>
               </div>
 
               <div className="flex items-center gap-3">
@@ -171,7 +171,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                     setMobileMenuOpen(false);
                     onOpenQuoteModal();
                   }}
-                  className="flex-1 sm:flex-initial px-6 py-3.5 rounded-full bg-[#7A1F2B] text-white font-display font-bold text-xs uppercase tracking-wider text-center cursor-pointer shadow-md"
+                  className="flex-1 sm:flex-initial px-6 py-3.5 rounded-full bg-[#0284C7] text-white font-display font-bold text-xs uppercase tracking-wider text-center cursor-pointer shadow-md"
                 >
                   Request Quote
                 </button>

@@ -57,7 +57,7 @@ export const Introduction: React.FC = () => {
               className="p-8 sm:p-10 rounded-3xl bg-white border border-[#EDE8DE] relative overflow-hidden shadow-md"
             >
               {/* Top Accent Line */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#7A1F2B] via-[#B8955A] to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#0284C7] via-[#B8955A] to-transparent" />
 
               <p className="font-display font-medium text-xl sm:text-2xl text-[#171717] leading-relaxed">
                 “{company.description.body1}”
@@ -108,7 +108,7 @@ export const Introduction: React.FC = () => {
                     const el = document.getElementById('services');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#7A1F2B] hover:text-[#B8955A] transition-colors uppercase font-bold cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#0284C7] hover:text-[#B8955A] transition-colors uppercase font-bold cursor-pointer"
                 >
                   <span>Explore 8 Production Pillars</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -153,7 +153,7 @@ export const Introduction: React.FC = () => {
                 <p className="text-sm font-mono text-[#555555]">No images in this section.</p>
                 <button
                   onClick={() => setIsAddImageOpen(true)}
-                  className="px-4 py-2 rounded-full bg-[#7A1F2B] text-white font-mono text-xs uppercase font-bold cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-[#0284C7] text-white font-mono text-xs uppercase font-bold cursor-pointer"
                 >
                   + Add An Image
                 </button>

@@ -47,13 +47,13 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
             }`}
           >
             {/* Ambient Background Glow */}
-            <div className={`absolute top-1/2 ${isEven ? 'left-0' : 'right-0'} -translate-y-1/2 w-96 h-96 bg-[#7A1F2B]/5 rounded-full blur-3xl pointer-events-none`} />
+            <div className={`absolute top-1/2 ${isEven ? 'left-0' : 'right-0'} -translate-y-1/2 w-96 h-96 bg-[#0284C7]/5 rounded-full blur-3xl pointer-events-none`} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               {/* Section Header Controls */}
               <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs font-bold text-[#7A1F2B] px-3 py-1 rounded-full bg-[#7A1F2B]/10 border border-[#7A1F2B]/25">
+                  <span className="font-mono text-xs font-bold text-[#0284C7] px-3 py-1 rounded-full bg-[#0284C7]/10 border border-[#0284C7]/25">
                     {service.number}
                   </span>
                   <span className="font-mono text-xs text-[#B8955A] uppercase tracking-[0.2em] font-bold">
@@ -86,7 +86,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                   </h2>
 
                   {/* Subtitle / Statement */}
-                  <p className="text-lg md:text-xl font-medium text-[#7A1F2B] leading-snug">
+                  <p className="text-lg md:text-xl font-medium text-[#0284C7] leading-snug">
                     “{service.subtitle}”
                   </p>
 
@@ -112,7 +112,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                     {onOpenQuoteModal ? (
                       <button
                         onClick={onOpenQuoteModal}
-                        className="px-6 py-3.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)] cursor-pointer group hover:scale-102"
+                        className="px-6 py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(2,132,199,0.3)] cursor-pointer group hover:scale-102"
                       >
                         <span>Inquire {service.title}</span>
                         <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -122,7 +122,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                         href={`https://wa.me/97433635098?text=Hello%20FACE%20PRINTING,%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3.5 rounded-full bg-[#7A1F2B] hover:bg-[#631621] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(122,31,43,0.3)]"
+                        className="px-6 py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(2,132,199,0.3)]"
                       >
                         <span>Inquire {service.title}</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
