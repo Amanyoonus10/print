@@ -57,10 +57,10 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={scrollToExplore}
-            className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#171717]/80 hover:text-[#0284C7] transition-colors cursor-pointer group uppercase font-bold"
+            className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#171717]/80 hover:text-[#0084C8] transition-colors cursor-pointer group uppercase font-bold"
           >
-            <div className="w-6 h-6 rounded-full border border-[#EDE8DE] bg-white flex items-center justify-center group-hover:border-[#0284C7] transition-colors shadow-xs">
-              <ArrowDown className="w-3 h-3 text-[#0284C7] animate-bounce" />
+            <div className="w-6 h-6 rounded-full border border-[#EDE8DE] bg-white flex items-center justify-center group-hover:border-[#0084C8] transition-colors shadow-xs">
+              <ArrowDown className="w-3 h-3 text-[#0084C8] animate-bounce" />
             </div>
             <span>SCROLL TO EXPLORE</span>
           </button>
@@ -68,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
           {onReplayIntro && (
             <button
               onClick={onReplayIntro}
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDE8DE] hover:bg-white text-[#171717]/80 hover:text-[#0284C7] font-mono text-[10px] uppercase font-bold tracking-wider transition-colors cursor-pointer border border-[#EDE8DE]"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDE8DE] hover:bg-white text-[#171717]/80 hover:text-[#0084C8] font-mono text-[10px] uppercase font-bold tracking-wider transition-colors cursor-pointer border border-[#EDE8DE]"
             >
               <span>🎬 Watch Commercial Film</span>
             </button>
@@ -86,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
             Expert Craftsmanship
           </span>
           <span className="inline-flex items-center gap-2 text-[#171717] font-bold">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0084C8]" />
             CR: {companyData.contact.cr}
           </span>
         </div>

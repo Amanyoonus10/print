@@ -32,7 +32,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           className="flex items-center gap-3 mb-4"
         >
           {number && (
-            <span className="font-mono text-xs font-bold text-[#0284C7] px-2.5 py-1 rounded-full bg-[#0284C7]/10 border border-[#0284C7]/25">
+            <span className="font-mono text-xs font-bold text-[#0084C8] px-2.5 py-1 rounded-full bg-[#0084C8]/10 border border-[#0084C8]/25">
               {number}
             </span>
           )}

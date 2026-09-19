@@ -68,7 +68,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </h3>
           </div>
 
-          <div className="w-10 h-10 rounded-full bg-[#0284C7] text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md shrink-0 ml-3">
+          <div className="w-10 h-10 rounded-full bg-[#0084C8] text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md shrink-0 ml-3">
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>

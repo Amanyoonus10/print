@@ -74,7 +74,7 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
               onClick={() => setActiveCategory(cat)}
               className={`font-mono text-xs px-4 py-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-[#0284C7] text-white font-bold shadow-[0_2px_15px_rgba(2,132,199,0.35)]'
+                  ? 'bg-[#0084C8] text-white font-bold shadow-[0_2px_15px_rgba(0,132,200,0.35)]'
                   : 'bg-white text-[#171717] hover:bg-[#EDE8DE] border border-[#EDE8DE]'
               }`}
             >
@@ -102,7 +102,7 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
             <p className="font-mono text-sm text-[#555555]">No projects found in category "{activeCategory}".</p>
             <button
               onClick={() => setIsAddProjectOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#0284C7] text-white font-mono text-xs uppercase font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-[#0084C8] text-white font-mono text-xs uppercase font-bold cursor-pointer"
             >
               + Add Project to {activeCategory}
             </button>

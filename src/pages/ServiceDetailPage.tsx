@@ -75,7 +75,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold text-[#0284C7] px-3 py-1 rounded-full bg-[#0284C7]/10 border border-[#0284C7]/25">
+              <span className="font-mono text-xs font-bold text-[#0084C8] px-3 py-1 rounded-full bg-[#0084C8]/10 border border-[#0084C8]/25">
                 Pillar {service.number}
               </span>
               <span className="font-mono text-xs text-[#B8955A] uppercase tracking-widest font-bold">
@@ -87,7 +87,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
               {service.title}
             </h1>
 
-            <p className="text-xl sm:text-2xl font-medium text-[#0284C7] leading-snug">
+            <p className="text-xl sm:text-2xl font-medium text-[#0084C8] leading-snug">
               “{service.subtitle}”
             </p>
 
@@ -98,7 +98,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <button
                 onClick={onOpenQuoteModal}
-                className="px-8 py-4 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(2,132,199,0.3)] cursor-pointer hover:scale-105"
+                className="px-8 py-4 rounded-full bg-[#0084C8] hover:bg-[#006EAA] text-white font-display font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(0,132,200,0.3)] cursor-pointer hover:scale-105"
               >
                 <span>Request {service.title} Quote</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -132,7 +132,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Key Deliverables */}
           <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7]">
+            <div className="w-12 h-12 rounded-2xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8]">
               <Layers className="w-6 h-6" />
             </div>
             <h3 className="font-display font-bold text-xl text-[#171717]">Key Deliverables</h3>
@@ -148,7 +148,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
 
           {/* Substrates & Materials */}
           <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7]">
+            <div className="w-12 h-12 rounded-2xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8]">
               <Cpu className="w-6 h-6" />
             </div>
             <h3 className="font-display font-bold text-xl text-[#171717]">Substrates & Specs</h3>
@@ -164,7 +164,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
 
           {/* Core Applications */}
           <div className="p-8 rounded-3xl bg-white border border-[#EDE8DE] flex flex-col gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-[#0284C7]/10 border border-[#0284C7]/25 flex items-center justify-center text-[#0284C7]">
+            <div className="w-12 h-12 rounded-2xl bg-[#0084C8]/10 border border-[#0084C8]/25 flex items-center justify-center text-[#0084C8]">
               <Compass className="w-6 h-6" />
             </div>
             <h3 className="font-display font-bold text-xl text-[#171717]">Applications in Qatar</h3>
@@ -229,7 +229,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
             <p className="font-mono text-sm text-[#555555]">No exhibits currently in this gallery.</p>
             <button
               onClick={() => setIsAddGalleryImageOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#0284C7] text-white font-mono text-xs uppercase font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-[#0084C8] text-white font-mono text-xs uppercase font-bold cursor-pointer"
             >
               + Add First Exhibit Image & Description
             </button>

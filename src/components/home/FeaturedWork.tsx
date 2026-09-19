@@ -90,7 +90,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
             <p className="font-mono text-sm text-[#555555] mb-3">No projects currently listed.</p>
             <button
               onClick={() => setIsAddProjectOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#0284C7] text-white font-mono text-xs uppercase font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-[#0084C8] text-white font-mono text-xs uppercase font-bold cursor-pointer"
             >
               + Add Project
             </button>

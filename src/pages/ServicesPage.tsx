@@ -74,7 +74,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenQuoteModal }) 
                 <div className="pt-6 border-t border-[#EDE8DE] flex items-center justify-between">
                   <Link
                     to={`/services/${service.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#0284C7] hover:text-[#B8955A] uppercase tracking-wider group"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#0084C8] hover:text-[#B8955A] uppercase tracking-wider group"
                   >
                     <span>View Specifications & Gallery</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -82,7 +82,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenQuoteModal }) 
 
                   <button
                     onClick={onOpenQuoteModal}
-                    className="px-4 py-2 rounded-full bg-[#EDE8DE] hover:bg-[#0284C7] text-[#171717] hover:text-white border border-[#EDE8DE] font-mono text-xs uppercase font-semibold transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-full bg-[#EDE8DE] hover:bg-[#0084C8] text-[#171717] hover:text-white border border-[#EDE8DE] font-mono text-xs uppercase font-semibold transition-colors cursor-pointer"
                   >
                     Quote
                   </button>

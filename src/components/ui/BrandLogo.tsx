@@ -47,7 +47,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 
       {/* Brand Typography matching Royal Maroon and Gold branding */}
       <div className="flex flex-col">
-        <span className={`font-display font-black text-[#0284C7] leading-none ${textSizes[size]} transition-colors group-hover:text-[#0369A1]`}>
+        <span className={`font-display font-black text-[#0084C8] leading-none ${textSizes[size]} transition-colors group-hover:text-[#006EAA]`}>
           FACE
         </span>
         {showSubtitle && (

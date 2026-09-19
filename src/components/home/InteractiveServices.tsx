@@ -88,7 +88,7 @@ export const InteractiveServices: React.FC = () => {
                     <div className="flex items-center gap-4 sm:gap-6">
                       {/* Index Number */}
                       <span className={`font-mono text-xs sm:text-sm transition-colors duration-300 font-bold ${
-                        isCurrent ? 'text-[#0284C7]' : 'text-[#171717]/40 group-hover:text-[#171717]'
+                        isCurrent ? 'text-[#0084C8]' : 'text-[#171717]/40 group-hover:text-[#171717]'
                       }`}>
                         {service.number}
                       </span>
@@ -106,7 +106,7 @@ export const InteractiveServices: React.FC = () => {
                     {/* Arrow Action */}
                     <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 shrink-0 ${
                       isCurrent
-                        ? 'border-[#0284C7] bg-[#0284C7] text-white shadow-[0_0_15px_rgba(2,132,199,0.35)]'
+                        ? 'border-[#0084C8] bg-[#0084C8] text-white shadow-[0_0_15px_rgba(0,132,200,0.35)]'
                         : 'border-[#EDE8DE] bg-white text-[#171717]/40 group-hover:border-[#B8955A] group-hover:text-[#171717]'
                     }`}>
                       <ArrowUpRight className="w-4 h-4" />
