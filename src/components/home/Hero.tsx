@@ -27,13 +27,12 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
   };
 
   return (
-    <section id="hero-section" className="relative w-full min-h-screen flex flex-col justify-between pt-20 sm:pt-22 pb-4 bg-[#F7F4EE] overflow-hidden">
-      {/* Full-Width Edge-to-Edge Video Container (Strictly Zero Black Bars on Any Screen) */}
-      <div className="flex-1 w-full flex items-center justify-center my-auto px-0 overflow-hidden">
-        <div className="relative w-full h-[65vh] sm:h-[72vh] md:h-[76vh] max-h-[calc(100vh-150px)] overflow-hidden bg-transparent">
+    <section id="hero-section" className="relative w-full min-h-[100dvh] flex flex-col justify-between pt-18 sm:pt-22 pb-2 sm:pb-4 bg-[#F7F4EE] overflow-hidden">
+      {/* Responsive Video Container - Perfectly Framed on Mobile & Edge-to-Edge on Desktop */}
+      <div className="flex-1 w-full flex items-center justify-center my-auto px-2 sm:px-4 lg:px-0 overflow-hidden">
+        <div className="relative w-full aspect-[16/10] sm:aspect-auto sm:h-[72vh] md:h-[76vh] max-h-[calc(100dvh-140px)] rounded-2xl sm:rounded-none overflow-hidden bg-black/5 shadow-md sm:shadow-none border border-[#EDE8DE]/80 sm:border-none">
           <video
             ref={videoRef}
-            src="/videos/hero_combined_loop.mp4"
             poster="/videos/hero_combined_poster.jpg"
             autoPlay
             muted
@@ -46,21 +45,24 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
             onPlay={(e) => {
               e.currentTarget.playbackRate = 1.0;
             }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', minWidth: '100%', minHeight: '100%' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             className="w-full h-full object-cover"
-          />
+          >
+            <source src="/videos/hero_combined_loop_mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/videos/hero_combined_loop.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
 
-      {/* Bottom Bar: Scroll Indicator & Core Credentials Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-3 pb-1 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#EDE8DE] mt-2">
-        <div className="flex items-center gap-4">
+      {/* Bottom Bar: Streamlined 1-Row Responsive Layout */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full pt-2.5 sm:pt-3 pb-1 flex items-center justify-between border-t border-[#EDE8DE] mt-auto">
+        <div className="flex items-center gap-2 sm:gap-4">
           <button
             onClick={scrollToExplore}
-            className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#171717]/80 hover:text-[#49C1DA] transition-colors cursor-pointer group uppercase font-bold"
+            className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs font-mono tracking-[0.18em] sm:tracking-[0.25em] text-[#171717]/80 hover:text-[#49C1DA] transition-colors cursor-pointer group uppercase font-bold"
           >
-            <div className="w-6 h-6 rounded-full border border-[#EDE8DE] bg-white flex items-center justify-center group-hover:border-[#49C1DA] transition-colors shadow-xs">
-              <ArrowDown className="w-3 h-3 text-[#49C1DA] animate-bounce" />
+            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#EDE8DE] bg-white flex items-center justify-center group-hover:border-[#49C1DA] transition-colors shadow-xs shrink-0">
+              <ArrowDown className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#49C1DA] animate-bounce" />
             </div>
             <span>SCROLL TO EXPLORE</span>
           </button>
@@ -75,8 +77,8 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
           )}
         </div>
 
-        {/* 3 Core Strengths Badges */}
-        <div className="flex items-center gap-4 sm:gap-6 text-xs font-mono text-[#171717]/80 font-semibold">
+        {/* 3 Core Strengths Badges / Mobile Credentials */}
+        <div className="flex items-center gap-3 sm:gap-6 text-[10px] sm:text-xs font-mono text-[#171717]/80 font-semibold">
           <span className="hidden md:inline-flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#B8955A]" />
             Advanced Technology
@@ -85,8 +87,8 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
             <Cpu className="w-4 h-4 text-[#B8955A]" />
             Expert Craftsmanship
           </span>
-          <span className="inline-flex items-center gap-2 text-[#171717] font-bold">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#49C1DA]" />
+          <span className="inline-flex items-center gap-1.5 sm:gap-2 text-[#171717] font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#49C1DA] shrink-0" />
             CR: {companyData.contact.cr}
           </span>
         </div>

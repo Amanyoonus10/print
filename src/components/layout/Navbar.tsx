@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           isScrolled
             ? 'bg-[#F7F4EE]/90 backdrop-blur-xl border-b border-[#EDE8DE] py-3.5 shadow-[0_4px_25px_rgba(73,193,218,0.04)]'
-            : 'bg-transparent py-6 md:py-8'
+            : 'bg-transparent py-3.5 sm:py-6 md:py-8'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
