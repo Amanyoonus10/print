@@ -5,19 +5,38 @@ import { companyData } from '../../data/company';
 interface HeroProps {
   onOpenQuoteModal?: () => void;
   onReplayIntro?: () => void;
+  isIntroActive?: boolean;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
+export const Hero: React.FC<HeroProps> = ({ onReplayIntro, isIntroActive = false }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 1.0;
-      videoRef.current.play().catch(() => {
-        // Autoplay policy fallback
-      });
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isIntroActive) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Ignore if not ready
+      }
+    } else {
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Ignore if not ready
+      }
+      video.playbackRate = 1.0;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay policy fallback
+        });
+      }
     }
-  }, []);
+  }, [isIntroActive]);
 
   const scrollToExplore = () => {
     const nextSection = document.getElementById('introduction');
@@ -34,16 +53,32 @@ export const Hero: React.FC<HeroProps> = ({ onReplayIntro }) => {
           <video
             ref={videoRef}
             poster="/videos/hero_combined_poster.jpg"
-            autoPlay
+            autoPlay={!isIntroActive}
             muted
             loop
             playsInline
             preload="auto"
             onLoadedMetadata={(e) => {
               e.currentTarget.playbackRate = 1.0;
+              if (isIntroActive) {
+                e.currentTarget.pause();
+                try {
+                  e.currentTarget.currentTime = 0;
+                } catch {
+                  // Ignore
+                }
+              }
             }}
             onPlay={(e) => {
               e.currentTarget.playbackRate = 1.0;
+              if (isIntroActive) {
+                e.currentTarget.pause();
+                try {
+                  e.currentTarget.currentTime = 0;
+                } catch {
+                  // Ignore
+                }
+              }
             }}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             className="w-full h-full object-cover"

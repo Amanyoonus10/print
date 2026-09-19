@@ -69,7 +69,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
       {showIntro && <ScrollVideo onComplete={handleIntroComplete} />}
 
       {/* 01 HERO */}
-      <Hero onOpenQuoteModal={onOpenQuoteModal} onReplayIntro={handleReplayIntro} />
+      <Hero
+        onOpenQuoteModal={onOpenQuoteModal}
+        onReplayIntro={handleReplayIntro}
+        isIntroActive={showIntro}
+      />
 
       {/* 02 COMPANY STORY / INTRODUCTION */}
       <Introduction />
