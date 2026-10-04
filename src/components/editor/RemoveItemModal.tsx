@@ -95,13 +95,13 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
             </label>
             <input
               type="password"
-              placeholder="Enter PIN to authorize"
+              placeholder="••••"
               value={pinCode}
               onChange={(e) => {
                 setPinCode(e.target.value);
                 if (error) setError('');
               }}
-              className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none text-sm text-gray-900 placeholder:text-gray-400"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none text-center font-mono tracking-widest text-sm text-gray-900 bg-gray-50 focus:bg-white placeholder:text-gray-400 transition-all"
             />
           </div>
 

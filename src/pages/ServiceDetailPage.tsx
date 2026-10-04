@@ -99,6 +99,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           addVideoLabel="Add / Change Hero Video"
           editTextLabel="Edit Description & Title"
           clearDataLabel="Restore Original Image"
+          requirePinOnClear={true}
           onAddImage={() => {
             setHeroModalMediaType('image');
             setIsAddHeroImageOpen(true);

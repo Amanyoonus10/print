@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PlusCircle, Trash2, Edit3, Film } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
+import { ConfirmPinModal } from './ConfirmPinModal';
 
 interface SectionEditorBarProps {
   sectionName?: string;
@@ -12,6 +13,7 @@ interface SectionEditorBarProps {
   addVideoLabel?: string;
   editTextLabel?: string;
   clearDataLabel?: string;
+  requirePinOnClear?: boolean;
   customActions?: React.ReactNode;
   className?: string;
 }
@@ -25,12 +27,24 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
   addVideoLabel = 'Add Video Exhibit',
   editTextLabel = 'Edit Text',
   clearDataLabel = 'Clear Added Data',
+  requirePinOnClear = false,
   customActions,
   className = '',
 }) => {
   const { resetToDefaults } = useContent();
+  const [isConfirmPinOpen, setIsConfirmPinOpen] = useState<boolean>(false);
 
-  const handleClear = () => {
+  const handleClearClick = () => {
+    if (requirePinOnClear) {
+      setIsConfirmPinOpen(true);
+    } else if (onClearData) {
+      onClearData();
+    } else {
+      setIsConfirmPinOpen(true);
+    }
+  };
+
+  const handleAuthorizedAction = () => {
     if (onClearData) {
       onClearData();
     } else {
@@ -39,53 +53,66 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
   };
 
   return (
-    <div className={`flex items-center gap-1.5 sm:gap-2 ${className}`}>
-      {onAddImage && (
-        <button
-          onClick={onAddImage}
-          title={addImageLabel}
-          aria-label={addImageLabel}
-          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer group active:scale-95"
-        >
-          <PlusCircle className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
-        </button>
-      )}
+    <>
+      <div className={`flex items-center gap-1.5 sm:gap-2 ${className}`}>
+        {onAddImage && (
+          <button
+            onClick={onAddImage}
+            title={addImageLabel}
+            aria-label={addImageLabel}
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer group active:scale-95"
+          >
+            <PlusCircle className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
+          </button>
+        )}
 
-      {onAddVideo && (
-        <button
-          onClick={onAddVideo}
-          title={addVideoLabel}
-          aria-label={addVideoLabel}
-          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#49C1DA]/10 text-gray-800 hover:text-[#49C1DA] border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer active:scale-95 group"
-        >
-          <Film className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2]" />
-        </button>
-      )}
+        {onAddVideo && (
+          <button
+            onClick={onAddVideo}
+            title={addVideoLabel}
+            aria-label={addVideoLabel}
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#49C1DA]/10 text-gray-800 hover:text-[#49C1DA] border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer active:scale-95 group"
+          >
+            <Film className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2]" />
+          </button>
+        )}
 
-      {onClearData && (
-        <button
-          onClick={handleClear}
-          title={clearDataLabel}
-          aria-label={clearDataLabel}
-          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 shadow-xs transition-all duration-200 cursor-pointer active:scale-95"
-        >
-          <Trash2 className="w-4 h-4 stroke-[2]" />
-        </button>
-      )}
+        {onClearData && (
+          <button
+            onClick={handleClearClick}
+            title={clearDataLabel}
+            aria-label={clearDataLabel}
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-red-50 text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 shadow-xs transition-all duration-200 cursor-pointer active:scale-95"
+          >
+            <Trash2 className="w-4 h-4 stroke-[2]" />
+          </button>
+        )}
 
-      {onEditText && (
-        <button
-          onClick={onEditText}
-          title={editTextLabel}
-          aria-label={editTextLabel}
-          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer active:scale-95 group"
-        >
-          <Edit3 className="w-4 h-4 text-gray-600 group-hover:text-[#49C1DA]" />
-        </button>
-      )}
+        {onEditText && (
+          <button
+            onClick={onEditText}
+            title={editTextLabel}
+            aria-label={editTextLabel}
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer active:scale-95 group"
+          >
+            <Edit3 className="w-4 h-4 text-gray-600 group-hover:text-[#49C1DA]" />
+          </button>
+        )}
 
-      {customActions}
-    </div>
+        {customActions}
+      </div>
+
+      {/* Security PIN Confirmation Modal */}
+      <ConfirmPinModal
+        isOpen={isConfirmPinOpen}
+        onClose={() => setIsConfirmPinOpen(false)}
+        title="Security Authorization"
+        description={`Please enter your security PIN to confirm: "${clearDataLabel}".`}
+        actionLabel="Confirm & Authorize"
+        isDestructive={true}
+        onConfirm={handleAuthorizedAction}
+      />
+    </>
   );
 };
 
@@ -108,4 +135,3 @@ export const RemoveImageButton: React.FC<{
     </button>
   );
 };
-
