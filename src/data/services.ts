@@ -36,6 +36,12 @@ export const servicesData: ServiceItem[] = [
     ],
     gallery: [
       {
+        url: "/videos/qstp_project_exhibit.mp4",
+        title: "QSTP Project",
+        caption: "Authentic Delivered Exhibit",
+        mediaType: "video"
+      },
+      {
         url: "/images/user_extracted/Page_04_Image_02.jpeg",
         title: "Qatar Airways Roll-Up Banner",
         caption: "High-contrast luxury travel banner with razor-sharp typography."

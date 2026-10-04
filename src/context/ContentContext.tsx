@@ -63,11 +63,26 @@ interface ContentContextType {
 const ContentContext = createContext<ContentContextType | null>(null);
 
 const STORAGE_KEYS = {
-  COMPANY: 'face_printing_company_content_v2',
-  INTRO_IMAGES: 'face_printing_intro_images_v2',
-  SERVICES: 'face_printing_services_content_v2',
-  PROJECTS: 'face_printing_projects_content_v2',
+  COMPANY: 'face_printing_company_content_v3',
+  INTRO_IMAGES: 'face_printing_intro_images_v3',
+  SERVICES: 'face_printing_services_content_v3',
+  PROJECTS: 'face_printing_projects_content_v3',
   EDIT_MODE: 'face_printing_edit_mode_active',
+};
+
+// Helper for backward-compatible storage loading (v3 preferred, v2 fallback)
+const getStoredData = (keyV3: string, keyV2?: string): string | null => {
+  try {
+    const v3 = localStorage.getItem(keyV3);
+    if (v3) return v3;
+    if (keyV2) {
+      const v2 = localStorage.getItem(keyV2);
+      if (v2) return v2;
+    }
+  } catch {
+    // fallback
+  }
+  return null;
 };
 
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -80,7 +95,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   // Company state
   const [company, setCompany] = useState<CompanyInfo>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.COMPANY);
+      const saved = getStoredData(STORAGE_KEYS.COMPANY, 'face_printing_company_content_v2');
       return saved ? JSON.parse(saved) : initialCompanyData;
     } catch {
       return initialCompanyData;
@@ -90,7 +105,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   // Intro Images state
   const [introImages, setIntroImages] = useState<IntroImageItem[]>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.INTRO_IMAGES);
+      const saved = getStoredData(STORAGE_KEYS.INTRO_IMAGES, 'face_printing_intro_images_v2');
       return saved ? JSON.parse(saved) : DEFAULT_INTRO_IMAGES;
     } catch {
       return DEFAULT_INTRO_IMAGES;
@@ -100,31 +115,34 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   // Services state
   const [services, setServices] = useState<ServiceItem[]>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.SERVICES);
+      const saved = getStoredData(STORAGE_KEYS.SERVICES, 'face_printing_services_content_v2');
       if (!saved) return initialServicesData;
       const parsed: ServiceItem[] = JSON.parse(saved);
-      return parsed.map((s) => {
-        const defaultService = initialServicesData.find((init) => init.slug === s.slug);
-        const defaultGalleryUrls = new Set((defaultService?.gallery || []).map((g) => g.url));
+      return initialServicesData.map((defaultService) => {
+        const s = parsed.find((p) => p.slug === defaultService.slug) || defaultService;
+        const defaultGalleryUrls = new Set((defaultService.gallery || []).map((g) => g.url));
 
-        // Separate user uploads from default exhibits so newest uploads are at the top
-        const currentGallery = s.gallery || defaultService?.gallery || [];
-        const userUploads = currentGallery.filter(
+        // Separate user uploads from default exhibits so newest uploads stay at the top
+        const userUploads = (s.gallery || []).filter(
           (g) =>
             !defaultGalleryUrls.has(g.url) ||
             g.url.startsWith('idb://') ||
             g.url.startsWith('blob:') ||
             g.url.startsWith('data:')
         );
-        const defaultItems = currentGallery.filter(
-          (g) => defaultGalleryUrls.has(g.url) && !userUploads.includes(g)
-        );
+
+        // Include all default exhibits from codebase, preserving any title/caption edits
+        const defaultItems = (defaultService.gallery || []).map((defaultItem) => {
+          const existing = (s.gallery || []).find((g) => g.url === defaultItem.url);
+          return existing || defaultItem;
+        });
+
         const sortedGallery = [...userUploads, ...defaultItems];
 
-        if (s.slug === 'light-box') {
+        if (defaultService.slug === 'light-box') {
           return {
             ...s,
-            heroImage: defaultService?.heroImage || '/images/user_extracted/Page_07_Image_09.jpeg',
+            heroImage: defaultService.heroImage || '/images/user_extracted/Page_07_Image_09.jpeg',
             heroMediaType: 'image',
             gallery: sortedGallery.filter((g) => !g.url.includes('QSTP') && g.title !== 'QSTP Project'),
           };
@@ -139,8 +157,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             s.heroImage.startsWith('idb://'));
         return {
           ...s,
-          heroImage: isValidHero ? s.heroImage : (defaultService?.heroImage || s.heroImage),
-          heroMediaType: isValidHero ? s.heroMediaType : (defaultService?.heroMediaType || 'image'),
+          heroImage: isValidHero ? s.heroImage : defaultService.heroImage,
+          heroMediaType: isValidHero ? (s.heroMediaType || defaultService.heroMediaType) : defaultService.heroMediaType,
           gallery: sortedGallery,
         };
       });
@@ -152,23 +170,26 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   // Projects state
   const [projects, setProjects] = useState<ProjectItem[]>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.PROJECTS);
+      const saved = getStoredData(STORAGE_KEYS.PROJECTS, 'face_printing_projects_content_v2');
       if (!saved) return initialProjectsData;
       const parsed: ProjectItem[] = JSON.parse(saved);
-      return parsed.map((p) => {
-        const defaultProject = initialProjectsData.find((init) => init.id === p.id);
-        const defaultGalleryUrls = new Set((defaultProject?.gallery || []).map((g) => g.url));
-        const currentGallery = p.gallery || defaultProject?.gallery || [];
-        const userUploads = currentGallery.filter(
+      return initialProjectsData.map((defaultProject) => {
+        const p = parsed.find((item) => item.id === defaultProject.id) || defaultProject;
+        const defaultGalleryUrls = new Set((defaultProject.gallery || []).map((g) => g.url));
+
+        const userUploads = (p.gallery || []).filter(
           (g) =>
             !defaultGalleryUrls.has(g.url) ||
             g.url.startsWith('idb://') ||
             g.url.startsWith('blob:') ||
             g.url.startsWith('data:')
         );
-        const defaultItems = currentGallery.filter(
-          (g) => defaultGalleryUrls.has(g.url) && !userUploads.includes(g)
-        );
+
+        const defaultItems = (defaultProject.gallery || []).map((defaultItem) => {
+          const existing = (p.gallery || []).find((g) => g.url === defaultItem.url);
+          return existing || defaultItem;
+        });
+
         const sortedGallery = [...userUploads, ...defaultItems];
 
         const isValidCover =
@@ -181,8 +202,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             p.coverImage.startsWith('idb://'));
         return {
           ...p,
-          coverImage: isValidCover ? p.coverImage : (defaultProject?.coverImage || p.coverImage),
-          coverMediaType: isValidCover ? p.coverMediaType : (defaultProject?.coverMediaType || 'image'),
+          coverImage: isValidCover ? p.coverImage : defaultProject.coverImage,
+          coverMediaType: isValidCover ? (p.coverMediaType || defaultProject.coverMediaType) : defaultProject.coverMediaType,
           gallery: sortedGallery,
         };
       });
@@ -380,6 +401,10 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       localStorage.removeItem(STORAGE_KEYS.INTRO_IMAGES);
       localStorage.removeItem(STORAGE_KEYS.SERVICES);
       localStorage.removeItem(STORAGE_KEYS.PROJECTS);
+      localStorage.removeItem('face_printing_company_content_v2');
+      localStorage.removeItem('face_printing_intro_images_v2');
+      localStorage.removeItem('face_printing_services_content_v2');
+      localStorage.removeItem('face_printing_projects_content_v2');
     }
   };
 
