@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Calendar, Building2, Tag, Edit3 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Calendar, Building2, Tag, Edit3, Maximize2 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
 import { RemoveItemModal } from '../components/editor/RemoveItemModal';
 import { MediaRenderer } from '../components/ui/MediaRenderer';
+import { MediaLightboxModal } from '../components/ui/MediaLightboxModal';
 
 interface ProjectDetailPageProps {
   onOpenQuoteModal: () => void;
@@ -25,6 +26,11 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
   const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
   const [isEditGalleryTextOpen, setIsEditGalleryTextOpen] = useState<boolean>(false);
   const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
+
+  // Fullscreen Lightbox Viewer State
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number>(0);
+  const [lightboxItems, setLightboxItems] = useState<Array<{ url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }>>([]);
 
   const project = projects.find(p => p.slug === slug);
 
@@ -165,14 +171,34 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
 
       {/* Main Cover Image / Video */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="relative rounded-3xl overflow-hidden aspect-[16/9] bg-white border border-[#EDE8DE] shadow-2xl">
+        <div
+          onClick={() => {
+            setLightboxItems([{
+              url: project.coverImage,
+              title: project.title,
+              caption: project.description || project.summary,
+              mediaType: project.coverMediaType,
+            }]);
+            setLightboxIndex(0);
+            setIsLightboxOpen(true);
+          }}
+          className="relative rounded-3xl overflow-hidden aspect-[16/9] bg-white border border-[#EDE8DE] shadow-2xl group cursor-pointer hover:border-[#49C1DA] transition-all"
+          title="Click to view full screen"
+        >
           <MediaRenderer
             src={project.coverImage}
             mediaType={project.coverMediaType}
             alt={project.title}
             showMutedIndicator={true}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
           />
+          {/* Fullscreen Expand Overlay on hover */}
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+            <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md text-white font-mono text-xs font-semibold shadow-lg border border-white/20 transform scale-95 group-hover:scale-100 transition-transform">
+              <Maximize2 className="w-4 h-4 text-[#49C1DA]" />
+              <span>View Fullscreen</span>
+            </span>
+          </div>
         </div>
       </section>
 
@@ -245,7 +271,12 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
           {project.gallery.map((item, idx) => (
             <div
               key={idx}
-              className="group relative rounded-3xl bg-white border border-[#EDE8DE] overflow-hidden shadow-xs hover:border-[#B8955A]/60 hover:shadow-lg transition-all"
+              onClick={() => {
+                setLightboxItems(project.gallery);
+                setLightboxIndex(idx);
+                setIsLightboxOpen(true);
+              }}
+              className="group relative rounded-3xl bg-white border border-[#EDE8DE] overflow-hidden shadow-xs hover:border-[#49C1DA] hover:shadow-xl transition-all cursor-pointer"
             >
               <div className="relative aspect-[16/10] bg-[#F7F4EE] overflow-hidden">
                 <MediaRenderer
@@ -255,16 +286,27 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
                   priority={idx < 2}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+
+                {/* Fullscreen Expand Overlay on hover */}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                  <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white font-mono text-xs font-semibold shadow-lg border border-white/20 transform scale-95 group-hover:scale-100 transition-transform">
+                    <Maximize2 className="w-3.5 h-3.5 text-[#49C1DA]" />
+                    <span>View Fullscreen</span>
+                  </span>
+                </div>
               </div>
               <div className="p-6 flex flex-col gap-1 justify-between flex-1">
                 <div>
                   <div className="flex items-start justify-between gap-2">
-                    <h4 className="font-display font-bold text-lg text-[#171717]">{item.title}</h4>
+                    <h4 className="font-display font-bold text-lg text-[#171717] group-hover:text-[#49C1DA] transition-colors">{item.title}</h4>
                     <button
                       type="button"
-                      onClick={() => setEditingItemIndex(idx)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingItemIndex(idx);
+                      }}
                       title={`Edit ${item.title}`}
-                      className="p-1.5 rounded-lg text-gray-400 hover:text-[#49C1DA] hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
+                      className="p-1.5 rounded-lg text-gray-400 hover:text-[#49C1DA] hover:bg-gray-100 transition-colors cursor-pointer shrink-0 z-10"
                     >
                       <Edit3 className="w-4 h-4" />
                     </button>
@@ -437,6 +479,14 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
           onSave={handleSaveItemText}
         />
       )}
+
+      {/* Fullscreen Lightbox Modal */}
+      <MediaLightboxModal
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        items={lightboxItems}
+        initialIndex={lightboxIndex}
+      />
     </div>
   );
 };
