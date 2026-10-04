@@ -62,7 +62,7 @@ export const InteractiveServices: React.FC = () => {
           <div className="flex items-center">
             <SectionEditorBar
               addImageLabel={`Add Image to ${activeService.title}`}
-              addVideoLabel={`Add Video (No Sound) to ${activeService.title}`}
+              addVideoLabel={`Add Video to ${activeService.title}`}
               clearDataLabel="Clear Added Data"
               editTextLabel="Edit Active Service"
               onAddImage={() => {

@@ -39,7 +39,7 @@ export const Introduction: React.FC = () => {
 
           <SectionEditorBar
             addImageLabel="Add Facility Image"
-            addVideoLabel="Add Facility Video (No Sound)"
+            addVideoLabel="Add Facility Video"
             clearDataLabel="Clear Added Data"
             editTextLabel="Edit Narrative"
             onAddImage={() => {

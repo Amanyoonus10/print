@@ -22,7 +22,7 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
   onEditText,
   onClearData,
   addImageLabel = 'Add Photo / Image',
-  addVideoLabel = 'Add Video (No Sound)',
+  addVideoLabel = 'Add Video Exhibit',
   editTextLabel = 'Edit Text',
   clearDataLabel = 'Clear Added Data',
   customActions,

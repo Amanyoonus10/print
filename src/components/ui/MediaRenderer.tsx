@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { VolumeX, Film } from 'lucide-react';
+import { VolumeX, Volume2, Film } from 'lucide-react';
 import { isVideoSource } from '../../utils/media';
 import { getCachedMediaUrl, resolveMediaUrl } from '../../utils/mediaStorage';
 
@@ -33,13 +33,16 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
   muted = true,
   playsInline = true,
   controls = false,
-  showMutedIndicator = false,
+  showMutedIndicator = true,
   mutedIndicatorPosition = 'top-right',
   onClick,
   style,
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const isVideo = isVideoSource(src, mediaType);
+
+  // Audio control state
+  const [isMuted, setIsMuted] = useState<boolean>(muted);
 
   // Instant sync cache hit if available
   const initialResolved = getCachedMediaUrl(src) || (src.startsWith('idb://') ? '' : src);
@@ -86,20 +89,37 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
   useEffect(() => {
     if (isVideo && videoRef.current && resolvedSrc) {
       const v = videoRef.current;
-      v.muted = true;
-      v.defaultMuted = true;
+      v.muted = isMuted;
+      v.defaultMuted = isMuted;
       v.playsInline = true;
+
+      if (!isMuted) {
+        v.volume = 1;
+      }
 
       if (autoPlay) {
         const playPromise = v.play();
         if (playPromise !== undefined) {
           playPromise.catch(() => {
-            // Browser policy restriction fallback (e.g. low power mode)
+            // Autoplay policy fallback
           });
         }
       }
     }
-  }, [isVideo, resolvedSrc, autoPlay]);
+  }, [isVideo, resolvedSrc, autoPlay, isMuted]);
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!videoRef.current) return;
+    const nextMuted = !isMuted;
+    videoRef.current.muted = nextMuted;
+    if (!nextMuted) {
+      videoRef.current.volume = 1;
+      videoRef.current.play().catch(() => {});
+    }
+    setIsMuted(nextMuted);
+  };
 
   // Error handling: if video fails to load, try fallbackSrc if provided
   if (isVideo && hasError) {
@@ -143,7 +163,7 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
           src={resolvedSrc || undefined}
           autoPlay={autoPlay}
           loop={loop}
-          muted={muted}
+          muted={isMuted}
           playsInline={playsInline}
           controls={controls}
           preload="auto"
@@ -161,13 +181,25 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
         />
 
         {showMutedIndicator && (
-          <div
-            title="Exhibiting with no sound (Smooth muted loop)"
-            className={`absolute ${indicatorPosClass} z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] pointer-events-none select-none shadow-sm`}
+          <button
+            type="button"
+            onClick={toggleMute}
+            title={isMuted ? "Click to play sound (Unmute)" : "Click to mute sound"}
+            aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+            className={`absolute ${indicatorPosClass} z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black text-white font-mono text-[11px] shadow-lg border border-white/20 transition-all cursor-pointer backdrop-blur-md active:scale-95 group/sound`}
           >
-            <VolumeX className="w-3 h-3 text-[#49C1DA]" />
-            <span>No Sound</span>
-          </div>
+            {isMuted ? (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-gray-300 group-hover/sound:text-white" />
+                <span className="font-semibold text-gray-200">Unmute</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-[#49C1DA] animate-pulse" />
+                <span className="text-[#49C1DA] font-bold">Sound On</span>
+              </>
+            )}
+          </button>
         )}
       </div>
     );

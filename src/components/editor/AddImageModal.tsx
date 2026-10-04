@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, VolumeX, Image as ImageIcon, Video, Link as LinkIcon, FileCheck } from 'lucide-react';
+import { X, CheckCircle2, Volume2, Image as ImageIcon, Video, Link as LinkIcon, FileCheck } from 'lucide-react';
 import { isVideoSource, isValidMediaUrl } from '../../utils/media';
 import { saveMediaBlob } from '../../utils/mediaStorage';
 import { MediaRenderer } from '../ui/MediaRenderer';
@@ -35,7 +35,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
   onAdd,
 }) => {
   const isInitialVid = initialMediaType === 'video' || defaultType.toLowerCase().includes('video');
-  const [itemType, setItemType] = useState<string>(isInitialVid ? 'Video Exhibit (No Sound)' : defaultType);
+  const [itemType, setItemType] = useState<string>(isInitialVid ? 'Video Exhibit' : defaultType);
   const [itemTitle, setItemTitle] = useState<string>('');
   const [itemCategory, setItemCategory] = useState<string>('');
   const [itemDateSubtitle, setItemDateSubtitle] = useState<string>('');
@@ -65,7 +65,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
   useEffect(() => {
     const isVid = initialMediaType === 'video' || defaultType.toLowerCase().includes('video');
     setMediaType(isVid ? 'video' : 'image');
-    setItemType(isVid ? 'Video Exhibit (No Sound)' : defaultType);
+    setItemType(isVid ? 'Video Exhibit' : defaultType);
   }, [initialMediaType, defaultType, isOpen]);
 
   // Keyboard shortcut: Press Escape to close modal
@@ -118,7 +118,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       if (isVideo) {
         setMediaType('video');
         if (!itemType.toLowerCase().includes('video')) {
-          setItemType('Video Exhibit (No Sound)');
+          setItemType('Video Exhibit');
         }
       } else {
         setMediaType('image');
@@ -264,7 +264,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
                   onClick={() => {
                     setMediaType('video');
                     if (!itemType.includes('Video')) {
-                      setItemType('Video Exhibit (No Sound)');
+                      setItemType('Video Exhibit');
                     }
                   }}
                   className={`px-2 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1 transition-all cursor-pointer ${
@@ -274,7 +274,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
                   }`}
                 >
                   <Video className="w-3 h-3 text-[#49C1DA]" />
-                  <span>Video (Muted)</span>
+                  <span>Video</span>
                 </button>
               </div>
             </div>
@@ -319,8 +319,8 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
                     onChange={(e) => handleItemTypeChange(e.target.value)}
                     className="w-full px-2.5 py-1.5 rounded-lg border border-gray-300 focus:border-[#49C1DA] outline-none text-xs text-gray-900 bg-white cursor-pointer"
                   >
-                    <option value="Video Exhibit (No Sound)">🎬 Video Exhibit (No Sound)</option>
-                    <option value="Video Reel / Showcase (No Sound)">🎬 Video Reel (No Sound)</option>
+                    <option value="Video Exhibit">🎬 Video Exhibit (With Audio)</option>
+                    <option value="Video Reel / Showcase">🎬 Video Reel / Showcase</option>
                     <option value="Gallery Exhibit (Photo / Image)">🖼️ Gallery Photo Exhibit</option>
                     <option value="News Room Announcement">News Announcement</option>
                     <option value="Project Case Study">Project Case Study</option>
@@ -392,9 +392,9 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
                   <span className="text-[11px] font-bold uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
                     <span>Media File</span>
                     {mediaType === 'video' && (
-                      <span className="text-[10px] text-[#49C1DA] font-mono font-medium flex items-center gap-0.5">
-                        <VolumeX className="w-3 h-3" />
-                        (No Sound)
+                      <span className="text-[10px] text-[#49C1DA] font-mono font-medium flex items-center gap-1">
+                        <Volume2 className="w-3 h-3" />
+                        (Sound Supported)
                       </span>
                     )}
                   </span>

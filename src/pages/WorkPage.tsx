@@ -69,7 +69,7 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
 
           <SectionEditorBar
             addImageLabel="Add Project Image"
-            addVideoLabel="Add Project Video (No Sound)"
+            addVideoLabel="Add Project Video"
             clearDataLabel="Clear Added Data"
             onAddImage={() => {
               setModalMediaType('image');

@@ -73,7 +73,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         <SectionEditorBar
           className="mb-8 justify-end"
           addImageLabel="Change Hero Image"
-          addVideoLabel="Add / Change Hero Video (No Sound)"
+          addVideoLabel="Add / Change Hero Video"
           editTextLabel="Edit Description & Title"
           clearDataLabel="Restore Original Image"
           onAddImage={() => {
@@ -218,7 +218,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
 
           <SectionEditorBar
             addImageLabel="Add Gallery Image"
-            addVideoLabel="Add Gallery Video (No Sound)"
+            addVideoLabel="Add Gallery Video"
             clearDataLabel="Clear Added Data"
             onAddImage={() => {
               setGalleryModalMediaType('image');

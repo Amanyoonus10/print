@@ -75,7 +75,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         <SectionEditorBar
           className="mb-8 justify-end"
           addImageLabel="Change Cover Image"
-          addVideoLabel="Add / Change Cover Video (No Sound)"
+          addVideoLabel="Add / Change Cover Video"
           editTextLabel="Edit Case Study Copy"
           onAddImage={() => {
             setCoverModalMediaType('image');
@@ -202,7 +202,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
 
           <SectionEditorBar
             addImageLabel="Add Gallery Image"
-            addVideoLabel="Add Gallery Video (No Sound)"
+            addVideoLabel="Add Gallery Video"
             clearDataLabel="Clear Added Data"
             onAddImage={() => {
               setGalleryModalMediaType('image');

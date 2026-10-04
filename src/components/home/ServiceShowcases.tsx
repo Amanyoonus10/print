@@ -66,7 +66,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
 
                 <SectionEditorBar
                   addImageLabel={`Add Image to ${service.title}`}
-                  addVideoLabel={`Add Video (No Sound) to ${service.title}`}
+                  addVideoLabel={`Add Video to ${service.title}`}
                   clearDataLabel="Clear Added Data"
                   editTextLabel="Edit Description"
                   onAddImage={() => {
