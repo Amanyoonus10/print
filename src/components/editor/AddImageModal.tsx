@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, VolumeX, Image as ImageIcon, Video } from 'lucide-react';
-import { isVideoSource } from '../../utils/media';
+import { X, CheckCircle2, VolumeX, Image as ImageIcon, Video, Link as LinkIcon, FileCheck } from 'lucide-react';
+import { isVideoSource, isValidMediaUrl } from '../../utils/media';
+import { saveMediaBlob } from '../../utils/mediaStorage';
+import { MediaRenderer } from '../ui/MediaRenderer';
 
 export interface AddMediaItemData {
   url: string;
@@ -38,25 +40,44 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
   const [itemCategory, setItemCategory] = useState<string>('');
   const [itemDateSubtitle, setItemDateSubtitle] = useState<string>('');
   const [itemDescription, setItemDescription] = useState<string>('');
-  const [mediaUrl, setMediaUrl] = useState<string>('');
+
+  // Mode and media state
   const [mediaType, setMediaType] = useState<'image' | 'video'>(isInitialVid ? 'video' : 'image');
+  const [sourceMode, setSourceMode] = useState<'upload' | 'url'>('upload');
+  
+  // File upload state (stores IndexedDB persistent ID and fast streaming preview)
+  const [uploadedFileId, setUploadedFileId] = useState<string>('');
+  const [uploadedBlobUrl, setUploadedBlobUrl] = useState<string>('');
+  const [uploadedFileName, setUploadedFileName] = useState<string>('');
+  const [uploadedFileSize, setUploadedFileSize] = useState<string>('');
+  const [isProcessingFile, setIsProcessingFile] = useState<boolean>(false);
+
+  // Manual URL input state (strictly for external links or server paths)
+  const [urlInput, setUrlInput] = useState<string>('');
+
   const [pinCode, setPinCode] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoPreviewRef = useRef<HTMLVideoElement | null>(null);
 
   // Sync state if initialMediaType or defaultType changes
   useEffect(() => {
     const isVid = initialMediaType === 'video' || defaultType.toLowerCase().includes('video');
     setMediaType(isVid ? 'video' : 'image');
     setItemType(isVid ? 'Video Exhibit (No Sound)' : defaultType);
-  }, [initialMediaType, defaultType]);
+  }, [initialMediaType, defaultType, isOpen]);
+
+  // Clean reset on close
+  const handleModalClose = () => {
+    setError('');
+    setSuccess(false);
+    onClose();
+  };
 
   if (!isOpen) return null;
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -68,33 +89,54 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       return;
     }
 
-    if (file.size > 25 * 1024 * 1024) {
-      setError('File is larger than 25MB. Browser LocalStorage may exceed quota. Please use a shorter video clip or provide a direct video URL.');
+    // High performance limits: up to 80MB smoothly handled by IndexedDB without memory strain
+    if (file.size > 80 * 1024 * 1024) {
+      setError('File is larger than 80MB. Please use an optimized video clip (under 80MB) for best web performance.');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      setMediaUrl(result);
-      setMediaType(isVideo ? 'video' : 'image');
-      if (isVideo) {
-        setItemType('Video Exhibit (No Sound)');
-      }
+    try {
+      setIsProcessingFile(true);
       setError('');
+
+      // Store in IndexedDB and generate GPU streamable Object URL
+      const { id, blobUrl } = await saveMediaBlob(file, file.name);
+
+      setUploadedFileId(id);
+      setUploadedBlobUrl(blobUrl);
+      setUploadedFileName(file.name);
+      setUploadedFileSize((file.size / (1024 * 1024)).toFixed(1) + ' MB');
+      setSourceMode('upload');
+
+      // Auto-set title from filename if empty
       if (!itemTitle) {
-        setItemTitle(file.name.replace(/\.[^/.]+$/, ''));
+        const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        setItemTitle(cleanName);
       }
-    };
-    reader.readAsDataURL(file);
+
+      if (isVideo) {
+        setMediaType('video');
+        if (!itemType.toLowerCase().includes('video')) {
+          setItemType('Video Exhibit (No Sound)');
+        }
+      } else {
+        setMediaType('image');
+      }
+    } catch (err) {
+      console.error('File processing error:', err);
+      setError('Failed to process media file. Please try again.');
+    } finally {
+      setIsProcessingFile(false);
+    }
   };
 
-  const handleUrlChange = (url: string) => {
-    setMediaUrl(url);
-    setError('');
-    if (isVideoSource(url)) {
-      setMediaType('video');
-      setItemType('Video Exhibit (No Sound)');
+  const handleRemoveUploadedFile = () => {
+    setUploadedFileId('');
+    setUploadedBlobUrl('');
+    setUploadedFileName('');
+    setUploadedFileSize('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -107,25 +149,46 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     }
   };
 
+  // Determine active media URL to preview and submit
+  const effectiveMediaSrc = sourceMode === 'upload' ? (uploadedBlobUrl || uploadedFileId) : urlInput.trim();
+  const storageMediaUrl = sourceMode === 'upload' ? uploadedFileId : urlInput.trim();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!mediaUrl) {
-      setError(mediaType === 'video' ? 'Please upload a video file or provide a video URL.' : 'Please upload an image file or provide an image URL.');
-      return;
+
+    // 1. Validate Media Source
+    if (sourceMode === 'upload') {
+      if (!uploadedFileId) {
+        setError(mediaType === 'video' ? 'Please upload a video file or switch to Web URL.' : 'Please upload an image file or switch to Web URL.');
+        return;
+      }
+    } else {
+      if (!urlInput.trim()) {
+        setError('Please enter a web URL or file path.');
+        return;
+      }
+      if (!isValidMediaUrl(urlInput.trim())) {
+        setError('Invalid URL format. Please enter a valid URL (starting with https://, http://, or /). Note: Titles or names should be entered in the "Title" field above, not in the URL field.');
+        return;
+      }
     }
+
+    // 2. Validate Title
     if (!itemTitle.trim()) {
       setError('Please enter a Title / Headline / Caption.');
       return;
     }
+
+    // 3. Security Code
     if (pinCode.trim() !== '7227') {
-      setError('Invalid Security Passcode. Access denied.');
+      setError('Invalid Security Passcode (Hint: 7227). Access denied.');
       return;
     }
 
-    const determinedType = isVideoSource(mediaUrl, mediaType) ? 'video' : 'image';
+    const determinedType = isVideoSource(effectiveMediaSrc, mediaType) ? 'video' : 'image';
 
     onAdd({
-      url: mediaUrl,
+      url: storageMediaUrl,
       mediaType: determinedType,
       title: itemTitle.trim(),
       category: itemCategory.trim() || undefined,
@@ -142,7 +205,11 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       setItemCategory('');
       setItemDateSubtitle('');
       setItemDescription('');
-      setMediaUrl('');
+      setUploadedFileId('');
+      setUploadedBlobUrl('');
+      setUploadedFileName('');
+      setUploadedFileSize('');
+      setUrlInput('');
       setMediaType('image');
       setPinCode('');
       setError('');
@@ -151,11 +218,9 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     }, 400);
   };
 
-  const isCurrentVideo = isVideoSource(mediaUrl, mediaType);
-
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm overflow-y-auto">
+      <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -166,7 +231,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
           {/* Top Close Button */}
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleModalClose}
             aria-label="Close"
             className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
           >
@@ -174,28 +239,34 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
           </button>
 
           {/* Subtitle Notice */}
-          <p className="text-xs text-gray-400 font-sans leading-relaxed pr-8 mb-5">
-            This admin panel stores data locally (LocalStorage) and renders updates in real-time.
-          </p>
+          <div className="pr-8 mb-4">
+            <h2 className="text-xl font-display font-bold text-gray-900">
+              {mediaType === 'video' ? 'Add Video Exhibit' : 'Add Photo / Exhibit'}
+            </h2>
+            <p className="text-xs text-gray-400 font-sans leading-relaxed mt-0.5">
+              High-performance video streaming with hardware GPU decoding. Video exhibits play silently on loop (No Sound).
+            </p>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-sans">
-                {error}
+              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-sans leading-relaxed flex items-start gap-2">
+                <span className="font-bold shrink-0">Note:</span>
+                <span>{error}</span>
               </div>
             )}
 
             {success && (
-              <div className="p-3 rounded-xl bg-green-50 border border-green-200 text-green-700 text-xs font-sans flex items-center gap-2">
+              <div className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-green-700 text-xs font-sans flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
-                <span>Published to website successfully!</span>
+                <span className="font-semibold">Published to website successfully!</span>
               </div>
             )}
 
             {/* 1. MEDIA FORMAT OPTION: IMAGE VS VIDEO */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                1. Choose Option: Photo or Video
+                1. Media Format
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
@@ -277,7 +348,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               <input
                 type="text"
                 required
-                placeholder="e.g. Distributor Program launched in Dubai"
+                placeholder="e.g. QSTP Tension Fabric Illumination"
                 value={itemTitle}
                 onChange={(e) => setItemTitle(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400"
@@ -287,11 +358,11 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
             {/* 4. Category / Tag (News only) */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
-                Category / Tag (News only)
+                Category / Tag (Optional)
               </label>
               <input
                 type="text"
-                placeholder="e.g. Export, Education, Milestone"
+                placeholder="e.g. Signage, Branding, Fabric SEG"
                 value={itemCategory}
                 onChange={(e) => setItemCategory(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400"
@@ -301,11 +372,11 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
             {/* 5. Date / Subtitle */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
-                Date / Subtitle
+                Subtitle / Material Specs
               </label>
               <input
                 type="text"
-                placeholder="e.g. Year 1, Month 3 or 2026"
+                placeholder="e.g. Dye-Sublimated Backlit Stretch Fabrics"
                 value={itemDateSubtitle}
                 onChange={(e) => setItemDateSubtitle(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400"
@@ -318,90 +389,140 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
                 Description / Detail Content
               </label>
               <textarea
-                rows={3}
-                placeholder="e.g. Detailed breakdown of events..."
+                rows={2}
+                placeholder="e.g. Illuminated signage and tension fabric systems with uniform edge-to-edge brilliance..."
                 value={itemDescription}
                 onChange={(e) => setItemDescription(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400 resize-none"
+                className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400 resize-none"
               />
             </div>
 
-            {/* 7. Upload File or URL based on Media Option */}
+            {/* 7. HIGH-PERFORMANCE MEDIA SOURCE: UPLOAD OR WEB URL */}
             <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
-              <label className="block text-xs font-bold text-gray-900 mb-1">
-                {mediaType === 'video' ? 'Upload Video File (.mp4, .webm, .mov)' : 'Upload Image File (.jpg, .png, .webp)'}
-              </label>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-1.5">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept={mediaType === 'video' ? 'video/*,.mp4,.webm,.ogg,.mov' : 'image/*'}
-                  onChange={handleFileUpload}
-                  className="text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-200 file:text-gray-800 hover:file:bg-gray-300 cursor-pointer w-full"
-                />
+              {/* Source Mode Switcher */}
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-200/80">
+                <span className="text-xs font-bold text-gray-900 uppercase tracking-wider">
+                  2. Media File or URL
+                </span>
+                <div className="flex items-center bg-gray-200 p-0.5 rounded-lg text-[11px] font-medium">
+                  <button
+                    type="button"
+                    onClick={() => setSourceMode('upload')}
+                    className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                      sourceMode === 'upload' ? 'bg-white text-gray-900 font-bold shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    Upload File
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSourceMode('url')}
+                    className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                      sourceMode === 'url' ? 'bg-white text-gray-900 font-bold shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    Or URL Link
+                  </button>
+                </div>
               </div>
 
-              {/* Or manual URL */}
-              <div className="mt-2.5 flex items-center gap-2">
-                <span className="text-[11px] text-gray-500 font-sans shrink-0 font-medium">Or URL:</span>
-                <input
-                  type="text"
-                  placeholder={mediaType === 'video' ? 'e.g. /videos/hero_video_1.mp4 or https://.../video.mp4' : 'https://...'}
-                  value={mediaUrl}
-                  onChange={(e) => handleUrlChange(e.target.value)}
-                  className="flex-1 px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs text-gray-900 outline-none focus:border-gray-900"
-                />
-              </div>
-
-              {mediaType === 'video' && (
-                <p className="mt-2 text-[11px] text-gray-500 font-sans flex items-center gap-1.5">
-                  <VolumeX className="w-3.5 h-3.5 text-[#49C1DA] shrink-0" />
-                  <span><strong>No Sound:</strong> Video will automatically play silently on a smooth loop without audio.</span>
-                </p>
+              {sourceMode === 'upload' ? (
+                <div>
+                  {uploadedFileName ? (
+                    /* Clean, lag-free file badge */
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#49C1DA]/40 shadow-xs">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#49C1DA]/15 text-[#49C1DA] flex items-center justify-center shrink-0">
+                          {mediaType === 'video' ? <Video className="w-5 h-5" /> : <FileCheck className="w-5 h-5" />}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-gray-900 truncate">
+                            {uploadedFileName}
+                          </p>
+                          <p className="text-[10px] text-gray-500 font-mono">
+                            {uploadedFileSize} • GPU Stream Ready
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleRemoveUploadedFile}
+                        className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                        title="Remove uploaded file"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="block text-[11px] font-medium text-gray-600 mb-1.5">
+                        {mediaType === 'video' ? 'Select video from device (.mp4, .webm, .mov)' : 'Select image from device (.jpg, .png, .webp)'}
+                      </label>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept={mediaType === 'video' ? 'video/*,.mp4,.webm,.ogg,.mov' : 'image/*'}
+                        onChange={handleFileUpload}
+                        disabled={isProcessingFile}
+                        className="text-xs text-gray-600 file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-gray-200 file:text-gray-800 hover:file:bg-gray-300 cursor-pointer w-full"
+                      />
+                      {isProcessingFile && (
+                        <p className="text-xs text-[#49C1DA] font-medium mt-1 animate-pulse">
+                          Processing & optimizing media for GPU playback...
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-600 mb-1.5 flex items-center gap-1">
+                    <LinkIcon className="w-3.5 h-3.5 text-gray-400" />
+                    <span>Enter Direct Video or Image Web Link (HTTPS or /videos/...)</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder={mediaType === 'video' ? 'https://example.com/video.mp4 or /videos/demo.mp4' : 'https://example.com/photo.jpg'}
+                    value={urlInput}
+                    onChange={(e) => {
+                      setUrlInput(e.target.value);
+                      setError('');
+                    }}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-xs text-gray-900 outline-none focus:border-gray-900"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">
+                    Tip: Do not put item titles here. Direct video URLs must end with .mp4 or start with https://.
+                  </p>
+                </div>
               )}
 
-              {/* Media Preview thumbnail / video player if selected */}
-              {mediaUrl && (
-                <div className="mt-3 relative rounded-xl overflow-hidden aspect-[16/9] border border-gray-200 bg-black max-h-40">
-                  {isCurrentVideo ? (
-                    <>
-                      <video
-                        ref={(el) => {
-                          videoPreviewRef.current = el;
-                          if (el) {
-                            el.muted = true;
-                            el.defaultMuted = true;
-                          }
-                        }}
-                        src={mediaUrl}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-mono px-2.5 py-0.5 rounded-full flex items-center gap-1.5 border border-white/20">
-                        <VolumeX className="w-3 h-3 text-[#49C1DA]" />
-                        <span>Muted Video (No Sound)</span>
-                      </div>
-                    </>
-                  ) : (
-                    <img
-                      src={mediaUrl}
-                      alt="Uploaded thumbnail"
-                      className="w-full h-full object-cover"
-                    />
-                  )}
+              {mediaType === 'video' && (
+                <div className="mt-2.5 p-2 rounded-lg bg-[#49C1DA]/10 border border-[#49C1DA]/20 flex items-center gap-2">
+                  <VolumeX className="w-4 h-4 text-[#49C1DA] shrink-0" />
+                  <span className="text-[11px] text-gray-700 font-sans">
+                    <strong>Muted Autoplay:</strong> Exhibit video plays silently on a continuous smooth loop without audio.
+                  </span>
+                </div>
+              )}
 
+              {/* Instant Lag-Free Media Preview */}
+              {effectiveMediaSrc && (
+                <div className="mt-3 relative rounded-xl overflow-hidden aspect-[16/9] border border-gray-200 bg-black max-h-44 shadow-inner">
+                  <MediaRenderer
+                    src={effectiveMediaSrc}
+                    mediaType={mediaType}
+                    alt={itemTitle || 'Preview exhibit'}
+                    showMutedIndicator={mediaType === 'video'}
+                    className="w-full h-full object-cover"
+                  />
                   <button
                     type="button"
                     onClick={() => {
-                      setMediaUrl('');
-                      if (fileInputRef.current) fileInputRef.current.value = '';
+                      handleRemoveUploadedFile();
+                      setUrlInput('');
                     }}
-                    title="Remove media"
-                    className="absolute top-2 right-2 bg-black/70 hover:bg-black text-white p-1 rounded-full transition-all cursor-pointer"
+                    title="Remove preview"
+                    className="absolute top-2 right-2 bg-black/70 hover:bg-black text-white p-1 rounded-full transition-all cursor-pointer z-30"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -412,14 +533,14 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
             {/* 8. Security Pincode */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
-                Security Pincode
+                Security Pincode <span className="text-gray-400 font-normal">(7227)</span>
               </label>
               <input
                 type="password"
-                placeholder="Enter PIN to publish"
+                placeholder="Enter PIN 7227 to publish"
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 placeholder:text-gray-400 font-mono"
               />
             </div>
 
@@ -427,7 +548,8 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] text-white font-sans text-sm font-bold tracking-wide transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                disabled={isProcessingFile}
+                className="w-full py-3.5 rounded-full bg-[#49C1DA] hover:bg-[#32AEC8] active:bg-[#259ab2] text-white font-sans text-sm font-bold tracking-wide transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <span>Publish to Website</span>
               </button>

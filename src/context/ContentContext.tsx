@@ -101,7 +101,24 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [services, setServices] = useState<ServiceItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.SERVICES);
-      return saved ? JSON.parse(saved) : initialServicesData;
+      if (!saved) return initialServicesData;
+      const parsed: ServiceItem[] = JSON.parse(saved);
+      return parsed.map((s) => {
+        const defaultService = initialServicesData.find((init) => init.slug === s.slug);
+        const isValidHero =
+          s.heroImage &&
+          (s.heroImage.startsWith('http://') ||
+            s.heroImage.startsWith('https://') ||
+            s.heroImage.startsWith('/') ||
+            s.heroImage.startsWith('data:') ||
+            s.heroImage.startsWith('blob:') ||
+            s.heroImage.startsWith('idb://'));
+        return {
+          ...s,
+          heroImage: isValidHero ? s.heroImage : (defaultService?.heroImage || s.heroImage),
+          heroMediaType: isValidHero ? s.heroMediaType : (defaultService?.heroMediaType || 'image'),
+        };
+      });
     } catch {
       return initialServicesData;
     }
@@ -111,7 +128,24 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [projects, setProjects] = useState<ProjectItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-      return saved ? JSON.parse(saved) : initialProjectsData;
+      if (!saved) return initialProjectsData;
+      const parsed: ProjectItem[] = JSON.parse(saved);
+      return parsed.map((p) => {
+        const defaultProject = initialProjectsData.find((init) => init.id === p.id);
+        const isValidCover =
+          p.coverImage &&
+          (p.coverImage.startsWith('http://') ||
+            p.coverImage.startsWith('https://') ||
+            p.coverImage.startsWith('/') ||
+            p.coverImage.startsWith('data:') ||
+            p.coverImage.startsWith('blob:') ||
+            p.coverImage.startsWith('idb://'));
+        return {
+          ...p,
+          coverImage: isValidCover ? p.coverImage : (defaultProject?.coverImage || p.coverImage),
+          coverMediaType: isValidCover ? p.coverMediaType : (defaultProject?.coverMediaType || 'image'),
+        };
+      });
     } catch {
       return initialProjectsData;
     }

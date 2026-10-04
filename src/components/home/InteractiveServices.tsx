@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ArrowUpRight } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
+import { servicesData } from '../../data/services';
 import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
@@ -158,9 +159,11 @@ export const InteractiveServices: React.FC = () => {
                   {/* Visual Preview (Image or Video - No Sound) */}
                   <MediaRenderer
                     src={activeService.heroImage}
+                    fallbackSrc={servicesData.find(s => s.slug === activeService.slug)?.heroImage}
                     mediaType={activeService.heroMediaType}
                     alt={activeService.title}
                     showMutedIndicator={true}
+                    mutedIndicatorPosition="top-right"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
 
