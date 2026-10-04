@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Calendar, Building2, Tag } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Calendar, Building2, Tag, Edit3 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
@@ -23,6 +23,8 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
   const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
   const [galleryModalMediaType, setGalleryModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
+  const [isEditGalleryTextOpen, setIsEditGalleryTextOpen] = useState<boolean>(false);
+  const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
 
   const project = projects.find(p => p.slug === slug);
 
@@ -55,6 +57,27 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
       caption: data.caption || data.description || 'Authentic Delivered Solution',
       mediaType: data.mediaType,
     });
+  };
+
+  const handleSaveGalleryText = (values: Record<string, string>) => {
+    updateProject(project.id, {
+      galleryTitle: values.galleryTitle || 'PROJECT GALLERIES.',
+      gallerySubtitle: values.gallerySubtitle || 'Authentic visual captures of delivered solutions in Qatar.',
+      galleryTag: values.galleryTag || 'PHOTO EXHIBITS',
+    });
+  };
+
+  const handleSaveItemText = (values: Record<string, string>) => {
+    if (editingItemIndex === null) return;
+    const newGallery = [...project.gallery];
+    if (newGallery[editingItemIndex]) {
+      newGallery[editingItemIndex] = {
+        ...newGallery[editingItemIndex],
+        title: values.title || newGallery[editingItemIndex].title,
+        caption: values.caption || newGallery[editingItemIndex].caption,
+      };
+      updateProject(project.id, { gallery: newGallery });
+    }
   };
 
   return (
@@ -195,14 +218,15 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <SectionHeading
-            tag="PHOTO EXHIBITS"
-            title="PROJECT GALLERIES."
-            subtitle="Authentic visual captures of delivered solutions in Qatar."
+            tag={project.galleryTag || "PHOTO EXHIBITS"}
+            title={project.galleryTitle || "PROJECT GALLERIES."}
+            subtitle={project.gallerySubtitle || "Authentic visual captures of delivered solutions in Qatar."}
           />
 
           <SectionEditorBar
             addImageLabel="Add Gallery Image"
             addVideoLabel="Add Gallery Video"
+            editTextLabel="Edit Gallery Title & Subtitle"
             clearDataLabel="Clear Added Data"
             onAddImage={() => {
               setGalleryModalMediaType('image');
@@ -212,6 +236,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
               setGalleryModalMediaType('video');
               setIsAddGalleryImageOpen(true);
             }}
+            onEditText={() => setIsEditGalleryTextOpen(true)}
             onClearData={() => setIsRemoveGalleryOpen(true)}
           />
         </div>
@@ -231,9 +256,21 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <div className="p-6 flex flex-col gap-1">
-                <h4 className="font-display font-bold text-lg text-[#171717]">{item.title}</h4>
-                <p className="text-xs sm:text-sm text-[#777777] font-mono">{item.caption}</p>
+              <div className="p-6 flex flex-col gap-1 justify-between flex-1">
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <h4 className="font-display font-bold text-lg text-[#171717]">{item.title}</h4>
+                    <button
+                      type="button"
+                      onClick={() => setEditingItemIndex(idx)}
+                      title={`Edit ${item.title}`}
+                      className="p-1.5 rounded-lg text-gray-400 hover:text-[#49C1DA] hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <p className="text-xs sm:text-sm text-[#777777] font-mono mt-1">{item.caption}</p>
+                </div>
               </div>
             </div>
           ))}
@@ -347,6 +384,59 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         }}
         onClearAll={resetToDefaults}
       />
+
+      {/* Edit Gallery Header Text Modal */}
+      <EditTextModal
+        isOpen={isEditGalleryTextOpen}
+        onClose={() => setIsEditGalleryTextOpen(false)}
+        title={`Edit ${project.title} Gallery Header`}
+        subtitle="Customize the project gallery section title and description"
+        fields={[
+          {
+            key: 'galleryTitle',
+            label: 'Section Title',
+            value: project.galleryTitle || 'PROJECT GALLERIES.',
+          },
+          {
+            key: 'gallerySubtitle',
+            label: 'Section Subtitle',
+            value: project.gallerySubtitle || 'Authentic visual captures of delivered solutions in Qatar.',
+            multiline: true,
+            rows: 2,
+          },
+          {
+            key: 'galleryTag',
+            label: 'Category Tag',
+            value: project.galleryTag || 'PHOTO EXHIBITS',
+          },
+        ]}
+        onSave={handleSaveGalleryText}
+      />
+
+      {/* Edit Individual Gallery Item Modal */}
+      {editingItemIndex !== null && project.gallery[editingItemIndex] && (
+        <EditTextModal
+          isOpen={editingItemIndex !== null}
+          onClose={() => setEditingItemIndex(null)}
+          title={`Edit Exhibit: ${project.gallery[editingItemIndex].title}`}
+          subtitle="Update exhibit title and caption"
+          fields={[
+            {
+              key: 'title',
+              label: 'Exhibit Title',
+              value: project.gallery[editingItemIndex].title,
+            },
+            {
+              key: 'caption',
+              label: 'Exhibit Caption',
+              value: project.gallery[editingItemIndex].caption,
+              multiline: true,
+              rows: 3,
+            },
+          ]}
+          onSave={handleSaveItemText}
+        />
+      )}
     </div>
   );
 };

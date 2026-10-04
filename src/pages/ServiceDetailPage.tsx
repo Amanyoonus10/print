@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Layers, Cpu, Compass } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Layers, Cpu, Compass, Edit3 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { servicesData } from '../data/services';
 import { SectionEditorBar } from '../components/editor/SectionEditorBar';
@@ -24,6 +24,8 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
   const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
   const [galleryModalMediaType, setGalleryModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
+  const [isEditGalleryTextOpen, setIsEditGalleryTextOpen] = useState<boolean>(false);
+  const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
 
   const service = services.find(s => s.slug === slug);
 
@@ -53,6 +55,27 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
       caption: data.caption || data.description || 'Authentic Delivered Exhibit',
       mediaType: data.mediaType,
     });
+  };
+
+  const handleSaveGalleryText = (values: Record<string, string>) => {
+    updateService(service.slug, {
+      galleryTitle: values.galleryTitle || `${service.title} EXHIBITS.`,
+      gallerySubtitle: values.gallerySubtitle || 'Genuine project deliverables executed for organizations across Qatar.',
+      galleryTag: values.galleryTag || 'AUTHENTIC GALLERY',
+    });
+  };
+
+  const handleSaveItemText = (values: Record<string, string>) => {
+    if (editingItemIndex === null) return;
+    const newGallery = [...service.gallery];
+    if (newGallery[editingItemIndex]) {
+      newGallery[editingItemIndex] = {
+        ...newGallery[editingItemIndex],
+        title: values.title || newGallery[editingItemIndex].title,
+        caption: values.caption || newGallery[editingItemIndex].caption,
+      };
+      updateService(service.slug, { gallery: newGallery });
+    }
   };
 
   return (
@@ -211,14 +234,15 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <SectionHeading
             number={service.number}
-            tag="AUTHENTIC GALLERY"
-            title={`${service.title} EXHIBITS.`}
-            subtitle="Genuine project deliverables executed for organizations across Qatar."
+            tag={service.galleryTag || "AUTHENTIC GALLERY"}
+            title={service.galleryTitle || `${service.title} EXHIBITS.`}
+            subtitle={service.gallerySubtitle || "Genuine project deliverables executed for organizations across Qatar."}
           />
 
           <SectionEditorBar
             addImageLabel="Add Gallery Image"
             addVideoLabel="Add Gallery Video"
+            editTextLabel="Edit Gallery Title & Description"
             clearDataLabel="Clear Added Data"
             onAddImage={() => {
               setGalleryModalMediaType('image');
@@ -228,6 +252,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
               setGalleryModalMediaType('video');
               setIsAddGalleryImageOpen(true);
             }}
+            onEditText={() => setIsEditGalleryTextOpen(true)}
             onClearData={() => setIsRemoveGalleryOpen(true)}
           />
         </div>
@@ -247,13 +272,25 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="p-4 flex flex-col">
-                <h4 className="font-display font-bold text-sm text-[#171717] truncate">
-                  {item.title}
-                </h4>
-                <p className="font-mono text-xs text-[#777777] mt-1 line-clamp-2">
-                  {item.caption || 'Project deliverable executed with precision in Doha, Qatar.'}
-                </p>
+              <div className="p-4 flex flex-col justify-between flex-1">
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <h4 className="font-display font-bold text-sm text-[#171717] line-clamp-1">
+                      {item.title}
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => setEditingItemIndex(idx)}
+                      title={`Edit ${item.title}`}
+                      className="p-1 rounded-md text-gray-400 hover:text-[#49C1DA] hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <p className="font-mono text-xs text-[#777777] mt-1 line-clamp-2">
+                    {item.caption || 'Project deliverable executed with precision in Doha, Qatar.'}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
@@ -338,6 +375,59 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         }}
         onClearAll={resetToDefaults}
       />
+
+      {/* Edit Gallery Header Text Modal */}
+      <EditTextModal
+        isOpen={isEditGalleryTextOpen}
+        onClose={() => setIsEditGalleryTextOpen(false)}
+        title={`Edit ${service.title} Gallery Header`}
+        subtitle="Customize the section title and description"
+        fields={[
+          {
+            key: 'galleryTitle',
+            label: 'Section Title',
+            value: service.galleryTitle || `${service.title} EXHIBITS.`,
+          },
+          {
+            key: 'gallerySubtitle',
+            label: 'Section Subtitle',
+            value: service.gallerySubtitle || 'Genuine project deliverables executed for organizations across Qatar.',
+            multiline: true,
+            rows: 2,
+          },
+          {
+            key: 'galleryTag',
+            label: 'Category Tag',
+            value: service.galleryTag || 'AUTHENTIC GALLERY',
+          },
+        ]}
+        onSave={handleSaveGalleryText}
+      />
+
+      {/* Edit Individual Gallery Item Modal */}
+      {editingItemIndex !== null && service.gallery[editingItemIndex] && (
+        <EditTextModal
+          isOpen={editingItemIndex !== null}
+          onClose={() => setEditingItemIndex(null)}
+          title={`Edit Exhibit: ${service.gallery[editingItemIndex].title}`}
+          subtitle="Update exhibit title and caption"
+          fields={[
+            {
+              key: 'title',
+              label: 'Exhibit Title',
+              value: service.gallery[editingItemIndex].title,
+            },
+            {
+              key: 'caption',
+              label: 'Exhibit Caption',
+              value: service.gallery[editingItemIndex].caption,
+              multiline: true,
+              rows: 3,
+            },
+          ]}
+          onSave={handleSaveItemText}
+        />
+      )}
     </div>
   );
 };

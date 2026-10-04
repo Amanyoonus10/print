@@ -48,6 +48,9 @@ export interface ServiceItem {
     caption: string;
     mediaType?: 'image' | 'video';
   }[];
+  galleryTitle?: string;
+  gallerySubtitle?: string;
+  galleryTag?: string;
   accentColor?: string;
 }
 
@@ -72,6 +75,9 @@ export interface ProjectItem {
     caption: string;
     mediaType?: 'image' | 'video';
   }[];
+  galleryTitle?: string;
+  gallerySubtitle?: string;
+  galleryTag?: string;
   featured?: boolean;
 }
 
