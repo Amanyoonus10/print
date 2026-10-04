@@ -105,6 +105,14 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const parsed: ServiceItem[] = JSON.parse(saved);
       return parsed.map((s) => {
         const defaultService = initialServicesData.find((init) => init.slug === s.slug);
+        if (s.slug === 'light-box') {
+          return {
+            ...s,
+            heroImage: defaultService?.heroImage || '/images/user_extracted/Page_07_Image_09.jpeg',
+            heroMediaType: 'image',
+            gallery: (s.gallery || []).filter((g) => !g.url.includes('QSTP') && g.title !== 'QSTP Project'),
+          };
+        }
         const isValidHero =
           s.heroImage &&
           (s.heroImage.startsWith('http://') ||

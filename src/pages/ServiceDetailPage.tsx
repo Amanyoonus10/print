@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Layers, Cpu, Compass } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { servicesData } from '../data/services';
 import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
@@ -74,6 +75,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           addImageLabel="Change Hero Image"
           addVideoLabel="Add / Change Hero Video (No Sound)"
           editTextLabel="Edit Description & Title"
+          clearDataLabel="Restore Original Image"
           onAddImage={() => {
             setHeroModalMediaType('image');
             setIsAddHeroImageOpen(true);
@@ -83,6 +85,15 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
             setIsAddHeroImageOpen(true);
           }}
           onEditText={() => setIsEditHeroTextOpen(true)}
+          onClearData={() => {
+            const defaultService = servicesData.find((init) => init.slug === service.slug);
+            if (defaultService) {
+              updateService(service.slug, {
+                heroImage: defaultService.heroImage,
+                heroMediaType: 'image',
+              });
+            }
+          }}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
