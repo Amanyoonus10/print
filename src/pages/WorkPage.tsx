@@ -30,7 +30,14 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
     ? projects
     : projects.filter(p => p.category === activeCategory);
 
-  const handleAddProject = (data: { url: string; title: string; subtitle?: string; caption?: string; description?: string }) => {
+  const handleAddProject = (data: {
+    url: string;
+    mediaType?: 'image' | 'video';
+    title: string;
+    subtitle?: string;
+    caption?: string;
+    description?: string;
+  }) => {
     addProject({
       title: data.title,
       category: data.subtitle || (activeCategory !== 'All' ? activeCategory : 'Branding & Spatial'),
@@ -38,10 +45,11 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
       client: 'Doha Client',
       year: '2026',
       coverImage: data.url,
+      coverMediaType: data.mediaType,
       summary: data.caption || data.description || 'Custom print and fabrication case study executed in Qatar.',
       description: data.description || data.caption || 'Detailed execution case study for Qatar client.',
       scope: ['Precision Printing', 'Quality Finishing'],
-      gallery: [{ url: data.url, title: data.title, caption: data.caption || 'Case Study Photo' }],
+      gallery: [{ url: data.url, title: data.title, caption: data.caption || 'Case Study Exhibit', mediaType: data.mediaType }],
       featured: true,
     });
   };

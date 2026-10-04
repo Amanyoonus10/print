@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, RotateCcw } from 'lucide-react';
+import { MediaRenderer } from '../ui/MediaRenderer';
 
 export interface RemovableItem {
   id?: string;
@@ -8,6 +9,7 @@ export interface RemovableItem {
   title: string;
   subtitle?: string;
   url: string;
+  mediaType?: 'image' | 'video';
 }
 
 interface RemoveItemModalProps {
@@ -123,8 +125,9 @@ export const RemoveItemModal: React.FC<RemoveItemModalProps> = ({
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-200 shrink-0 border border-gray-200">
-                    <img
+                    <MediaRenderer
                       src={item.url}
+                      mediaType={item.mediaType}
                       alt={item.title}
                       className="w-full h-full object-cover"
                     />

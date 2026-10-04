@@ -27,7 +27,14 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
 
   const displayedProjects = showAll ? projects : projects.filter(p => p.featured).slice(0, 6);
 
-  const handleAddProject = (data: { url: string; title: string; subtitle?: string; caption?: string; description?: string }) => {
+  const handleAddProject = (data: {
+    url: string;
+    mediaType?: 'image' | 'video';
+    title: string;
+    subtitle?: string;
+    caption?: string;
+    description?: string;
+  }) => {
     addProject({
       title: data.title,
       category: data.subtitle || 'Signage & Fabrication',
@@ -35,10 +42,11 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
       client: 'Doha Client',
       year: '2026',
       coverImage: data.url,
+      coverMediaType: data.mediaType,
       summary: data.caption || data.description || 'Custom print and fabrication installation executed with precision in Qatar.',
       description: data.description || data.caption || 'Detailed execution overview for Qatar projects.',
       scope: ['Precision Printing', 'Installation & Finishing'],
-      gallery: [{ url: data.url, title: data.title, caption: data.caption || 'Project Showcase' }],
+      gallery: [{ url: data.url, title: data.title, caption: data.caption || 'Project Showcase', mediaType: data.mediaType }],
       featured: true,
     });
   };

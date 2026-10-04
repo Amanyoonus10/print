@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Film } from 'lucide-react';
 import type { ProjectItem } from '../../types';
+import { MediaRenderer, isVideoSource } from './MediaRenderer';
 
 interface ProjectCardProps {
   project: ProjectItem;
@@ -16,6 +17,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   priority = false,
   onClick,
 }) => {
+  const isVideo = isVideoSource(project.coverImage, project.coverMediaType);
   const aspectClasses = {
     square: 'aspect-square',
     video: 'aspect-video',
@@ -32,25 +34,34 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       className="group flex flex-col gap-4 relative cursor-pointer"
       onClick={onClick}
     >
-      {/* Image Container with Hover Scale */}
+      {/* Image / Video Container with Hover Scale */}
       <div
         className={`relative w-full ${aspectClasses[aspectRatio]} rounded-3xl overflow-hidden bg-white border border-[#EDE8DE] shadow-sm transition-all duration-500 group-hover:border-[#B8955A] group-hover:shadow-xl`}
       >
-        <img
+        <MediaRenderer
           src={project.coverImage}
+          mediaType={project.coverMediaType}
           alt={project.title}
-          loading={priority ? 'eager' : 'lazy'}
+          priority={priority}
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-95" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-95 pointer-events-none" />
 
         {/* Top Badges */}
-        <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
-          <span className="font-mono text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 uppercase tracking-wider">
-            {project.category}
-          </span>
+        <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10 pointer-events-none">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 uppercase tracking-wider">
+              {project.category}
+            </span>
+            {isVideo && (
+              <span className="font-mono text-[10px] font-bold text-[#49C1DA] bg-black/60 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-[#49C1DA]/40 uppercase tracking-wider flex items-center gap-1">
+                <Film className="w-3 h-3" />
+                <span>Video</span>
+              </span>
+            )}
+          </div>
           
           <span className="font-mono text-xs text-white/80 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
             {project.year}

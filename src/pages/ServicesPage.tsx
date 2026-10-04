@@ -3,6 +3,7 @@ import { SectionHeading } from '../components/ui/SectionHeading';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useContent } from '../context/ContentContext';
+import { MediaRenderer } from '../components/ui/MediaRenderer';
 
 interface ServicesPageProps {
   onOpenQuoteModal: () => void;
@@ -31,12 +32,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenQuoteModal }) 
               key={service.slug}
               className="group rounded-3xl bg-white border border-[#EDE8DE] overflow-hidden hover:border-[#B8955A]/60 transition-all duration-400 flex flex-col justify-between shadow-xs hover:shadow-xl"
             >
-              {/* Image Banner */}
+              {/* Image / Video Banner */}
               <div className="relative aspect-[16/9] overflow-hidden bg-gray-100">
-                <img
+                <MediaRenderer
                   src={service.heroImage}
+                  mediaType={service.heroMediaType}
                   alt={service.title}
-                  loading="lazy"
+                  showMutedIndicator={true}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

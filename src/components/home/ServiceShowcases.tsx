@@ -6,6 +6,7 @@ import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
 import { RemoveItemModal } from '../editor/RemoveItemModal';
+import { MediaRenderer } from '../ui/MediaRenderer';
 import type { ServiceItem } from '../../types';
 
 export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ onOpenQuoteModal }) => {
@@ -24,12 +25,13 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
     });
   };
 
-  const handleAddImage = (data: { url: string; title: string; caption?: string }) => {
+  const handleAddImage = (data: { url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }) => {
     if (!activeAddService) return;
     addServiceGalleryImage(activeAddService.slug, {
       url: data.url,
       title: data.title,
       caption: data.caption,
+      mediaType: data.mediaType,
     });
   };
 
@@ -148,17 +150,19 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className={`lg:col-span-6 flex flex-col gap-4 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
                 >
-                  {/* Primary Large Image */}
+                  {/* Primary Large Image / Video */}
                   <div className="relative rounded-3xl overflow-hidden aspect-[16/11] bg-white border border-[#EDE8DE] group shadow-lg">
-                    <img
+                    <MediaRenderer
                       src={service.heroImage}
+                      mediaType={service.heroMediaType}
                       alt={service.title}
-                      loading="lazy"
+                      priority={index === 0}
+                      showMutedIndicator={true}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                     
-                    <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                    <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none">
                       <div>
                         <span className="font-mono text-[10px] text-[#B8955A] uppercase tracking-widest block font-bold">
                           Production Standard
@@ -173,17 +177,17 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                     </div>
                   </div>
 
-                  {/* 2-Column Supporting Detail Images */}
+                  {/* 2-Column Supporting Detail Images / Videos */}
                   <div className="grid grid-cols-2 gap-4">
                     {service.gallery.slice(0, 4).map((item, gIdx) => (
                       <div
                         key={gIdx}
                         className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-white border border-[#EDE8DE] group shadow-xs"
                       >
-                        <img
+                        <MediaRenderer
                           src={item.url}
+                          mediaType={item.mediaType}
                           alt={item.title}
-                          loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
 

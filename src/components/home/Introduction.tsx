@@ -7,6 +7,7 @@ import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
 import { RemoveItemModal } from '../editor/RemoveItemModal';
+import { MediaRenderer } from '../ui/MediaRenderer';
 
 export const Introduction: React.FC = () => {
   const { company, introImages, updateCompanyDescription, addIntroImage, removeIntroImage, resetToDefaults } = useContent();
@@ -128,14 +129,15 @@ export const Introduction: React.FC = () => {
                 transition={{ duration: 0.7, delay: idx * 0.1 }}
                 className="relative rounded-3xl overflow-hidden aspect-[16/11] bg-white border border-[#EDE8DE] group shadow-md"
               >
-                <img
+                <MediaRenderer
                   src={img.url}
+                  mediaType={img.mediaType}
                   alt={img.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
 
-                <div className="absolute bottom-6 left-6 right-6">
+                <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                   {img.subtitle && (
                     <span className="font-mono text-[10px] text-[#B8955A] uppercase tracking-widest font-bold block">
                       {img.subtitle}
@@ -163,13 +165,18 @@ export const Introduction: React.FC = () => {
         </div>
       </div>
 
-      {/* Add Image Modal */}
+      {/* Add Media Modal */}
       <AddImageModal
         isOpen={isAddImageOpen}
         onClose={() => setIsAddImageOpen(false)}
-        title="Add Image to Company Story"
+        title="Add Media to Company Story"
         subtitle="Introduction Gallery"
-        onAdd={data => addIntroImage({ url: data.url, title: data.title, subtitle: data.subtitle })}
+        onAdd={data => addIntroImage({
+          url: data.url,
+          mediaType: data.mediaType,
+          title: data.title,
+          subtitle: data.subtitle
+        })}
       />
 
       {/* Remove Intro Images Modal */}

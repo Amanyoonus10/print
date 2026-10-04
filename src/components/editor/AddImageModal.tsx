@@ -1,6 +1,18 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2 } from 'lucide-react';
+import { X, CheckCircle2, VolumeX, Film, Image as ImageIcon } from 'lucide-react';
+import { isVideoSource } from '../ui/MediaRenderer';
+
+export interface AddMediaItemData {
+  url: string;
+  mediaType?: 'image' | 'video';
+  title: string;
+  category?: string;
+  subtitle?: string;
+  caption?: string;
+  description?: string;
+  itemType?: string;
+}
 
 interface AddImageModalProps {
   isOpen: boolean;
@@ -9,15 +21,7 @@ interface AddImageModalProps {
   subtitle?: string;
   defaultType?: string;
   requireDescription?: boolean;
-  onAdd: (data: {
-    url: string;
-    title: string;
-    category?: string;
-    subtitle?: string;
-    caption?: string;
-    description?: string;
-    itemType?: string;
-  }) => void;
+  onAdd: (data: AddMediaItemData) => void;
 }
 
 export const AddImageModal: React.FC<AddImageModalProps> = ({
@@ -31,12 +35,14 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
   const [itemCategory, setItemCategory] = useState<string>('');
   const [itemDateSubtitle, setItemDateSubtitle] = useState<string>('');
   const [itemDescription, setItemDescription] = useState<string>('');
-  const [imagePreview, setImagePreview] = useState<string>('');
+  const [mediaUrl, setMediaUrl] = useState<string>('');
+  const [mediaType, setMediaType] = useState<'image' | 'video'>('image');
   const [pinCode, setPinCode] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoPreviewRef = useRef<HTMLVideoElement | null>(null);
 
   if (!isOpen) return null;
 
@@ -44,14 +50,24 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      setError('Please select a valid image file (JPG, PNG, WebP).');
+    const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|ogg|mov|m4v)$/i.test(file.name);
+    const isImage = file.type.startsWith('image/') || /\.(jpe?g|png|webp|gif|svg)$/i.test(file.name);
+
+    if (!isVideo && !isImage) {
+      setError('Please select a valid image (JPG, PNG, WebP) or video (MP4, WebM, MOV) file.');
+      return;
+    }
+
+    if (file.size > 25 * 1024 * 1024) {
+      setError('File is larger than 25MB. Browser LocalStorage may exceed quota. Please use a shorter video clip or provide a direct video URL.');
       return;
     }
 
     const reader = new FileReader();
     reader.onload = () => {
-      setImagePreview(reader.result as string);
+      const result = reader.result as string;
+      setMediaUrl(result);
+      setMediaType(isVideo ? 'video' : 'image');
       setError('');
       if (!itemTitle) {
         setItemTitle(file.name.replace(/\.[^/.]+$/, ''));
@@ -60,10 +76,18 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     reader.readAsDataURL(file);
   };
 
+  const handleUrlChange = (url: string) => {
+    setMediaUrl(url);
+    setError('');
+    if (isVideoSource(url)) {
+      setMediaType('video');
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!imagePreview) {
-      setError('Please upload an image file or provide an image URL.');
+    if (!mediaUrl) {
+      setError('Please upload an image/video file or provide a media URL.');
       return;
     }
     if (!itemTitle.trim()) {
@@ -75,8 +99,11 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       return;
     }
 
+    const determinedType = isVideoSource(mediaUrl, mediaType) ? 'video' : 'image';
+
     onAdd({
-      url: imagePreview,
+      url: mediaUrl,
+      mediaType: determinedType,
       title: itemTitle.trim(),
       category: itemCategory.trim() || undefined,
       subtitle: itemDateSubtitle.trim() || undefined,
@@ -92,13 +119,16 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       setItemCategory('');
       setItemDateSubtitle('');
       setItemDescription('');
-      setImagePreview('');
+      setMediaUrl('');
+      setMediaType('image');
       setPinCode('');
       setError('');
       setSuccess(false);
       onClose();
     }, 400);
   };
+
+  const isCurrentVideo = isVideoSource(mediaUrl, mediaType);
 
   return (
     <AnimatePresence>
@@ -214,44 +244,113 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               />
             </div>
 
-            {/* 6. Upload Image File */}
+            {/* 6. Upload Media File (Image or Video - No Sound) */}
             <div>
-              <label className="block text-xs font-semibold text-gray-900 mb-1.5">
-                Upload Image File
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-gray-900">
+                  Upload Media File
+                </label>
+                {/* Media Type Toggle: Image vs Video (No Sound) */}
+                <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-lg border border-gray-200">
+                  <button
+                    type="button"
+                    onClick={() => setMediaType('image')}
+                    className={`px-2.5 py-0.5 rounded-md text-[11px] font-sans font-medium transition-all flex items-center gap-1 cursor-pointer ${
+                      mediaType === 'image'
+                        ? 'bg-white text-gray-900 shadow-xs font-semibold'
+                        : 'text-gray-500 hover:text-gray-900'
+                    }`}
+                  >
+                    <ImageIcon className="w-3 h-3" />
+                    <span>Image</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMediaType('video')}
+                    className={`px-2.5 py-0.5 rounded-md text-[11px] font-sans font-medium transition-all flex items-center gap-1 cursor-pointer ${
+                      mediaType === 'video'
+                        ? 'bg-[#49C1DA] text-white shadow-xs font-semibold'
+                        : 'text-gray-500 hover:text-gray-900'
+                    }`}
+                  >
+                    <Film className="w-3 h-3" />
+                    <VolumeX className="w-3 h-3" />
+                    <span>Video (No Sound)</span>
+                  </button>
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*"
+                  accept="image/*,video/*,.mp4,.webm,.ogg,.mov"
                   onChange={handleFileUpload}
-                  className="text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-800 hover:file:bg-gray-200 cursor-pointer"
+                  className="text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-800 hover:file:bg-gray-200 cursor-pointer w-full"
                 />
               </div>
 
-              {/* Or manual URL if desired */}
+              {/* Or manual URL */}
               <div className="mt-2 flex items-center gap-2">
-                <span className="text-[11px] text-gray-400 font-sans">Or URL:</span>
+                <span className="text-[11px] text-gray-400 font-sans shrink-0">Or URL:</span>
                 <input
                   type="url"
-                  placeholder="https://..."
-                  value={imagePreview.startsWith('http') ? imagePreview : ''}
-                  onChange={(e) => {
-                    setImagePreview(e.target.value);
-                    setError('');
-                  }}
-                  className="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-900 outline-none"
+                  placeholder="https://... (image or .mp4/.webm video)"
+                  value={mediaUrl.startsWith('http') || mediaUrl.startsWith('/videos') ? mediaUrl : ''}
+                  onChange={(e) => handleUrlChange(e.target.value)}
+                  className="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-900 outline-none focus:border-gray-900"
                 />
               </div>
 
-              {/* Image Preview thumbnail if selected */}
-              {imagePreview && (
-                <div className="mt-3 relative rounded-xl overflow-hidden aspect-[16/9] border border-gray-200 bg-gray-50 max-h-32">
-                  <img
-                    src={imagePreview}
-                    alt="Uploaded thumbnail"
-                    className="w-full h-full object-cover"
-                  />
+              <p className="mt-1 text-[11px] text-gray-400 font-sans flex items-center gap-1">
+                <VolumeX className="w-3 h-3 text-[#49C1DA] shrink-0" />
+                <span>Videos are automatically rendered with <strong>no sound</strong> (muted loop) across the website.</span>
+              </p>
+
+              {/* Media Preview thumbnail / video player if selected */}
+              {mediaUrl && (
+                <div className="mt-3 relative rounded-xl overflow-hidden aspect-[16/9] border border-gray-200 bg-black max-h-36">
+                  {isCurrentVideo ? (
+                    <>
+                      <video
+                        ref={(el) => {
+                          videoPreviewRef.current = el;
+                          if (el) {
+                            el.muted = true;
+                            el.defaultMuted = true;
+                          }
+                        }}
+                        src={mediaUrl}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-mono px-2 py-0.5 rounded-full flex items-center gap-1 border border-white/20">
+                        <VolumeX className="w-3 h-3 text-[#49C1DA]" />
+                        <span>Muted Video (No Sound)</span>
+                      </div>
+                    </>
+                  ) : (
+                    <img
+                      src={mediaUrl}
+                      alt="Uploaded thumbnail"
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaUrl('');
+                      if (fileInputRef.current) fileInputRef.current.value = '';
+                    }}
+                    title="Remove media"
+                    className="absolute top-2 right-2 bg-black/70 hover:bg-black text-white p-1 rounded-full transition-all cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               )}
             </div>
@@ -285,4 +384,3 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     </AnimatePresence>
   );
 };
-

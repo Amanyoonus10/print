@@ -7,6 +7,7 @@ import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
 import { RemoveItemModal } from '../components/editor/RemoveItemModal';
+import { MediaRenderer } from '../components/ui/MediaRenderer';
 
 interface ProjectDetailPageProps {
   onOpenQuoteModal: () => void;
@@ -38,17 +39,19 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
     });
   };
 
-  const handleSaveCoverImage = (data: { url: string }) => {
+  const handleSaveCoverImage = (data: { url: string; mediaType?: 'image' | 'video' }) => {
     updateProject(project.id, {
       coverImage: data.url,
+      coverMediaType: data.mediaType,
     });
   };
 
-  const handleAddGalleryImage = (data: { url: string; title: string; caption?: string; description?: string }) => {
+  const handleAddGalleryImage = (data: { url: string; title: string; caption?: string; description?: string; mediaType?: 'image' | 'video' }) => {
     addProjectGalleryImage(project.id, {
       url: data.url,
       title: data.title,
       caption: data.caption || data.description || 'Authentic Delivered Solution',
+      mediaType: data.mediaType,
     });
   };
 
@@ -127,12 +130,14 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         </div>
       </section>
 
-      {/* Main Cover Image */}
+      {/* Main Cover Image / Video */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="relative rounded-3xl overflow-hidden aspect-[16/9] bg-white border border-[#EDE8DE] shadow-2xl">
-          <img
+          <MediaRenderer
             src={project.coverImage}
+            mediaType={project.coverMediaType}
             alt={project.title}
+            showMutedIndicator={true}
             className="w-full h-full object-cover"
           />
         </div>
@@ -200,10 +205,11 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
               className="group relative rounded-3xl bg-white border border-[#EDE8DE] overflow-hidden shadow-xs hover:border-[#B8955A]/60 hover:shadow-lg transition-all"
             >
               <div className="relative aspect-[16/10] bg-[#F7F4EE] overflow-hidden">
-                <img
+                <MediaRenderer
                   src={item.url}
+                  mediaType={item.mediaType}
                   alt={item.title}
-                  loading="lazy"
+                  priority={idx < 2}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>

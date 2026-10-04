@@ -9,6 +9,7 @@ export interface IntroImageItem {
   url: string;
   title: string;
   subtitle?: string;
+  mediaType?: 'image' | 'video';
 }
 
 const DEFAULT_INTRO_IMAGES: IntroImageItem[] = [
@@ -17,12 +18,14 @@ const DEFAULT_INTRO_IMAGES: IntroImageItem[] = [
     url: '/images/user_extracted/Page_02_Image_01.jpeg',
     title: 'High-Speed Roll-to-Roll Wide-Format Printing',
     subtitle: 'Modern Equipment & Technology',
+    mediaType: 'image',
   },
   {
     id: 'intro-2',
     url: '/images/user_extracted/Page_02_Image_02.jpeg',
     title: 'Precision UV Flatbed Substrate Press',
     subtitle: 'Doha Facility',
+    mediaType: 'image',
   },
 ];
 
@@ -35,13 +38,13 @@ interface ContentContextType {
   company: CompanyInfo;
   introImages: IntroImageItem[];
   updateCompanyDescription: (updates: Partial<CompanyInfo['description']>) => void;
-  addIntroImage: (image: { url: string; title: string; subtitle?: string }) => void;
+  addIntroImage: (image: { url: string; title: string; subtitle?: string; mediaType?: 'image' | 'video' }) => void;
   removeIntroImage: (id: string) => void;
 
   // Services
   services: ServiceItem[];
   updateService: (slug: string, updates: Partial<ServiceItem>) => void;
-  addServiceGalleryImage: (serviceSlug: string, image: { url: string; title: string; caption?: string }) => void;
+  addServiceGalleryImage: (serviceSlug: string, image: { url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }) => void;
   removeServiceGalleryImage: (serviceSlug: string, imageIndex: number) => void;
 
   // Projects / Featured Work
@@ -49,7 +52,7 @@ interface ContentContextType {
   addProject: (project: Omit<ProjectItem, 'id' | 'slug'> & { slug?: string }) => void;
   removeProject: (id: string) => void;
   updateProject: (id: string, updates: Partial<ProjectItem>) => void;
-  addProjectGalleryImage: (projectId: string, image: { url: string; title: string; caption?: string }) => void;
+  addProjectGalleryImage: (projectId: string, image: { url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }) => void;
   removeProjectGalleryImage: (projectId: string, imageIndex: number) => void;
 
   // Reset / Export
@@ -114,37 +117,58 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   });
 
-  // Persist edits to localStorage
+  // Persist edits to localStorage safely
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.EDIT_MODE, JSON.stringify(isEditMode));
+    try {
+      localStorage.setItem(STORAGE_KEYS.EDIT_MODE, JSON.stringify(isEditMode));
+    } catch (e) {
+      console.warn('LocalStorage error saving editMode:', e);
+    }
   }, [isEditMode]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.COMPANY, JSON.stringify(company));
+    try {
+      localStorage.setItem(STORAGE_KEYS.COMPANY, JSON.stringify(company));
+    } catch (e) {
+      console.warn('LocalStorage error saving company:', e);
+    }
   }, [company]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.INTRO_IMAGES, JSON.stringify(introImages));
+    try {
+      localStorage.setItem(STORAGE_KEYS.INTRO_IMAGES, JSON.stringify(introImages));
+    } catch (e) {
+      console.warn('LocalStorage error saving introImages:', e);
+    }
   }, [introImages]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.SERVICES, JSON.stringify(services));
+    try {
+      localStorage.setItem(STORAGE_KEYS.SERVICES, JSON.stringify(services));
+    } catch (e) {
+      console.warn('LocalStorage error saving services:', e);
+    }
   }, [services]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+    try {
+      localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+    } catch (e) {
+      console.warn('LocalStorage error saving projects:', e);
+    }
   }, [projects]);
 
   const toggleEditMode = () => setIsEditMode(prev => !prev);
   const setEditMode = (enabled: boolean) => setIsEditMode(enabled);
 
   // Intro image methods
-  const addIntroImage = (image: { url: string; title: string; subtitle?: string }) => {
+  const addIntroImage = (image: { url: string; title: string; subtitle?: string; mediaType?: 'image' | 'video' }) => {
     const newItem: IntroImageItem = {
       id: `intro-${Date.now()}`,
       url: image.url,
       title: image.title,
       subtitle: image.subtitle || 'Doha Facility',
+      mediaType: image.mediaType,
     };
     setIntroImages(prev => [...prev, newItem]);
   };
@@ -172,7 +196,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const addServiceGalleryImage = (
     serviceSlug: string,
-    image: { url: string; title: string; caption?: string }
+    image: { url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }
   ) => {
     setServices(prev =>
       prev.map(s => {
@@ -185,6 +209,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
               url: image.url,
               title: image.title || s.title,
               caption: image.caption || 'Authentic Production Exhibit',
+              mediaType: image.mediaType,
             },
           ],
         };
@@ -219,6 +244,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           url: projectData.coverImage,
           title: projectData.title,
           caption: projectData.summary,
+          mediaType: projectData.coverMediaType,
         },
       ],
       featured: projectData.featured ?? true,
@@ -236,7 +262,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const addProjectGalleryImage = (
     projectId: string,
-    image: { url: string; title: string; caption?: string }
+    image: { url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }
   ) => {
     setProjects(prev =>
       prev.map(p => {
@@ -249,6 +275,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
               url: image.url,
               title: image.title || p.title,
               caption: image.caption || 'Project Exhibition Photo',
+              mediaType: image.mediaType,
             },
           ],
         };

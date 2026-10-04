@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowUpRight, Calendar, Building2, Tag } from 'lucide-react';
 import type { ProjectItem } from '../../types';
+import { MediaRenderer } from './MediaRenderer';
 
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
@@ -83,11 +84,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               </div>
             </div>
 
-            {/* Main Cover Image */}
+            {/* Main Cover Image / Video */}
             <div className="relative rounded-2xl overflow-hidden aspect-[16/9] bg-[#F7F4EE] border border-[#EDE8DE] shadow-md">
-              <img
+              <MediaRenderer
                 src={project.coverImage}
+                mediaType={project.coverMediaType}
                 alt={project.title}
+                showMutedIndicator={true}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -118,11 +121,11 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               </div>
             )}
 
-            {/* Project Gallery Photos */}
+            {/* Project Gallery Photos / Videos */}
             {project.gallery && project.gallery.length > 0 && (
               <div>
                 <h4 className="font-display font-bold text-lg text-[#171717] mb-4">
-                  Case Study Photo Gallery
+                  Case Study Media Gallery
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {project.gallery.map((g, idx) => (
@@ -131,8 +134,9 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                       className="rounded-2xl overflow-hidden bg-white border border-[#EDE8DE] shadow-xs"
                     >
                       <div className="aspect-[4/3] overflow-hidden bg-[#F7F4EE]">
-                        <img
+                        <MediaRenderer
                           src={g.url}
+                          mediaType={g.mediaType}
                           alt={g.title}
                           className="w-full h-full object-cover"
                         />

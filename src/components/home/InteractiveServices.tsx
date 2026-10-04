@@ -8,6 +8,7 @@ import { SectionEditorBar } from '../editor/SectionEditorBar';
 import { AddImageModal } from '../editor/AddImageModal';
 import { EditTextModal } from '../editor/EditTextModal';
 import { RemoveItemModal } from '../editor/RemoveItemModal';
+import { MediaRenderer } from '../ui/MediaRenderer';
 
 export const InteractiveServices: React.FC = () => {
   const navigate = useNavigate();
@@ -28,15 +29,17 @@ export const InteractiveServices: React.FC = () => {
     });
   };
 
-  const handleAddImage = (data: { url: string; title: string; caption?: string }) => {
+  const handleAddImage = (data: { url: string; title: string; caption?: string; mediaType?: 'image' | 'video' }) => {
     if (!activeService) return;
     updateService(activeService.slug, {
       heroImage: data.url,
+      heroMediaType: data.mediaType,
     });
     addServiceGalleryImage(activeService.slug, {
       url: data.url,
       title: data.title,
       caption: data.caption,
+      mediaType: data.mediaType,
     });
   };
 
@@ -143,10 +146,12 @@ export const InteractiveServices: React.FC = () => {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="relative w-full h-full rounded-2xl overflow-hidden"
                 >
-                  {/* Background Image from PDF */}
-                  <img
+                  {/* Visual Preview (Image or Video - No Sound) */}
+                  <MediaRenderer
                     src={activeService.heroImage}
+                    mediaType={activeService.heroMediaType}
                     alt={activeService.title}
+                    showMutedIndicator={true}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
 

@@ -37,6 +37,7 @@ export interface ServiceItem {
   shortDescription: string;
   fullDescription: string;
   heroImage: string;
+  heroMediaType?: 'image' | 'video';
   previewImage: string;
   features: string[];
   materials: string[];
@@ -45,6 +46,7 @@ export interface ServiceItem {
     url: string;
     title: string;
     caption: string;
+    mediaType?: 'image' | 'video';
   }[];
   accentColor?: string;
 }
@@ -58,6 +60,7 @@ export interface ProjectItem {
   client: string;
   year: string;
   coverImage: string;
+  coverMediaType?: 'image' | 'video';
   summary: string;
   description: string;
   challenge?: string;
@@ -67,6 +70,7 @@ export interface ProjectItem {
     url: string;
     title: string;
     caption: string;
+    mediaType?: 'image' | 'video';
   }[];
   featured?: boolean;
 }

@@ -7,6 +7,7 @@ import { SectionEditorBar } from '../components/editor/SectionEditorBar';
 import { AddImageModal } from '../components/editor/AddImageModal';
 import { EditTextModal } from '../components/editor/EditTextModal';
 import { RemoveItemModal } from '../components/editor/RemoveItemModal';
+import { MediaRenderer } from '../components/ui/MediaRenderer';
 
 interface ServiceDetailPageProps {
   onOpenQuoteModal: () => void;
@@ -35,17 +36,19 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
     });
   };
 
-  const handleSaveHeroImage = (data: { url: string }) => {
+  const handleSaveHeroImage = (data: { url: string; mediaType?: 'image' | 'video' }) => {
     updateService(service.slug, {
       heroImage: data.url,
+      heroMediaType: data.mediaType,
     });
   };
 
-  const handleAddGalleryImage = (data: { url: string; title: string; caption?: string; description?: string }) => {
+  const handleAddGalleryImage = (data: { url: string; title: string; caption?: string; description?: string; mediaType?: 'image' | 'video' }) => {
     addServiceGalleryImage(service.slug, {
       url: data.url,
       title: data.title,
       caption: data.caption || data.description || 'Authentic Delivered Exhibit',
+      mediaType: data.mediaType,
     });
   };
 
@@ -117,9 +120,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
 
           <div className="lg:col-span-6">
             <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-white border border-[#EDE8DE] shadow-2xl group">
-              <img
+              <MediaRenderer
                 src={service.heroImage}
+                mediaType={service.heroMediaType}
                 alt={service.title}
+                showMutedIndicator={true}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -205,10 +210,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
               className="group relative rounded-2xl bg-white border border-[#EDE8DE] overflow-hidden shadow-xs hover:border-[#B8955A]/60 hover:shadow-lg transition-all"
             >
               <div className="relative aspect-[4/3] bg-[#F7F4EE] overflow-hidden">
-                <img
+                <MediaRenderer
                   src={item.url}
+                  mediaType={item.mediaType}
                   alt={item.title}
-                  loading="lazy"
+                  priority={idx < 3}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
