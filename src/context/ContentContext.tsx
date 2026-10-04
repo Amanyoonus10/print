@@ -105,12 +105,28 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const parsed: ServiceItem[] = JSON.parse(saved);
       return parsed.map((s) => {
         const defaultService = initialServicesData.find((init) => init.slug === s.slug);
+        const defaultGalleryUrls = new Set((defaultService?.gallery || []).map((g) => g.url));
+
+        // Separate user uploads from default exhibits so newest uploads are at the top
+        const currentGallery = s.gallery || defaultService?.gallery || [];
+        const userUploads = currentGallery.filter(
+          (g) =>
+            !defaultGalleryUrls.has(g.url) ||
+            g.url.startsWith('idb://') ||
+            g.url.startsWith('blob:') ||
+            g.url.startsWith('data:')
+        );
+        const defaultItems = currentGallery.filter(
+          (g) => defaultGalleryUrls.has(g.url) && !userUploads.includes(g)
+        );
+        const sortedGallery = [...userUploads, ...defaultItems];
+
         if (s.slug === 'light-box') {
           return {
             ...s,
             heroImage: defaultService?.heroImage || '/images/user_extracted/Page_07_Image_09.jpeg',
             heroMediaType: 'image',
-            gallery: (s.gallery || []).filter((g) => !g.url.includes('QSTP') && g.title !== 'QSTP Project'),
+            gallery: sortedGallery.filter((g) => !g.url.includes('QSTP') && g.title !== 'QSTP Project'),
           };
         }
         const isValidHero =
@@ -125,6 +141,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           ...s,
           heroImage: isValidHero ? s.heroImage : (defaultService?.heroImage || s.heroImage),
           heroMediaType: isValidHero ? s.heroMediaType : (defaultService?.heroMediaType || 'image'),
+          gallery: sortedGallery,
         };
       });
     } catch {
@@ -140,6 +157,20 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const parsed: ProjectItem[] = JSON.parse(saved);
       return parsed.map((p) => {
         const defaultProject = initialProjectsData.find((init) => init.id === p.id);
+        const defaultGalleryUrls = new Set((defaultProject?.gallery || []).map((g) => g.url));
+        const currentGallery = p.gallery || defaultProject?.gallery || [];
+        const userUploads = currentGallery.filter(
+          (g) =>
+            !defaultGalleryUrls.has(g.url) ||
+            g.url.startsWith('idb://') ||
+            g.url.startsWith('blob:') ||
+            g.url.startsWith('data:')
+        );
+        const defaultItems = currentGallery.filter(
+          (g) => defaultGalleryUrls.has(g.url) && !userUploads.includes(g)
+        );
+        const sortedGallery = [...userUploads, ...defaultItems];
+
         const isValidCover =
           p.coverImage &&
           (p.coverImage.startsWith('http://') ||
@@ -152,6 +183,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           ...p,
           coverImage: isValidCover ? p.coverImage : (defaultProject?.coverImage || p.coverImage),
           coverMediaType: isValidCover ? p.coverMediaType : (defaultProject?.coverMediaType || 'image'),
+          gallery: sortedGallery,
         };
       });
     } catch {
@@ -212,7 +244,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       subtitle: image.subtitle || 'Doha Facility',
       mediaType: image.mediaType,
     };
-    setIntroImages(prev => [...prev, newItem]);
+    setIntroImages(prev => [newItem, ...prev]);
   };
 
   const removeIntroImage = (id: string) => {
@@ -246,13 +278,13 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         return {
           ...s,
           gallery: [
-            ...s.gallery,
             {
               url: image.url,
               title: image.title || s.title,
               caption: image.caption || 'Authentic Production Exhibit',
               mediaType: image.mediaType,
             },
+            ...s.gallery,
           ],
         };
       })
@@ -312,13 +344,13 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         return {
           ...p,
           gallery: [
-            ...p.gallery,
             {
               url: image.url,
               title: image.title || p.title,
               caption: image.caption || 'Project Exhibition Photo',
               mediaType: image.mediaType,
             },
+            ...p.gallery,
           ],
         };
       })
