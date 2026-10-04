@@ -13,6 +13,7 @@ export const Introduction: React.FC = () => {
   const { company, introImages, updateCompanyDescription, addIntroImage, removeIntroImage, resetToDefaults } = useContent();
 
   const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
+  const [modalMediaType, setModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
 
@@ -38,9 +39,17 @@ export const Introduction: React.FC = () => {
 
           <SectionEditorBar
             addImageLabel="Add Facility Image"
+            addVideoLabel="Add Facility Video (No Sound)"
             clearDataLabel="Clear Added Data"
             editTextLabel="Edit Narrative"
-            onAddImage={() => setIsAddImageOpen(true)}
+            onAddImage={() => {
+              setModalMediaType('image');
+              setIsAddImageOpen(true);
+            }}
+            onAddVideo={() => {
+              setModalMediaType('video');
+              setIsAddImageOpen(true);
+            }}
             onClearData={() => setIsRemoveModalOpen(true)}
             onEditText={() => setIsEditTextOpen(true)}
           />
@@ -165,12 +174,13 @@ export const Introduction: React.FC = () => {
         </div>
       </div>
 
-      {/* Add Media Modal */}
+      {/* Add Media Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddImageOpen}
         onClose={() => setIsAddImageOpen(false)}
-        title="Add Media to Company Story"
+        title="Add Media to Company Story (Photo or Video)"
         subtitle="Introduction Gallery"
+        initialMediaType={modalMediaType}
         onAdd={data => addIntroImage({
           url: data.url,
           mediaType: data.mediaType,

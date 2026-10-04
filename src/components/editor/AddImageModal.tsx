@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, VolumeX, Film, Image as ImageIcon } from 'lucide-react';
-import { isVideoSource } from '../ui/MediaRenderer';
+import { X, CheckCircle2, VolumeX, Image as ImageIcon, Video } from 'lucide-react';
+import { isVideoSource } from '../../utils/media';
 
 export interface AddMediaItemData {
   url: string;
@@ -20,6 +20,7 @@ interface AddImageModalProps {
   title?: string;
   subtitle?: string;
   defaultType?: string;
+  initialMediaType?: 'image' | 'video';
   requireDescription?: boolean;
   onAdd: (data: AddMediaItemData) => void;
 }
@@ -27,22 +28,31 @@ interface AddImageModalProps {
 export const AddImageModal: React.FC<AddImageModalProps> = ({
   isOpen,
   onClose,
-  defaultType = 'Gallery Exhibit',
+  defaultType = 'Gallery Exhibit (Photo / Image)',
+  initialMediaType = 'image',
   onAdd,
 }) => {
-  const [itemType, setItemType] = useState<string>(defaultType);
+  const isInitialVid = initialMediaType === 'video' || defaultType.toLowerCase().includes('video');
+  const [itemType, setItemType] = useState<string>(isInitialVid ? 'Video Exhibit (No Sound)' : defaultType);
   const [itemTitle, setItemTitle] = useState<string>('');
   const [itemCategory, setItemCategory] = useState<string>('');
   const [itemDateSubtitle, setItemDateSubtitle] = useState<string>('');
   const [itemDescription, setItemDescription] = useState<string>('');
   const [mediaUrl, setMediaUrl] = useState<string>('');
-  const [mediaType, setMediaType] = useState<'image' | 'video'>('image');
+  const [mediaType, setMediaType] = useState<'image' | 'video'>(isInitialVid ? 'video' : 'image');
   const [pinCode, setPinCode] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoPreviewRef = useRef<HTMLVideoElement | null>(null);
+
+  // Sync state if initialMediaType or defaultType changes
+  useEffect(() => {
+    const isVid = initialMediaType === 'video' || defaultType.toLowerCase().includes('video');
+    setMediaType(isVid ? 'video' : 'image');
+    setItemType(isVid ? 'Video Exhibit (No Sound)' : defaultType);
+  }, [initialMediaType, defaultType]);
 
   if (!isOpen) return null;
 
@@ -68,6 +78,9 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
       const result = reader.result as string;
       setMediaUrl(result);
       setMediaType(isVideo ? 'video' : 'image');
+      if (isVideo) {
+        setItemType('Video Exhibit (No Sound)');
+      }
       setError('');
       if (!itemTitle) {
         setItemTitle(file.name.replace(/\.[^/.]+$/, ''));
@@ -81,13 +94,23 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     setError('');
     if (isVideoSource(url)) {
       setMediaType('video');
+      setItemType('Video Exhibit (No Sound)');
+    }
+  };
+
+  const handleItemTypeChange = (newType: string) => {
+    setItemType(newType);
+    if (newType.toLowerCase().includes('video')) {
+      setMediaType('video');
+    } else if (newType.toLowerCase().includes('photo') || newType.toLowerCase().includes('image')) {
+      setMediaType('image');
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!mediaUrl) {
-      setError('Please upload an image/video file or provide a media URL.');
+      setError(mediaType === 'video' ? 'Please upload a video file or provide a video URL.' : 'Please upload an image file or provide an image URL.');
       return;
     }
     if (!itemTitle.trim()) {
@@ -151,7 +174,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
           </button>
 
           {/* Subtitle Notice */}
-          <p className="text-xs text-gray-400 font-sans leading-relaxed pr-8 mb-6">
+          <p className="text-xs text-gray-400 font-sans leading-relaxed pr-8 mb-5">
             This admin panel stores data locally (LocalStorage) and renders updates in real-time.
           </p>
 
@@ -169,17 +192,76 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               </div>
             )}
 
-            {/* 1. Item Type Select */}
+            {/* 1. MEDIA FORMAT OPTION: IMAGE VS VIDEO */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                1. Choose Option: Photo or Video
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMediaType('image');
+                    if (itemType.includes('Video')) {
+                      setItemType('Gallery Exhibit (Photo / Image)');
+                    }
+                  }}
+                  className={`p-3.5 rounded-2xl border-2 text-left flex items-center gap-3 transition-all cursor-pointer ${
+                    mediaType === 'image'
+                      ? 'border-[#49C1DA] bg-[#49C1DA]/10 ring-2 ring-[#49C1DA]/20 shadow-sm'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${mediaType === 'image' ? 'bg-[#49C1DA] text-white shadow-xs' : 'bg-gray-100 text-gray-600'}`}>
+                    <ImageIcon className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block text-xs font-bold text-gray-900 truncate">Photo / Image</span>
+                    <span className="block text-[10px] text-gray-500 truncate">JPG, PNG, WebP</span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMediaType('video');
+                    if (!itemType.includes('Video')) {
+                      setItemType('Video Exhibit (No Sound)');
+                    }
+                  }}
+                  className={`p-3.5 rounded-2xl border-2 text-left flex items-center gap-3 transition-all cursor-pointer ${
+                    mediaType === 'video'
+                      ? 'border-[#49C1DA] bg-[#49C1DA]/10 ring-2 ring-[#49C1DA]/20 shadow-sm'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${mediaType === 'video' ? 'bg-[#49C1DA] text-white shadow-xs' : 'bg-gray-100 text-gray-600'}`}>
+                    <Video className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1">
+                      <span className="block text-xs font-bold text-gray-900 truncate">Add Video</span>
+                      <VolumeX className="w-3.5 h-3.5 text-[#49C1DA] shrink-0" />
+                    </div>
+                    <span className="block text-[10px] text-gray-500 truncate">MP4, WebM (No Sound)</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* 2. Item Type Select */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
                 Item Type
               </label>
               <select
                 value={itemType}
-                onChange={(e) => setItemType(e.target.value)}
+                onChange={(e) => handleItemTypeChange(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none text-sm text-gray-900 bg-white cursor-pointer"
               >
-                <option value="Gallery Exhibit">Gallery Exhibit</option>
+                <option value="Video Exhibit (No Sound)">🎬 Video Exhibit (No Sound)</option>
+                <option value="Video Reel / Showcase (No Sound)">🎬 Video Reel / Showcase (No Sound)</option>
+                <option value="Gallery Exhibit (Photo / Image)">🖼️ Gallery Exhibit (Photo / Image)</option>
                 <option value="News Room Announcement">News Room Announcement</option>
                 <option value="Project Case Study">Project Case Study</option>
                 <option value="Production Facility Feature">Production Facility Feature</option>
@@ -187,7 +269,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               </select>
             </div>
 
-            {/* 2. Title / Headline / Caption */}
+            {/* 3. Title / Headline / Caption */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
                 Title / Headline / Caption
@@ -202,7 +284,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               />
             </div>
 
-            {/* 3. Category / Tag (News only) */}
+            {/* 4. Category / Tag (News only) */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
                 Category / Tag (News only)
@@ -216,7 +298,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               />
             </div>
 
-            {/* 4. Date / Subtitle */}
+            {/* 5. Date / Subtitle */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
                 Date / Subtitle
@@ -230,7 +312,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               />
             </div>
 
-            {/* 5. Description / Detail Content */}
+            {/* 6. Description / Detail Content */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
                 Description / Detail Content
@@ -244,72 +326,44 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               />
             </div>
 
-            {/* 6. Upload Media File (Image or Video - No Sound) */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-semibold text-gray-900">
-                  Upload Media File
-                </label>
-                {/* Media Type Toggle: Image vs Video (No Sound) */}
-                <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-lg border border-gray-200">
-                  <button
-                    type="button"
-                    onClick={() => setMediaType('image')}
-                    className={`px-2.5 py-0.5 rounded-md text-[11px] font-sans font-medium transition-all flex items-center gap-1 cursor-pointer ${
-                      mediaType === 'image'
-                        ? 'bg-white text-gray-900 shadow-xs font-semibold'
-                        : 'text-gray-500 hover:text-gray-900'
-                    }`}
-                  >
-                    <ImageIcon className="w-3 h-3" />
-                    <span>Image</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMediaType('video')}
-                    className={`px-2.5 py-0.5 rounded-md text-[11px] font-sans font-medium transition-all flex items-center gap-1 cursor-pointer ${
-                      mediaType === 'video'
-                        ? 'bg-[#49C1DA] text-white shadow-xs font-semibold'
-                        : 'text-gray-500 hover:text-gray-900'
-                    }`}
-                  >
-                    <Film className="w-3 h-3" />
-                    <VolumeX className="w-3 h-3" />
-                    <span>Video (No Sound)</span>
-                  </button>
-                </div>
-              </div>
+            {/* 7. Upload File or URL based on Media Option */}
+            <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200">
+              <label className="block text-xs font-bold text-gray-900 mb-1">
+                {mediaType === 'video' ? 'Upload Video File (.mp4, .webm, .mov)' : 'Upload Image File (.jpg, .png, .webp)'}
+              </label>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-1.5">
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*,video/*,.mp4,.webm,.ogg,.mov"
+                  accept={mediaType === 'video' ? 'video/*,.mp4,.webm,.ogg,.mov' : 'image/*'}
                   onChange={handleFileUpload}
-                  className="text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-800 hover:file:bg-gray-200 cursor-pointer w-full"
+                  className="text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-200 file:text-gray-800 hover:file:bg-gray-300 cursor-pointer w-full"
                 />
               </div>
 
               {/* Or manual URL */}
-              <div className="mt-2 flex items-center gap-2">
-                <span className="text-[11px] text-gray-400 font-sans shrink-0">Or URL:</span>
+              <div className="mt-2.5 flex items-center gap-2">
+                <span className="text-[11px] text-gray-500 font-sans shrink-0 font-medium">Or URL:</span>
                 <input
-                  type="url"
-                  placeholder="https://... (image or .mp4/.webm video)"
-                  value={mediaUrl.startsWith('http') || mediaUrl.startsWith('/videos') ? mediaUrl : ''}
+                  type="text"
+                  placeholder={mediaType === 'video' ? 'e.g. /videos/hero_video_1.mp4 or https://.../video.mp4' : 'https://...'}
+                  value={mediaUrl}
                   onChange={(e) => handleUrlChange(e.target.value)}
-                  className="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-900 outline-none focus:border-gray-900"
+                  className="flex-1 px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs text-gray-900 outline-none focus:border-gray-900"
                 />
               </div>
 
-              <p className="mt-1 text-[11px] text-gray-400 font-sans flex items-center gap-1">
-                <VolumeX className="w-3 h-3 text-[#49C1DA] shrink-0" />
-                <span>Videos are automatically rendered with <strong>no sound</strong> (muted loop) across the website.</span>
-              </p>
+              {mediaType === 'video' && (
+                <p className="mt-2 text-[11px] text-gray-500 font-sans flex items-center gap-1.5">
+                  <VolumeX className="w-3.5 h-3.5 text-[#49C1DA] shrink-0" />
+                  <span><strong>No Sound:</strong> Video will automatically play silently on a smooth loop without audio.</span>
+                </p>
+              )}
 
               {/* Media Preview thumbnail / video player if selected */}
               {mediaUrl && (
-                <div className="mt-3 relative rounded-xl overflow-hidden aspect-[16/9] border border-gray-200 bg-black max-h-36">
+                <div className="mt-3 relative rounded-xl overflow-hidden aspect-[16/9] border border-gray-200 bg-black max-h-40">
                   {isCurrentVideo ? (
                     <>
                       <video
@@ -327,7 +381,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
                         playsInline
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-mono px-2 py-0.5 rounded-full flex items-center gap-1 border border-white/20">
+                      <div className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-mono px-2.5 py-0.5 rounded-full flex items-center gap-1.5 border border-white/20">
                         <VolumeX className="w-3 h-3 text-[#49C1DA]" />
                         <span>Muted Video (No Sound)</span>
                       </div>
@@ -355,7 +409,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               )}
             </div>
 
-            {/* 7. Security Pincode */}
+            {/* 8. Security Pincode */}
             <div>
               <label className="block text-xs font-semibold text-gray-900 mb-1.5">
                 Security Pincode
@@ -369,7 +423,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
               />
             </div>
 
-            {/* 8. Publish Button */}
+            {/* 9. Publish Button */}
             <div className="pt-2">
               <button
                 type="submit"

@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Film } from 'lucide-react';
 import type { ProjectItem } from '../../types';
-import { MediaRenderer, isVideoSource } from './MediaRenderer';
+import { MediaRenderer } from './MediaRenderer';
+import { isVideoSource } from '../../utils/media';
 
 interface ProjectCardProps {
   project: ProjectItem;

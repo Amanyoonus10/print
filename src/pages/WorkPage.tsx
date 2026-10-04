@@ -14,6 +14,7 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
   const { projects, addProject, removeProject, resetToDefaults } = useContent();
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
+  const [modalMediaType, setModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
 
   const categories = [
@@ -67,9 +68,17 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
           />
 
           <SectionEditorBar
-            addImageLabel="Add Gallery Item"
+            addImageLabel="Add Project Image"
+            addVideoLabel="Add Project Video (No Sound)"
             clearDataLabel="Clear Added Data"
-            onAddImage={() => setIsAddProjectOpen(true)}
+            onAddImage={() => {
+              setModalMediaType('image');
+              setIsAddProjectOpen(true);
+            }}
+            onAddVideo={() => {
+              setModalMediaType('video');
+              setIsAddProjectOpen(true);
+            }}
             onClearData={() => setIsRemoveModalOpen(true)}
           />
         </div>
@@ -118,12 +127,13 @@ export const WorkPage: React.FC<WorkPageProps> = () => {
         )}
       </section>
 
-      {/* Add Project Modal */}
+      {/* Add Project Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddProjectOpen}
         onClose={() => setIsAddProjectOpen(false)}
-        title="Add New Project Case Study"
+        title="Add Project Case Study (Photo or Video)"
         subtitle="Portfolio Showcase"
+        initialMediaType={modalMediaType}
         requireDescription={true}
         onAdd={handleAddProject}
       />

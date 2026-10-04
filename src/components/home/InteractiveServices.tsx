@@ -15,6 +15,7 @@ export const InteractiveServices: React.FC = () => {
   const { services, updateService, addServiceGalleryImage, resetToDefaults } = useContent();
   const [activeServiceSlug, setActiveServiceSlug] = useState<string>(services[0]?.slug || '');
   const [isAddImageOpen, setIsAddImageOpen] = useState<boolean>(false);
+  const [modalMediaType, setModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
 
@@ -59,10 +60,18 @@ export const InteractiveServices: React.FC = () => {
 
           <div className="flex items-center">
             <SectionEditorBar
-              addImageLabel="Add Service Item"
+              addImageLabel={`Add Image to ${activeService.title}`}
+              addVideoLabel={`Add Video (No Sound) to ${activeService.title}`}
               clearDataLabel="Clear Added Data"
               editTextLabel="Edit Active Service"
-              onAddImage={() => setIsAddImageOpen(true)}
+              onAddImage={() => {
+                setModalMediaType('image');
+                setIsAddImageOpen(true);
+              }}
+              onAddVideo={() => {
+                setModalMediaType('video');
+                setIsAddImageOpen(true);
+              }}
               onClearData={() => setIsRemoveModalOpen(true)}
               onEditText={() => setIsEditTextOpen(true)}
             />
@@ -187,12 +196,13 @@ export const InteractiveServices: React.FC = () => {
         </div>
       </div>
 
-      {/* Add / Change Image Modal */}
+      {/* Add / Change Media Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddImageOpen}
         onClose={() => setIsAddImageOpen(false)}
-        title={`Change Image for ${activeService.title}`}
+        title={`Add Photo or Video to ${activeService.title}`}
         subtitle="Service Preview Artwork"
+        initialMediaType={modalMediaType}
         onAdd={handleAddImage}
       />
 

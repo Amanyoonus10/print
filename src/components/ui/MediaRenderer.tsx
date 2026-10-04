@@ -2,8 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { VolumeX } from 'lucide-react';
 import { isVideoSource } from '../../utils/media';
 
-export { isVideoSource };
-
 export interface MediaRendererProps {
   src: string;
   alt?: string;

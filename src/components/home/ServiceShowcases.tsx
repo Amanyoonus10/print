@@ -13,6 +13,7 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
   const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage, resetToDefaults } = useContent();
 
   const [activeAddService, setActiveAddService] = useState<ServiceItem | null>(null);
+  const [modalMediaType, setModalMediaType] = useState<'image' | 'video'>('image');
   const [activeRemoveService, setActiveRemoveService] = useState<ServiceItem | null>(null);
   const [activeEditService, setActiveEditService] = useState<ServiceItem | null>(null);
 
@@ -64,10 +65,18 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
                 </div>
 
                 <SectionEditorBar
-                  addImageLabel={`Add ${service.title} Item`}
+                  addImageLabel={`Add Image to ${service.title}`}
+                  addVideoLabel={`Add Video (No Sound) to ${service.title}`}
                   clearDataLabel="Clear Added Data"
                   editTextLabel="Edit Description"
-                  onAddImage={() => setActiveAddService(service)}
+                  onAddImage={() => {
+                    setModalMediaType('image');
+                    setActiveAddService(service);
+                  }}
+                  onAddVideo={() => {
+                    setModalMediaType('video');
+                    setActiveAddService(service);
+                  }}
                   onClearData={() => setActiveRemoveService(service)}
                   onEditText={() => setActiveEditService(service)}
                 />
@@ -209,13 +218,14 @@ export const ServiceShowcases: React.FC<{ onOpenQuoteModal?: () => void }> = ({ 
         );
       })}
 
-      {/* Add Gallery Image Modal */}
+      {/* Add Gallery Media Modal (Photo or Video - No Sound) */}
       {activeAddService && (
         <AddImageModal
           isOpen={!!activeAddService}
           onClose={() => setActiveAddService(null)}
           title={`Add Exhibit to ${activeAddService.title}`}
-          subtitle="Service Gallery"
+          subtitle="Service Gallery (Photo or Video)"
+          initialMediaType={modalMediaType}
           onAdd={handleAddImage}
         />
       )}

@@ -17,6 +17,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
   const { projects, addProject, removeProject, resetToDefaults } = useContent();
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isAddProjectOpen, setIsAddProjectOpen] = useState<boolean>(false);
+  const [modalMediaType, setModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState<boolean>(false);
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
   const [showAll, setShowAll] = useState<boolean>(false);
@@ -65,9 +66,17 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
 
           <div className="flex flex-wrap items-center gap-3">
             <SectionEditorBar
-              addImageLabel="Add Gallery Item"
+              addImageLabel="Add Project Image"
+              addVideoLabel="Add Project Video (No Sound)"
               clearDataLabel="Clear Added Data"
-              onAddImage={() => setIsAddProjectOpen(true)}
+              onAddImage={() => {
+                setModalMediaType('image');
+                setIsAddProjectOpen(true);
+              }}
+              onAddVideo={() => {
+                setModalMediaType('video');
+                setIsAddProjectOpen(true);
+              }}
               onClearData={() => setIsRemoveModalOpen(true)}
             />
 
@@ -114,12 +123,13 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ onOpenQuoteModal }) 
         onOpenQuoteModal={onOpenQuoteModal}
       />
 
-      {/* Add Project Modal */}
+      {/* Add Project Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddProjectOpen}
         onClose={() => setIsAddProjectOpen(false)}
-        title="Add New Project to Portfolio"
+        title="Add New Project to Portfolio (Photo or Video)"
         subtitle="Portfolio Item"
+        initialMediaType={modalMediaType}
         requireDescription={true}
         onAdd={handleAddProject}
       />

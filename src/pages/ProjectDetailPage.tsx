@@ -18,8 +18,10 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
   const { projects, updateProject, addProjectGalleryImage, removeProjectGalleryImage, resetToDefaults } = useContent();
 
   const [isAddCoverImageOpen, setIsAddCoverImageOpen] = useState<boolean>(false);
+  const [coverModalMediaType, setCoverModalMediaType] = useState<'image' | 'video'>('image');
   const [isEditTextOpen, setIsEditTextOpen] = useState<boolean>(false);
   const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
+  const [galleryModalMediaType, setGalleryModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
 
   const project = projects.find(p => p.slug === slug);
@@ -73,8 +75,16 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         <SectionEditorBar
           className="mb-8 justify-end"
           addImageLabel="Change Cover Image"
+          addVideoLabel="Add / Change Cover Video (No Sound)"
           editTextLabel="Edit Case Study Copy"
-          onAddImage={() => setIsAddCoverImageOpen(true)}
+          onAddImage={() => {
+            setCoverModalMediaType('image');
+            setIsAddCoverImageOpen(true);
+          }}
+          onAddVideo={() => {
+            setCoverModalMediaType('video');
+            setIsAddCoverImageOpen(true);
+          }}
           onEditText={() => setIsEditTextOpen(true)}
         />
 
@@ -191,9 +201,17 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
           />
 
           <SectionEditorBar
-            addImageLabel="Add Gallery Item"
+            addImageLabel="Add Gallery Image"
+            addVideoLabel="Add Gallery Video (No Sound)"
             clearDataLabel="Clear Added Data"
-            onAddImage={() => setIsAddGalleryImageOpen(true)}
+            onAddImage={() => {
+              setGalleryModalMediaType('image');
+              setIsAddGalleryImageOpen(true);
+            }}
+            onAddVideo={() => {
+              setGalleryModalMediaType('video');
+              setIsAddGalleryImageOpen(true);
+            }}
             onClearData={() => setIsRemoveGalleryOpen(true)}
           />
         </div>
@@ -244,12 +262,13 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         </div>
       </section>
 
-      {/* Cover Image Modal */}
+      {/* Cover Media Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddCoverImageOpen}
         onClose={() => setIsAddCoverImageOpen(false)}
-        title={`Change Cover Image for ${project.title}`}
-        subtitle="Cover Photo"
+        title={`Change Cover Media for ${project.title}`}
+        subtitle="Cover Photo / Silent Video"
+        initialMediaType={coverModalMediaType}
         onAdd={handleSaveCoverImage}
       />
 
@@ -300,12 +319,13 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenQuot
         onSave={handleSaveText}
       />
 
-      {/* Add Gallery Image Modal */}
+      {/* Add Gallery Media Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddGalleryImageOpen}
         onClose={() => setIsAddGalleryImageOpen(false)}
-        title={`Add Photo to ${project.title}`}
-        subtitle="Photo Exhibits"
+        title={`Add Exhibit to ${project.title}`}
+        subtitle="Media Exhibits (Photo or Video)"
+        initialMediaType={galleryModalMediaType}
         requireDescription={true}
         onAdd={handleAddGalleryImage}
       />

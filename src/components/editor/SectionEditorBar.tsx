@@ -1,13 +1,15 @@
 import React from 'react';
-import { PlusCircle, Trash2, Edit3 } from 'lucide-react';
+import { PlusCircle, Trash2, Edit3, Film } from 'lucide-react';
 import { useContent } from '../../context/ContentContext';
 
 interface SectionEditorBarProps {
   sectionName?: string;
   onAddImage?: () => void;
+  onAddVideo?: () => void;
   onEditText?: () => void;
   onClearData?: () => void;
   addImageLabel?: string;
+  addVideoLabel?: string;
   editTextLabel?: string;
   clearDataLabel?: string;
   customActions?: React.ReactNode;
@@ -16,9 +18,11 @@ interface SectionEditorBarProps {
 
 export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
   onAddImage,
+  onAddVideo,
   onEditText,
   onClearData,
-  addImageLabel = 'Add Gallery Item',
+  addImageLabel = 'Add Photo / Image',
+  addVideoLabel = 'Add Video (No Sound)',
   editTextLabel = 'Edit Text',
   clearDataLabel = 'Clear Added Data',
   customActions,
@@ -44,6 +48,17 @@ export const SectionEditorBar: React.FC<SectionEditorBarProps> = ({
           className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer group active:scale-95"
         >
           <PlusCircle className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2] transition-transform group-hover:rotate-90 duration-300" />
+        </button>
+      )}
+
+      {onAddVideo && (
+        <button
+          onClick={onAddVideo}
+          title={addVideoLabel}
+          aria-label={addVideoLabel}
+          className="inline-flex items-center justify-center w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#49C1DA]/10 text-gray-800 hover:text-[#49C1DA] border border-gray-200 hover:border-[#49C1DA] shadow-xs transition-all duration-200 cursor-pointer active:scale-95 group"
+        >
+          <Film className="w-4 h-4 text-gray-700 group-hover:text-[#49C1DA] stroke-[2]" />
         </button>
       )}
 

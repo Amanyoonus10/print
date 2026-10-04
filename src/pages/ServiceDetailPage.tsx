@@ -18,8 +18,10 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
   const { services, updateService, addServiceGalleryImage, removeServiceGalleryImage, resetToDefaults } = useContent();
   
   const [isAddHeroImageOpen, setIsAddHeroImageOpen] = useState<boolean>(false);
+  const [heroModalMediaType, setHeroModalMediaType] = useState<'image' | 'video'>('image');
   const [isEditHeroTextOpen, setIsEditHeroTextOpen] = useState<boolean>(false);
   const [isAddGalleryImageOpen, setIsAddGalleryImageOpen] = useState<boolean>(false);
+  const [galleryModalMediaType, setGalleryModalMediaType] = useState<'image' | 'video'>('image');
   const [isRemoveGalleryOpen, setIsRemoveGalleryOpen] = useState<boolean>(false);
 
   const service = services.find(s => s.slug === slug);
@@ -70,8 +72,16 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         <SectionEditorBar
           className="mb-8 justify-end"
           addImageLabel="Change Hero Image"
+          addVideoLabel="Add / Change Hero Video (No Sound)"
           editTextLabel="Edit Description & Title"
-          onAddImage={() => setIsAddHeroImageOpen(true)}
+          onAddImage={() => {
+            setHeroModalMediaType('image');
+            setIsAddHeroImageOpen(true);
+          }}
+          onAddVideo={() => {
+            setHeroModalMediaType('video');
+            setIsAddHeroImageOpen(true);
+          }}
           onEditText={() => setIsEditHeroTextOpen(true)}
         />
 
@@ -196,9 +206,17 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
           />
 
           <SectionEditorBar
-            addImageLabel="Add Gallery Item"
+            addImageLabel="Add Gallery Image"
+            addVideoLabel="Add Gallery Video (No Sound)"
             clearDataLabel="Clear Added Data"
-            onAddImage={() => setIsAddGalleryImageOpen(true)}
+            onAddImage={() => {
+              setGalleryModalMediaType('image');
+              setIsAddGalleryImageOpen(true);
+            }}
+            onAddVideo={() => {
+              setGalleryModalMediaType('video');
+              setIsAddGalleryImageOpen(true);
+            }}
             onClearData={() => setIsRemoveGalleryOpen(true)}
           />
         </div>
@@ -243,12 +261,13 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         )}
       </section>
 
-      {/* Hero Image Modal */}
+      {/* Hero Media Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddHeroImageOpen}
         onClose={() => setIsAddHeroImageOpen(false)}
-        title={`Change Hero Image for ${service.title}`}
-        subtitle="Hero Artwork"
+        title={`Change Hero Media for ${service.title}`}
+        subtitle="Hero Artwork / Silent Video"
+        initialMediaType={heroModalMediaType}
         onAdd={handleSaveHeroImage}
       />
 
@@ -280,12 +299,13 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenQuot
         onSave={handleSaveHeroText}
       />
 
-      {/* Gallery Image & Description Modal */}
+      {/* Gallery Media Modal (Photo or Video - No Sound) */}
       <AddImageModal
         isOpen={isAddGalleryImageOpen}
         onClose={() => setIsAddGalleryImageOpen(false)}
         title={`Add Exhibit to ${service.title}`}
-        subtitle="Authentic Gallery"
+        subtitle="Authentic Gallery (Photo or Video)"
+        initialMediaType={galleryModalMediaType}
         requireDescription={true}
         onAdd={handleAddGalleryImage}
       />
