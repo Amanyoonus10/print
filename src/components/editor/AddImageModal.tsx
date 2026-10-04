@@ -178,7 +178,7 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
     }
 
     if (pinCode.trim() !== '7227') {
-      setError('Invalid Security Passcode (Enter: 7227).');
+      setError('Invalid Security PIN. Access denied.');
       return;
     }
 
@@ -511,13 +511,13 @@ export const AddImageModal: React.FC<AddImageModalProps> = ({
             {/* 3. FIXED STICKY BOTTOM FOOTER (PINCODE + PUBLISH ALWAYS IN VIEW) */}
             <div className="sticky bottom-0 z-30 bg-gray-50 border-t border-gray-200 px-4 sm:px-5 py-3 flex items-center justify-between gap-3 shrink-0">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold text-gray-600 whitespace-nowrap">PIN (7227):</span>
+                <span className="text-[11px] font-bold text-gray-600 whitespace-nowrap">PIN:</span>
                 <input
                   type="password"
-                  placeholder="7227"
+                  placeholder="••••"
                   value={pinCode}
                   onChange={(e) => setPinCode(e.target.value)}
-                  className="w-20 px-2 py-1.5 rounded-lg border border-gray-300 focus:border-[#49C1DA] outline-none text-xs text-gray-900 placeholder:text-gray-400 font-mono text-center bg-white"
+                  className="w-16 px-2 py-1.5 rounded-lg border border-gray-300 focus:border-[#49C1DA] outline-none text-xs text-gray-900 placeholder:text-gray-400 font-mono text-center bg-white tracking-widest"
                 />
               </div>
 
